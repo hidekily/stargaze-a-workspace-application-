@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Noto+Serif+JP:wght@200..900&display=swap');
+@import "tailwindcss";
+
+.google, .discord, .github {
+    height: 21px;
+    width: 20px;
+
+    background-size: cover;
+    background-image: url('/google.png');
+}
+
+
+.customfont{
+  font-family: "Noto Sans JP", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 40;
+  font-style: normal;
+}
+
+.customfont2 {
+  font-family: "Noto Serif JP", serif;
+  font-optical-sizing: auto;
+  font-weight: 40;
+  font-style: normal;
+}
