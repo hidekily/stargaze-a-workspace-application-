@@ -3,20 +3,14 @@ import Fastify from 'fastify'
 import rateLimit from '@fastify/rate-limit'
 import cors from '@fastify/cors'
 import {auth} from "shared/auth"
-import { categoriesRoutes } from './routes/admin/categories.js'
-import { menuCategoriesRoutes } from './routes/menu/categories.js'
-import { menuItemsRoutes } from './routes/menu/items.js'
-import { itemsConfigureRoutes } from './routes/admin/menuItems.js'
-import { ordersRoutes } from './routes/admin/orders.js'
-import { clientOrders } from './routes/menu/orders.js'
-import { tablesRoutes } from './routes/admin/tables.js'
+
 
 const port = Number(process.env.PORT) || 3001
 const app = Fastify({ logger: true })
 
 app.register(cors, {
   origin: (origin, cb) => {
-    if(!origin || origin.includes("localhost") || origin.includes("vercel.app") || origin.includes("xn--q9jyb4c")){
+    if(!origin || origin.includes("localhost")){
       cb(null, true)
     } else {
       cb(new Error("Not allowed by CORS"), false)
@@ -33,34 +27,6 @@ app.register(rateLimit, {
   timeWindow: '1 minute'
 })
 
-// Route registrations for /admin and /menu
-app.register(ordersRoutes, {
-  prefix: "/api/admin/orders"
-})
-
-app.register(clientOrders,{
-  prefix:"/api/menu/clientorders"
-})
-
-app.register(itemsConfigureRoutes, {
-  prefix: "/api/admin/items"
-})
-
-app.register(menuItemsRoutes, {
-  prefix: "/api/menu/items"
-})
-
-app.register(menuCategoriesRoutes, {
-  prefix: "/api/menu/categories"
-})
-
-app.register(categoriesRoutes, {
-  prefix: '/api/admin/categories'
-})
-
-app.register(tablesRoutes, {
-  prefix:"/api/admin/tables"
-})
 
 app.all('/api/auth/*', 
   {config: {
@@ -73,7 +39,7 @@ app.all('/api/auth/*',
   async (request, reply) => {
     if(request.method === 'OPTIONS') {
       const origin = request.headers.origin
-        if (origin && (origin.includes('localhost') || origin.includes('vercel.app') || origin.includes('xn--q9jyb4c'))) {        
+        if (origin && (origin.includes('localhost'))) {        
         reply.header('Access-Control-Allow-Origin', origin)
         reply.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS')
         reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
