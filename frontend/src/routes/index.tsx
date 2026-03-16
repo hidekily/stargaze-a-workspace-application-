@@ -1,6 +1,6 @@
 import { createFileRoute} from '@tanstack/react-router'
-import {authClient} from '../lib/auth-client'
-import {rateLimit, throttle} from '@tanstack/react-pacer'
+import { authClient} from '../lib/auth-client'
+import { rateLimit, throttle} from '@tanstack/react-pacer'
 import { StarField } from '@/components/Starfield';
 
 export const Route = createFileRoute('/')({
@@ -18,6 +18,7 @@ function RouteComponent() {
           callbackURL: getRedirectURL()
         })
         if(data.error){
+          console.log('teste')
           alert(data.error.message)
         }
       },

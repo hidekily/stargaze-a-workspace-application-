@@ -1,10 +1,10 @@
 services:
   db:
-    image: postgres:13
+    image: postgres:16
     container_name: drizzle_postgres
     restart: always
     environment:
-      POSTGRES_USER: myuser
+      POSTGRES_USER: star
       POSTGRES_PASSWORD: mypassword
       POSTGRES_DB: stargaze
     ports:

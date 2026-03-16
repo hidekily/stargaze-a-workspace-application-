@@ -16,13 +16,5 @@ export declare const auth: import("better-auth").Auth<{
             clientId: string;
             clientSecret: string;
         };
-        github: {
-            clientId: string;
-            clientSecret: string;
-        };
-        discord: {
-            clientId: string;
-            clientSecret: string;
-        };
     };
 }>;
