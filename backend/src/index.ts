@@ -4,7 +4,6 @@ import rateLimit from '@fastify/rate-limit'
 import cors from '@fastify/cors'
 import {auth} from "shared/auth"
 
-
 const port = Number(process.env.PORT) || 3001
 const app = Fastify({ logger: true })
 
