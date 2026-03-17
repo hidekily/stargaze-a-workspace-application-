@@ -12,6 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConsoleWorkspaceRouteImport } from './routes/console/workspace'
+import { Route as ConsoleWorkspaceTesteRouteImport } from './routes/console/workspace/teste'
+import { Route as ConsoleWorkspaceLinkRouteImport } from './routes/console/workspace/link'
+import { Route as ConsoleWorkspaceHidekiRouteImport } from './routes/console/workspace/hideki'
 
 const ConsoleRoute = ConsoleRouteImport.update({
   id: '/console',
@@ -28,29 +31,72 @@ const ConsoleWorkspaceRoute = ConsoleWorkspaceRouteImport.update({
   path: '/workspace',
   getParentRoute: () => ConsoleRoute,
 } as any)
+const ConsoleWorkspaceTesteRoute = ConsoleWorkspaceTesteRouteImport.update({
+  id: '/teste',
+  path: '/teste',
+  getParentRoute: () => ConsoleWorkspaceRoute,
+} as any)
+const ConsoleWorkspaceLinkRoute = ConsoleWorkspaceLinkRouteImport.update({
+  id: '/link',
+  path: '/link',
+  getParentRoute: () => ConsoleWorkspaceRoute,
+} as any)
+const ConsoleWorkspaceHidekiRoute = ConsoleWorkspaceHidekiRouteImport.update({
+  id: '/hideki',
+  path: '/hideki',
+  getParentRoute: () => ConsoleWorkspaceRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/console': typeof ConsoleRouteWithChildren
-  '/console/workspace': typeof ConsoleWorkspaceRoute
+  '/console/workspace': typeof ConsoleWorkspaceRouteWithChildren
+  '/console/workspace/hideki': typeof ConsoleWorkspaceHidekiRoute
+  '/console/workspace/link': typeof ConsoleWorkspaceLinkRoute
+  '/console/workspace/teste': typeof ConsoleWorkspaceTesteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/console': typeof ConsoleRouteWithChildren
-  '/console/workspace': typeof ConsoleWorkspaceRoute
+  '/console/workspace': typeof ConsoleWorkspaceRouteWithChildren
+  '/console/workspace/hideki': typeof ConsoleWorkspaceHidekiRoute
+  '/console/workspace/link': typeof ConsoleWorkspaceLinkRoute
+  '/console/workspace/teste': typeof ConsoleWorkspaceTesteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/console': typeof ConsoleRouteWithChildren
-  '/console/workspace': typeof ConsoleWorkspaceRoute
+  '/console/workspace': typeof ConsoleWorkspaceRouteWithChildren
+  '/console/workspace/hideki': typeof ConsoleWorkspaceHidekiRoute
+  '/console/workspace/link': typeof ConsoleWorkspaceLinkRoute
+  '/console/workspace/teste': typeof ConsoleWorkspaceTesteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/console' | '/console/workspace'
+  fullPaths:
+    | '/'
+    | '/console'
+    | '/console/workspace'
+    | '/console/workspace/hideki'
+    | '/console/workspace/link'
+    | '/console/workspace/teste'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/console' | '/console/workspace'
-  id: '__root__' | '/' | '/console' | '/console/workspace'
+  to:
+    | '/'
+    | '/console'
+    | '/console/workspace'
+    | '/console/workspace/hideki'
+    | '/console/workspace/link'
+    | '/console/workspace/teste'
+  id:
+    | '__root__'
+    | '/'
+    | '/console'
+    | '/console/workspace'
+    | '/console/workspace/hideki'
+    | '/console/workspace/link'
+    | '/console/workspace/teste'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -81,15 +127,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleWorkspaceRouteImport
       parentRoute: typeof ConsoleRoute
     }
+    '/console/workspace/teste': {
+      id: '/console/workspace/teste'
+      path: '/teste'
+      fullPath: '/console/workspace/teste'
+      preLoaderRoute: typeof ConsoleWorkspaceTesteRouteImport
+      parentRoute: typeof ConsoleWorkspaceRoute
+    }
+    '/console/workspace/link': {
+      id: '/console/workspace/link'
+      path: '/link'
+      fullPath: '/console/workspace/link'
+      preLoaderRoute: typeof ConsoleWorkspaceLinkRouteImport
+      parentRoute: typeof ConsoleWorkspaceRoute
+    }
+    '/console/workspace/hideki': {
+      id: '/console/workspace/hideki'
+      path: '/hideki'
+      fullPath: '/console/workspace/hideki'
+      preLoaderRoute: typeof ConsoleWorkspaceHidekiRouteImport
+      parentRoute: typeof ConsoleWorkspaceRoute
+    }
   }
 }
 
+interface ConsoleWorkspaceRouteChildren {
+  ConsoleWorkspaceHidekiRoute: typeof ConsoleWorkspaceHidekiRoute
+  ConsoleWorkspaceLinkRoute: typeof ConsoleWorkspaceLinkRoute
+  ConsoleWorkspaceTesteRoute: typeof ConsoleWorkspaceTesteRoute
+}
+
+const ConsoleWorkspaceRouteChildren: ConsoleWorkspaceRouteChildren = {
+  ConsoleWorkspaceHidekiRoute: ConsoleWorkspaceHidekiRoute,
+  ConsoleWorkspaceLinkRoute: ConsoleWorkspaceLinkRoute,
+  ConsoleWorkspaceTesteRoute: ConsoleWorkspaceTesteRoute,
+}
+
+const ConsoleWorkspaceRouteWithChildren =
+  ConsoleWorkspaceRoute._addFileChildren(ConsoleWorkspaceRouteChildren)
+
 interface ConsoleRouteChildren {
-  ConsoleWorkspaceRoute: typeof ConsoleWorkspaceRoute
+  ConsoleWorkspaceRoute: typeof ConsoleWorkspaceRouteWithChildren
 }
 
 const ConsoleRouteChildren: ConsoleRouteChildren = {
-  ConsoleWorkspaceRoute: ConsoleWorkspaceRoute,
+  ConsoleWorkspaceRoute: ConsoleWorkspaceRouteWithChildren,
 }
 
 const ConsoleRouteWithChildren =
