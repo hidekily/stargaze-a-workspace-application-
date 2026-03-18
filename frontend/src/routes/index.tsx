@@ -12,7 +12,7 @@ function RouteComponent() {
 
   const tryLogin = rateLimit(
     throttle(
-        async(provider: "google") => {
+        async(provider: "google" | 'github' | "") => {
         const data = await authClient.signIn.social({
           provider,
           callbackURL: getRedirectURL()
@@ -59,14 +59,14 @@ function RouteComponent() {
                   <span>google</span>
                 </button>
 
-                <button onClick={() => tryLogin('google')} className='bg-white w-[80%] h-[15%] rounded-lg flex justify-center items-center text-center gap-2'>
-                  <span className='google'></span>
-                  <span>Apple</span>
+                <button onClick={() => tryLogin('github')} className='bg-white w-[80%] h-[15%] rounded-lg flex justify-center items-center text-center gap-2'>
+                  <span className='github'></span>
+                  <span>Github</span>
                 </button>
 
                 <button onClick={() => tryLogin('google')} className='bg-white w-[80%] h-[15%] rounded-lg flex justify-center items-center text-center gap-2'>
-                  <span className='google'></span>
-                  <span>Microsoft</span>
+                  <span className='figma'></span>
+                  <span>Figma</span>
                 </button>
               </section>
           </section>

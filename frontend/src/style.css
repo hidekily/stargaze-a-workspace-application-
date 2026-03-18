@@ -1,12 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Noto+Serif+JP:wght@200..900&display=swap');
 @import "tailwindcss";
 
-.google, .discord, .github {
-    height: 21px;
-    width: 20px;
+.google, .figma, .github {
+    height: 35px;
+    width: 35px;
 
+    background-repeat: no-repeat;
     background-size: cover;
-    background-image: url('/google.png');
+}
+.google{
+  background-image: url('/google.png');
+}
+.github{
+  background-image: url('/github.png');
+}
+.figma{
+  background-image: url('/figma.png');
 }
 
 
