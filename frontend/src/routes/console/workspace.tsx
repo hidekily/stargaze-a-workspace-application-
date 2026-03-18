@@ -27,17 +27,21 @@ function RouteComponent() {
             <StarField />
 
             <div className='relative w-full h-full flex flex-col items-center'>
-              <section className='w-[80%] h-[10%] bg-teal-800 flex flex-row justify-center items-center gap-6'>
-                {session?.user.name + "✨"}
-                <Link to={'/console/workspace/hideki'}>Hideki</Link>
-                <Link to={'/console/workspace/link'}>link</Link>
-                <Link to={'/console/workspace/teste'}>teste</Link>
+              <section className='w-[80%] h-[10%] bg-teal-800 flex flex-row items-center gap-6'>
+                <div className='w-[30%] customfont text-[#] flex justify-center'>
+                  <span>{session?.user.name + "👻"}</span>
+                </div>
+                <div className='w-[70%] flex flex-row justify-center gap-7'>
+                  <Link to='/console/workspace/hideki'>hideki</Link>
+                  <Link to='/console/workspace/link'>link</Link>
+                  <Link to='/console/workspace/teste'>teste</Link>
+                </div>
               </section>
+              {/* fim da navbar e comeco do outlet */}
               <section>
                 <Outlet />
               </section>
             </div>
-            //ainda tenho q pensar no design... + configurar o ambiente pq o backend ta sem o docker p drizzle rodar. dps disso -- fzr o design, pensar no workflow das functions e fzr a API com fastify p functions. AMEM DEUS EU ODEIO git merge conflict
         </div>
     </>
   )

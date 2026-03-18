@@ -16,5 +16,13 @@ export declare const auth: import("better-auth").Auth<{
             clientId: string;
             clientSecret: string;
         };
+        github: {
+            clientId: string;
+            clientSecret: string;
+        };
+        figma: {
+            clientId: string;
+            clientSecret: string;
+        };
     };
 }>;

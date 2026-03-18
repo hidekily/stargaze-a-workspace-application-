@@ -12,7 +12,7 @@ function RouteComponent() {
 
   const tryLogin = rateLimit(
     throttle(
-        async(provider: "google" | 'github' | "") => {
+        async(provider: "google" | 'github' | "figma") => {
         const data = await authClient.signIn.social({
           provider,
           callbackURL: getRedirectURL()
@@ -40,8 +40,8 @@ function RouteComponent() {
 
         <section className='relative z-10 w-full h-full flex flex-col md:flex-row'>
           <section className='w-[100%] md:w-[50%] h-[50%] md:h-[50%] flex flex-col p-14 gap-5'>
-            <span className='text-[#FF6B4A] text-4xl'>Stargaze | ✨</span>
-            {<span className='text-lg break-normal w-[90%] text-[#E8E8F0]'>
+            <span className='text-[#FF6B4A] text-3xl md:text-5xl'>Stargaze | ✨</span>
+            {<span className='text-2xl md:text-3xl break-normal w-[90%] text-[#E8E8F0]'>
               Your space to
               <span className='text-[#FFD666] italic bold'> organize life</span>,
               <span className='text-[#7BA3FF] italic bold'> track goals</span>,
@@ -64,7 +64,7 @@ function RouteComponent() {
                   <span>Github</span>
                 </button>
 
-                <button onClick={() => tryLogin('google')} className='bg-white w-[80%] h-[15%] rounded-lg flex justify-center items-center text-center gap-2'>
+                <button onClick={() => tryLogin('figma')} className='bg-white w-[80%] h-[15%] rounded-lg flex justify-center items-center text-center gap-2'>
                   <span className='figma'></span>
                   <span>Figma</span>
                 </button>
