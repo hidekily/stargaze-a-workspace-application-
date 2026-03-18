@@ -31,7 +31,7 @@ function RouteComponent() {
             <div className='relative w-full h-full flex flex-col items-center'>
               <section className='w-[80%] h-[10%] flex flex-row items-center gap-6'>
                 <div className='w-[30%] customfont text-[#FFB347] flex justify-center'>
-                  <span>{session?.user.name + "👻"}</span>
+                  <span>{session?.user.id + "👻"}</span>
                 </div>
                 <div className='w-[70%] flex flex-row justify-center gap-7 text-[#FF6B4A]'>
                   <button onClick={() => setTab("personal")} className={`${tab === 'personal' ? 'text-lg' : 'text-md'} duration-400 transition-all`}>
