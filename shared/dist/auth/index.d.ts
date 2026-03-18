@@ -2,13 +2,13 @@ export declare const auth: import("better-auth").Auth<{
     database: (options: import("better-auth").BetterAuthOptions) => import("better-auth").DBAdapter<import("better-auth").BetterAuthOptions>;
     trustedOrigins: string[];
     baseURL: string;
-    advanced: {
-        account: {
-            accountLinking: {
-                enabled: boolean;
-                trustedProviders: string[];
-            };
+    account: {
+        accountLinking: {
+            enabled: true;
+            trustedProviders: ("github" | "figma" | "google")[];
         };
+    };
+    advanced: {
         crossSubDomainCookies: {
             enabled: false;
         };

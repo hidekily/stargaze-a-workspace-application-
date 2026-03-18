@@ -34,13 +34,13 @@ function RouteComponent() {
                   <span>{session?.user.name + "👻"}</span>
                 </div>
                 <div className='w-[70%] flex flex-row justify-center gap-7 text-[#FF6B4A]'>
-                  <button onClick={() => setTab("personal")} className={`${tab === 'personal' ? 'text-lg' : 'text-md'}`}>
+                  <button onClick={() => setTab("personal")} className={`${tab === 'personal' ? 'text-lg' : 'text-md'} duration-400 transition-all`}>
                     Personal
-                  </button>
-                  <Link to='/console/workspace/social' onClick={() => setTab("social")} className={`${tab === "social" ? 'text-lg' : 'text-md'}`}>
+                  </button> |
+                  <Link to='/console/workspace/social' onClick={() => setTab("social")} className={`${tab === "social" ? 'text-lg' : 'text-md'} duration-400 transition-all`}>
                     Social
-                  </Link>
-                  <Link to='/console/workspace/professional' onClick={() => setTab('professional')} className={`${tab === 'professional' ? 'text-long ': 'text-md'}`}>
+                  </Link> |
+                  <Link to='/console/workspace/professional' onClick={() => setTab('professional')} className={`${tab === 'professional' ? 'text-lg ': 'text-md'} duration-400 transition-all`}>
                     Professional
                   </Link>
                 </div>

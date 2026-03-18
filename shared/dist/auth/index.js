@@ -7,13 +7,13 @@ export const auth = betterAuth({
     }),
     trustedOrigins: ['http://localhost:3000'],
     baseURL: process.env.BETTER_AUTH_URL || 'http://localhost:3001',
+    account: {
+        accountLinking: {
+            enabled: true,
+            trustedProviders: ['google', 'figma', "github"]
+        }
+    },
     advanced: {
-        account: {
-            accountLinking: {
-                enabled: true,
-                trustedProviders: ["google", 'figma', "github"]
-            },
-        },
         crossSubDomainCookies: {
             enabled: false,
         },
