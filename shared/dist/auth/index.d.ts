@@ -3,6 +3,12 @@ export declare const auth: import("better-auth").Auth<{
     trustedOrigins: string[];
     baseURL: string;
     advanced: {
+        account: {
+            accountLinking: {
+                enabled: boolean;
+                trustedProviders: string[];
+            };
+        };
         crossSubDomainCookies: {
             enabled: false;
         };

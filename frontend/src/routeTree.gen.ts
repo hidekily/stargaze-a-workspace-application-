@@ -12,9 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConsoleWorkspaceRouteImport } from './routes/console/workspace'
-import { Route as ConsoleWorkspaceTesteRouteImport } from './routes/console/workspace/teste'
-import { Route as ConsoleWorkspaceLinkRouteImport } from './routes/console/workspace/link'
-import { Route as ConsoleWorkspaceHidekiRouteImport } from './routes/console/workspace/hideki'
+import { Route as ConsoleWorkspaceSocialRouteImport } from './routes/console/workspace/social'
+import { Route as ConsoleWorkspaceProfessionalRouteImport } from './routes/console/workspace/professional'
 
 const ConsoleRoute = ConsoleRouteImport.update({
   id: '/console',
@@ -31,46 +30,39 @@ const ConsoleWorkspaceRoute = ConsoleWorkspaceRouteImport.update({
   path: '/workspace',
   getParentRoute: () => ConsoleRoute,
 } as any)
-const ConsoleWorkspaceTesteRoute = ConsoleWorkspaceTesteRouteImport.update({
-  id: '/teste',
-  path: '/teste',
+const ConsoleWorkspaceSocialRoute = ConsoleWorkspaceSocialRouteImport.update({
+  id: '/social',
+  path: '/social',
   getParentRoute: () => ConsoleWorkspaceRoute,
 } as any)
-const ConsoleWorkspaceLinkRoute = ConsoleWorkspaceLinkRouteImport.update({
-  id: '/link',
-  path: '/link',
-  getParentRoute: () => ConsoleWorkspaceRoute,
-} as any)
-const ConsoleWorkspaceHidekiRoute = ConsoleWorkspaceHidekiRouteImport.update({
-  id: '/hideki',
-  path: '/hideki',
-  getParentRoute: () => ConsoleWorkspaceRoute,
-} as any)
+const ConsoleWorkspaceProfessionalRoute =
+  ConsoleWorkspaceProfessionalRouteImport.update({
+    id: '/professional',
+    path: '/professional',
+    getParentRoute: () => ConsoleWorkspaceRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/console': typeof ConsoleRouteWithChildren
   '/console/workspace': typeof ConsoleWorkspaceRouteWithChildren
-  '/console/workspace/hideki': typeof ConsoleWorkspaceHidekiRoute
-  '/console/workspace/link': typeof ConsoleWorkspaceLinkRoute
-  '/console/workspace/teste': typeof ConsoleWorkspaceTesteRoute
+  '/console/workspace/professional': typeof ConsoleWorkspaceProfessionalRoute
+  '/console/workspace/social': typeof ConsoleWorkspaceSocialRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/console': typeof ConsoleRouteWithChildren
   '/console/workspace': typeof ConsoleWorkspaceRouteWithChildren
-  '/console/workspace/hideki': typeof ConsoleWorkspaceHidekiRoute
-  '/console/workspace/link': typeof ConsoleWorkspaceLinkRoute
-  '/console/workspace/teste': typeof ConsoleWorkspaceTesteRoute
+  '/console/workspace/professional': typeof ConsoleWorkspaceProfessionalRoute
+  '/console/workspace/social': typeof ConsoleWorkspaceSocialRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/console': typeof ConsoleRouteWithChildren
   '/console/workspace': typeof ConsoleWorkspaceRouteWithChildren
-  '/console/workspace/hideki': typeof ConsoleWorkspaceHidekiRoute
-  '/console/workspace/link': typeof ConsoleWorkspaceLinkRoute
-  '/console/workspace/teste': typeof ConsoleWorkspaceTesteRoute
+  '/console/workspace/professional': typeof ConsoleWorkspaceProfessionalRoute
+  '/console/workspace/social': typeof ConsoleWorkspaceSocialRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -78,25 +70,22 @@ export interface FileRouteTypes {
     | '/'
     | '/console'
     | '/console/workspace'
-    | '/console/workspace/hideki'
-    | '/console/workspace/link'
-    | '/console/workspace/teste'
+    | '/console/workspace/professional'
+    | '/console/workspace/social'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/console'
     | '/console/workspace'
-    | '/console/workspace/hideki'
-    | '/console/workspace/link'
-    | '/console/workspace/teste'
+    | '/console/workspace/professional'
+    | '/console/workspace/social'
   id:
     | '__root__'
     | '/'
     | '/console'
     | '/console/workspace'
-    | '/console/workspace/hideki'
-    | '/console/workspace/link'
-    | '/console/workspace/teste'
+    | '/console/workspace/professional'
+    | '/console/workspace/social'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -127,40 +116,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleWorkspaceRouteImport
       parentRoute: typeof ConsoleRoute
     }
-    '/console/workspace/teste': {
-      id: '/console/workspace/teste'
-      path: '/teste'
-      fullPath: '/console/workspace/teste'
-      preLoaderRoute: typeof ConsoleWorkspaceTesteRouteImport
+    '/console/workspace/social': {
+      id: '/console/workspace/social'
+      path: '/social'
+      fullPath: '/console/workspace/social'
+      preLoaderRoute: typeof ConsoleWorkspaceSocialRouteImport
       parentRoute: typeof ConsoleWorkspaceRoute
     }
-    '/console/workspace/link': {
-      id: '/console/workspace/link'
-      path: '/link'
-      fullPath: '/console/workspace/link'
-      preLoaderRoute: typeof ConsoleWorkspaceLinkRouteImport
-      parentRoute: typeof ConsoleWorkspaceRoute
-    }
-    '/console/workspace/hideki': {
-      id: '/console/workspace/hideki'
-      path: '/hideki'
-      fullPath: '/console/workspace/hideki'
-      preLoaderRoute: typeof ConsoleWorkspaceHidekiRouteImport
+    '/console/workspace/professional': {
+      id: '/console/workspace/professional'
+      path: '/professional'
+      fullPath: '/console/workspace/professional'
+      preLoaderRoute: typeof ConsoleWorkspaceProfessionalRouteImport
       parentRoute: typeof ConsoleWorkspaceRoute
     }
   }
 }
 
 interface ConsoleWorkspaceRouteChildren {
-  ConsoleWorkspaceHidekiRoute: typeof ConsoleWorkspaceHidekiRoute
-  ConsoleWorkspaceLinkRoute: typeof ConsoleWorkspaceLinkRoute
-  ConsoleWorkspaceTesteRoute: typeof ConsoleWorkspaceTesteRoute
+  ConsoleWorkspaceProfessionalRoute: typeof ConsoleWorkspaceProfessionalRoute
+  ConsoleWorkspaceSocialRoute: typeof ConsoleWorkspaceSocialRoute
 }
 
 const ConsoleWorkspaceRouteChildren: ConsoleWorkspaceRouteChildren = {
-  ConsoleWorkspaceHidekiRoute: ConsoleWorkspaceHidekiRoute,
-  ConsoleWorkspaceLinkRoute: ConsoleWorkspaceLinkRoute,
-  ConsoleWorkspaceTesteRoute: ConsoleWorkspaceTesteRoute,
+  ConsoleWorkspaceProfessionalRoute: ConsoleWorkspaceProfessionalRoute,
+  ConsoleWorkspaceSocialRoute: ConsoleWorkspaceSocialRoute,
 }
 
 const ConsoleWorkspaceRouteWithChildren =
