@@ -13,7 +13,10 @@ import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConsoleWorkspaceRouteImport } from './routes/console/workspace'
 import { Route as ConsoleWorkspaceSocialRouteImport } from './routes/console/workspace/social'
-import { Route as ConsoleWorkspaceProfessionalRouteImport } from './routes/console/workspace/professional'
+import { Route as ConsoleWorkspacePersonalRouteImport } from './routes/console/workspace/personal'
+import { Route as ConsoleWorkspaceJobRouteImport } from './routes/console/workspace/job'
+import { Route as ConsoleWorkspaceSocialWorkspaceIdRouteImport } from './routes/console/workspace/social/$workspaceId'
+import { Route as ConsoleWorkspaceJobWorkspaceIdRouteImport } from './routes/console/workspace/job/$workspaceId'
 
 const ConsoleRoute = ConsoleRouteImport.update({
   id: '/console',
@@ -35,34 +38,60 @@ const ConsoleWorkspaceSocialRoute = ConsoleWorkspaceSocialRouteImport.update({
   path: '/social',
   getParentRoute: () => ConsoleWorkspaceRoute,
 } as any)
-const ConsoleWorkspaceProfessionalRoute =
-  ConsoleWorkspaceProfessionalRouteImport.update({
-    id: '/professional',
-    path: '/professional',
+const ConsoleWorkspacePersonalRoute =
+  ConsoleWorkspacePersonalRouteImport.update({
+    id: '/personal',
+    path: '/personal',
     getParentRoute: () => ConsoleWorkspaceRoute,
+  } as any)
+const ConsoleWorkspaceJobRoute = ConsoleWorkspaceJobRouteImport.update({
+  id: '/job',
+  path: '/job',
+  getParentRoute: () => ConsoleWorkspaceRoute,
+} as any)
+const ConsoleWorkspaceSocialWorkspaceIdRoute =
+  ConsoleWorkspaceSocialWorkspaceIdRouteImport.update({
+    id: '/$workspaceId',
+    path: '/$workspaceId',
+    getParentRoute: () => ConsoleWorkspaceSocialRoute,
+  } as any)
+const ConsoleWorkspaceJobWorkspaceIdRoute =
+  ConsoleWorkspaceJobWorkspaceIdRouteImport.update({
+    id: '/$workspaceId',
+    path: '/$workspaceId',
+    getParentRoute: () => ConsoleWorkspaceJobRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/console': typeof ConsoleRouteWithChildren
   '/console/workspace': typeof ConsoleWorkspaceRouteWithChildren
-  '/console/workspace/professional': typeof ConsoleWorkspaceProfessionalRoute
-  '/console/workspace/social': typeof ConsoleWorkspaceSocialRoute
+  '/console/workspace/job': typeof ConsoleWorkspaceJobRouteWithChildren
+  '/console/workspace/personal': typeof ConsoleWorkspacePersonalRoute
+  '/console/workspace/social': typeof ConsoleWorkspaceSocialRouteWithChildren
+  '/console/workspace/job/$workspaceId': typeof ConsoleWorkspaceJobWorkspaceIdRoute
+  '/console/workspace/social/$workspaceId': typeof ConsoleWorkspaceSocialWorkspaceIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/console': typeof ConsoleRouteWithChildren
   '/console/workspace': typeof ConsoleWorkspaceRouteWithChildren
-  '/console/workspace/professional': typeof ConsoleWorkspaceProfessionalRoute
-  '/console/workspace/social': typeof ConsoleWorkspaceSocialRoute
+  '/console/workspace/job': typeof ConsoleWorkspaceJobRouteWithChildren
+  '/console/workspace/personal': typeof ConsoleWorkspacePersonalRoute
+  '/console/workspace/social': typeof ConsoleWorkspaceSocialRouteWithChildren
+  '/console/workspace/job/$workspaceId': typeof ConsoleWorkspaceJobWorkspaceIdRoute
+  '/console/workspace/social/$workspaceId': typeof ConsoleWorkspaceSocialWorkspaceIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/console': typeof ConsoleRouteWithChildren
   '/console/workspace': typeof ConsoleWorkspaceRouteWithChildren
-  '/console/workspace/professional': typeof ConsoleWorkspaceProfessionalRoute
-  '/console/workspace/social': typeof ConsoleWorkspaceSocialRoute
+  '/console/workspace/job': typeof ConsoleWorkspaceJobRouteWithChildren
+  '/console/workspace/personal': typeof ConsoleWorkspacePersonalRoute
+  '/console/workspace/social': typeof ConsoleWorkspaceSocialRouteWithChildren
+  '/console/workspace/job/$workspaceId': typeof ConsoleWorkspaceJobWorkspaceIdRoute
+  '/console/workspace/social/$workspaceId': typeof ConsoleWorkspaceSocialWorkspaceIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -70,22 +99,31 @@ export interface FileRouteTypes {
     | '/'
     | '/console'
     | '/console/workspace'
-    | '/console/workspace/professional'
+    | '/console/workspace/job'
+    | '/console/workspace/personal'
     | '/console/workspace/social'
+    | '/console/workspace/job/$workspaceId'
+    | '/console/workspace/social/$workspaceId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/console'
     | '/console/workspace'
-    | '/console/workspace/professional'
+    | '/console/workspace/job'
+    | '/console/workspace/personal'
     | '/console/workspace/social'
+    | '/console/workspace/job/$workspaceId'
+    | '/console/workspace/social/$workspaceId'
   id:
     | '__root__'
     | '/'
     | '/console'
     | '/console/workspace'
-    | '/console/workspace/professional'
+    | '/console/workspace/job'
+    | '/console/workspace/personal'
     | '/console/workspace/social'
+    | '/console/workspace/job/$workspaceId'
+    | '/console/workspace/social/$workspaceId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -123,24 +161,73 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleWorkspaceSocialRouteImport
       parentRoute: typeof ConsoleWorkspaceRoute
     }
-    '/console/workspace/professional': {
-      id: '/console/workspace/professional'
-      path: '/professional'
-      fullPath: '/console/workspace/professional'
-      preLoaderRoute: typeof ConsoleWorkspaceProfessionalRouteImport
+    '/console/workspace/personal': {
+      id: '/console/workspace/personal'
+      path: '/personal'
+      fullPath: '/console/workspace/personal'
+      preLoaderRoute: typeof ConsoleWorkspacePersonalRouteImport
       parentRoute: typeof ConsoleWorkspaceRoute
+    }
+    '/console/workspace/job': {
+      id: '/console/workspace/job'
+      path: '/job'
+      fullPath: '/console/workspace/job'
+      preLoaderRoute: typeof ConsoleWorkspaceJobRouteImport
+      parentRoute: typeof ConsoleWorkspaceRoute
+    }
+    '/console/workspace/social/$workspaceId': {
+      id: '/console/workspace/social/$workspaceId'
+      path: '/$workspaceId'
+      fullPath: '/console/workspace/social/$workspaceId'
+      preLoaderRoute: typeof ConsoleWorkspaceSocialWorkspaceIdRouteImport
+      parentRoute: typeof ConsoleWorkspaceSocialRoute
+    }
+    '/console/workspace/job/$workspaceId': {
+      id: '/console/workspace/job/$workspaceId'
+      path: '/$workspaceId'
+      fullPath: '/console/workspace/job/$workspaceId'
+      preLoaderRoute: typeof ConsoleWorkspaceJobWorkspaceIdRouteImport
+      parentRoute: typeof ConsoleWorkspaceJobRoute
     }
   }
 }
 
+interface ConsoleWorkspaceJobRouteChildren {
+  ConsoleWorkspaceJobWorkspaceIdRoute: typeof ConsoleWorkspaceJobWorkspaceIdRoute
+}
+
+const ConsoleWorkspaceJobRouteChildren: ConsoleWorkspaceJobRouteChildren = {
+  ConsoleWorkspaceJobWorkspaceIdRoute: ConsoleWorkspaceJobWorkspaceIdRoute,
+}
+
+const ConsoleWorkspaceJobRouteWithChildren =
+  ConsoleWorkspaceJobRoute._addFileChildren(ConsoleWorkspaceJobRouteChildren)
+
+interface ConsoleWorkspaceSocialRouteChildren {
+  ConsoleWorkspaceSocialWorkspaceIdRoute: typeof ConsoleWorkspaceSocialWorkspaceIdRoute
+}
+
+const ConsoleWorkspaceSocialRouteChildren: ConsoleWorkspaceSocialRouteChildren =
+  {
+    ConsoleWorkspaceSocialWorkspaceIdRoute:
+      ConsoleWorkspaceSocialWorkspaceIdRoute,
+  }
+
+const ConsoleWorkspaceSocialRouteWithChildren =
+  ConsoleWorkspaceSocialRoute._addFileChildren(
+    ConsoleWorkspaceSocialRouteChildren,
+  )
+
 interface ConsoleWorkspaceRouteChildren {
-  ConsoleWorkspaceProfessionalRoute: typeof ConsoleWorkspaceProfessionalRoute
-  ConsoleWorkspaceSocialRoute: typeof ConsoleWorkspaceSocialRoute
+  ConsoleWorkspaceJobRoute: typeof ConsoleWorkspaceJobRouteWithChildren
+  ConsoleWorkspacePersonalRoute: typeof ConsoleWorkspacePersonalRoute
+  ConsoleWorkspaceSocialRoute: typeof ConsoleWorkspaceSocialRouteWithChildren
 }
 
 const ConsoleWorkspaceRouteChildren: ConsoleWorkspaceRouteChildren = {
-  ConsoleWorkspaceProfessionalRoute: ConsoleWorkspaceProfessionalRoute,
-  ConsoleWorkspaceSocialRoute: ConsoleWorkspaceSocialRoute,
+  ConsoleWorkspaceJobRoute: ConsoleWorkspaceJobRouteWithChildren,
+  ConsoleWorkspacePersonalRoute: ConsoleWorkspacePersonalRoute,
+  ConsoleWorkspaceSocialRoute: ConsoleWorkspaceSocialRouteWithChildren,
 }
 
 const ConsoleWorkspaceRouteWithChildren =

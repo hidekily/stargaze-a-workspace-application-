@@ -4,7 +4,6 @@ import { Outlet, Link } from '@tanstack/react-router'
 import { Session } from '@/types/session'
 import { useEffect, useState } from 'react'
 import { authClient } from '@/lib/auth-client'
-import { Personal } from './workspace/personal'
 
 export const Route = createFileRoute('/console/workspace')({
   component: RouteComponent,
@@ -28,26 +27,27 @@ function RouteComponent() {
         <div className='w-full h-full relative bg-black'>
             <StarField />
 
-            <div className='relative w-full h-full flex flex-col items-center'>
-              <section className='w-[80%] h-[10%] flex flex-row items-center gap-6'>
-                <div className='w-[30%] customfont text-[#FFB347] flex justify-center'>
-                  <span>{session?.user.name + "👻"}</span>
-                </div>
-                <div className='w-[70%] flex flex-row justify-center gap-7 text-[#FF6B4A]'>
-                  <button onClick={() => setTab("personal")} className={`${tab === 'personal' ? 'text-lg' : 'text-md'} duration-400 transition-all`}>
-                    Personal
-                  </button> |
-                  <Link to='/console/workspace/social' onClick={() => setTab("social")} className={`${tab === "social" ? 'text-lg' : 'text-md'} duration-400 transition-all`}>
-                    Social
-                  </Link> |
-                  <Link to='/console/workspace/professional' onClick={() => setTab('professional')} className={`${tab === 'professional' ? 'text-lg ': 'text-md'} duration-400 transition-all`}>
-                    Professional
-                  </Link>
-                </div>
-              </section>
-              {/* fim da navbar e comeco do outlet */}
-              <section>
-                {tab === 'personal' ? <Personal /> : <Outlet />}
+            <div className='relative w-full h-full flex flex-col md:flex-row items-center'>
+              <section className='h-[8%] md:h-full w-full md:w-[7%] bg-zinc-800 flex flex-row md:flex-col'>
+                <section className='w-[80%] md:w-full h-full md:h-[80%] flex flex-row md:flex-col items-center gap-8 text-[#7BA3FF]'>
+                    <div className='border-1 rounded-full h-full w-[20%] flex flex-col justify-center items-center lg:mt-5 md:h-[15%] md:w-[80%]'>
+                      <span className='personal'/>
+                      <Link to="/console/workspace/personal" className='hidden md:block'>personal</Link>
+                    </div>
+                    <div className='border-1 rounded-full h-full w-[20%] flex flex-col justify-center items-center md:h-[15%] md:w-[80%]'>
+                      <span className='professional'/>
+                      <Link to="/console/workspace/job" className='hidden md:block'>job</Link>
+                    </div>
+                    <div className='border-1 rounded-full h-full w-[20%] flex flex-col justify-center items-center md:h-[15%] md:w-[80%]'>
+                      <span className='social'/>
+                      <Link to="/console/workspace/social" className='hidden md:block'>social</Link>
+                    </div>
+                </section>
+
+                <section className='w-[20%] md:w-full bg-zinc-500 h-full md:h-[20%] flex flex-row md:flex-col justify-center items-center gap-4'>
+                  <span className='profile'/>
+                  <span className='hidden md:block md:text-xs'>profile</span>
+                </section>
               </section>
             </div>
         </div>
