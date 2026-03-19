@@ -28,25 +28,32 @@ function RouteComponent() {
             <StarField />
 
             <div className='relative w-full h-full flex flex-col md:flex-row items-center'>
-              <section className='h-[8%] md:h-full w-full md:w-[7%] bg-zinc-800 flex flex-row md:flex-col'>
-                <section className='w-[80%] md:w-full h-full md:h-[80%] flex flex-row md:flex-col items-center gap-8 text-[#7BA3FF]'>
-                    <div className='border-1 rounded-full h-full w-[20%] flex flex-col justify-center items-center lg:mt-5 md:h-[15%] md:w-[80%]'>
+              <section className='h-[8%] md:h-full w-full md:w-[7%] bg-zinc-800 flex flex-row md:flex-col opacity-90'>
+                <section className='w-[80%] md:w-full h-full md:h-[80%] flex flex-row md:flex-col items-center gap-8'>
+                  {/*  */}
+                    <Link to='/console/workspace/personal' 
+                      className='border-1 rounded-full h-full w-[20%] flex flex-col justify-center items-center lg:mt-5 md:h-[15%] md:w-[80%] text-[#FF6B4A]'>
                       <span className='personal'/>
-                      <Link to="/console/workspace/personal" className='hidden md:block'>personal</Link>
-                    </div>
-                    <div className='border-1 rounded-full h-full w-[20%] flex flex-col justify-center items-center md:h-[15%] md:w-[80%]'>
+                      <span className='hidden md:block'>personal</span>
+                    </Link>
+
+                    <Link to='/console/workspace/job' 
+                      className='border-1 rounded-full h-full w-[20%] flex flex-col justify-center items-center md:h-[15%] md:w-[80%] text-[#4A6BFF]'>
                       <span className='professional'/>
-                      <Link to="/console/workspace/job" className='hidden md:block'>job</Link>
-                    </div>
-                    <div className='border-1 rounded-full h-full w-[20%] flex flex-col justify-center items-center md:h-[15%] md:w-[80%]'>
+                      <span className='hidden md:block'>work</span>
+                    </Link>
+
+                    <Link to='/console/workspace/social' 
+                      className='border-1 rounded-full h-full w-[20%] flex flex-col justify-center items-center md:h-[15%] md:w-[80%] text-[#FFD666]'>
                       <span className='social'/>
-                      <Link to="/console/workspace/social" className='hidden md:block'>social</Link>
-                    </div>
+                      <span className='hidden md:block'>friends</span>
+                    </Link>
+                  {/*  */}
                 </section>
 
-                <section className='w-[20%] md:w-full bg-zinc-500 h-full md:h-[20%] flex flex-row md:flex-col justify-center items-center gap-4'>
+                <section className='w-[20%] md:w-full h-full md:h-[20%] flex flex-row md:flex-col justify-center items-center gap-4'>
                   <span className='profile'/>
-                  <span className='hidden md:block md:text-xs'>profile</span>
+                  <span className='hidden md:block md:text-xs'>settings</span>
                 </section>
               </section>
             </div>
