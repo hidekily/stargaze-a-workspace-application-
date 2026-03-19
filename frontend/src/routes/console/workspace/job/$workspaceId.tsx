@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute(
   '/console/workspace/job/$workspaceId',
@@ -7,5 +7,13 @@ export const Route = createFileRoute(
 })
 
 function RouteComponent() {
-  return <div>Hello "/console/workspace/professional/$professional"!</div>
+  return(
+    <>
+    <div>
+
+    </div>
+
+    <Outlet />
+    </>
+  )
 }
