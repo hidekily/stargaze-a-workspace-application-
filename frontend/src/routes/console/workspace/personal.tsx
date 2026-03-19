@@ -1,3 +1,4 @@
+import { TabBar } from '@/components/featuresTabBar'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/console/workspace/personal')({
@@ -7,10 +8,10 @@ export const Route = createFileRoute('/console/workspace/personal')({
 function RouteComponent() {
     return(
     <>
-      <div>
-      
-      </div>
-      
+      <TabBar>
+    
+      </TabBar>
+    
       <Outlet />
     </>
   )

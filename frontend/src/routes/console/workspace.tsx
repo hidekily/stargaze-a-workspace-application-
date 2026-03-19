@@ -28,7 +28,7 @@ function RouteComponent() {
             <StarField />
 
             <div className='relative w-full h-full flex flex-row md:flex-row items-center'>
-              <section className='h-[8%] md:h-full w-full md:w-[7%] bg-zinc-800 flex flex-row md:flex-col opacity-90'>
+              <section className='h-[8%] md:h-full w-full md:w-[7%] bg-[#0A0A0F] flex flex-row md:flex-col opacity-90'>
                 <section className='w-[80%] md:w-full h-full md:h-[80%] flex flex-row md:flex-col items-center gap-8'>
                   {/*  */}
                     <Link to='/console/workspace/personal' 

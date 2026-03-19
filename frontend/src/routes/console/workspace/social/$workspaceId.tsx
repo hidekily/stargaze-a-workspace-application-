@@ -8,9 +8,7 @@ function RouteComponent() {
   return(
     <>
       <div>
-    
+
       </div>
-    
-      <Outlet />
     </>
   )}

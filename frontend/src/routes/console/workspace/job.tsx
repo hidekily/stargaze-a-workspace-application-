@@ -1,9 +1,18 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { TabBar } from '@/components/featuresTabBar'
 
 export const Route = createFileRoute('/console/workspace/job')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  return <div className='bg-teal-900 w-90 h-90'>Hello '/console/workspace/hideki'!</div>
+  return(
+    <>
+      <TabBar>
+
+      </TabBar>
+
+      <Outlet />
+    </>
+  )
 }
