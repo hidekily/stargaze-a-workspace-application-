@@ -11,7 +11,6 @@ export const Route = createFileRoute('/console/workspace')({
 
 function RouteComponent() {
   const [session, setSession] = useState<Session | null>()
-  const [tab, setTab] = useState<"personal" | "professional" | "social">("personal")
 
   async function fetchSesssion(){
     const {data} = await authClient.getSession();
@@ -27,7 +26,7 @@ function RouteComponent() {
         <div className='w-full h-full relative bg-black'>
             <StarField />
 
-            <div className='relative w-full h-full flex flex-row md:flex-row items-center'>
+            <div className='relative w-full h-full flex flex-row md:flex-row'>
               <section className='h-[8%] md:h-full w-full md:w-[7%] bg-[#0A0A0F] flex flex-row md:flex-col opacity-90'>
                 <section className='w-[80%] md:w-full h-full md:h-[80%] flex flex-row md:flex-col items-center gap-8'>
                   {/*  */}
@@ -51,9 +50,9 @@ function RouteComponent() {
                   {/*  */}
                 </section>
 
-                <section className='w-[20%] md:w-full h-full md:h-[20%] flex flex-row md:flex-col justify-center items-center gap-4'>
+                <section className='w-[20%] md:w-full h-full md:h-[20%] flex flex-row md:flex-col justify-center items-center gap-4 text-[#FFD666]'>
                   <span className='profile'/>
-                  <span className='hidden md:block md:text-xs'>settings</span>
+                  <span className='hidden md:block md:text-xs'>{session?.user.name + "🦥 "}</span>
                 </section>
               </section>
 
