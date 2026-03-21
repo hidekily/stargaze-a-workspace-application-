@@ -3,8 +3,7 @@ import { FastifyInstance } from 'fastify';
 import { FastifyReply } from 'fastify';
 import { auth } from "shared/auth";
 import {db} from "shared/db"
-import { request } from 'http';
-import { workspace } from "shared/db/schema";
+import { workspace, workspaceInvite, workspaceMember } from "shared/db/schema";
 
 
 export async function appFastify(app :FastifyInstance, request: FastifyReply){
@@ -14,7 +13,9 @@ export async function appFastify(app :FastifyInstance, request: FastifyReply){
         memberLimit: z.number(),
         img: z.string().optional(),
         dayLimit: z.number().optional(),
-        userInvLimit: z.number().optional()
+        userInvLimit: z.number().optional(),
+        useCount: z.number().optional(),
+        createdAt: z.date()
     })
 
     app.post('/', async(request, reply) =>{
@@ -22,9 +23,13 @@ export async function appFastify(app :FastifyInstance, request: FastifyReply){
             headers: request.headers
         }) 
 
+        if(!session){
+            return reply.status(400).send({error:'session not found'})
+        }
+
         const workspaceId = crypto.randomUUID()
         const inviteCode = crypto.randomUUID()
-        const userId = session?.user.id
+        const userId = session?.user.id ?? null
         const role = "admin"
 
         const response = await userSendsSchema.safeParse(request.body)
@@ -33,7 +38,7 @@ export async function appFastify(app :FastifyInstance, request: FastifyReply){
             return reply.status(400).send({error: "data not found"})
         }
 
-        const {workspaceName, type, memberLimit, img, dayLimit, userInvLimit} = response.data
+        const {workspaceName, type, memberLimit, img, dayLimit, userInvLimit, useCount, createdAt} = response.data
 
         const [newWorkspace] = await db.insert(workspace).values({
             name: workspaceName,
@@ -42,7 +47,22 @@ export async function appFastify(app :FastifyInstance, request: FastifyReply){
             id: workspaceId
         }).returning()
 
-        return reply.status(201).send(newWorkspace)
+        const [newInvite] = await db.insert(workspaceInvite).values({
+            inviteCode: inviteCode,
+            workspaceId: newWorkspace.id,
+            dayLimit: dayLimit,
+            userInvLimit: userInvLimit,
+            useCount: useCount,
+            createdAt: createdAt
+        }).returning()
+
+        const [newUser] = await db.insert(workspaceMember).values({
+            userId: userId,
+            workspaceId: newWorkspace.id,
+            role: role,
+        }).returning()
+
+        return reply.status(201).send({data: {newWorkspace, newInvite, newUser}, message: 'data was created'})
     })
 
 
