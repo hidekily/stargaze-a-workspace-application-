@@ -3,7 +3,8 @@ import { FastifyInstance } from 'fastify';
 import { FastifyReply } from 'fastify';
 import { auth } from "shared/auth";
 import {db} from "shared/db"
-import { workspace, workspaceInvite, workspaceMember } from "shared/db/schema";
+import { user, workspace, workspaceInvite, workspaceMember } from "shared/db/schema";
+import { and, eq} from "drizzle-orm";
 
 
 export async function appFastify(app :FastifyInstance, request: FastifyReply){
@@ -29,7 +30,7 @@ export async function appFastify(app :FastifyInstance, request: FastifyReply){
 
         const workspaceId = crypto.randomUUID()
         const inviteCode = crypto.randomUUID()
-        const userId = session?.user.id ?? null
+        const userId = session.user.id
         const role = "admin"
 
         const response = await userSendsSchema.safeParse(request.body)
@@ -67,8 +68,26 @@ export async function appFastify(app :FastifyInstance, request: FastifyReply){
 
 
 
-    app.get('/', async() =>{
+    app.get('/by-ids', async(request, reply) =>{
+        const session = await auth.api.getSession({
+            headers: request.headers
+        }) 
 
+        if(!session){
+            return reply.status(400).send({error:"erro"})
+        }
+        const {type} = request.query as {type: "social" | "professional"}
+
+        const workspaces = await db
+        .select()
+        .from(workspace)
+        .innerJoin(workspaceMember, eq(workspace.id , workspaceMember.workspaceId))
+        .where(and(
+            eq(workspace.type, type),
+            eq(workspaceMember.userId , session.user.id)
+        ))
+
+        return reply.send(workspaces)
     })
 
     app.patch('/', async() =>{
