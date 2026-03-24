@@ -90,7 +90,48 @@ export async function appFastify(app :FastifyInstance, request: FastifyReply){
         return reply.send(workspaces)
     })
 
-    app.patch('/', async() =>{
+    app.patch('/:id', async(request, reply) =>{
+        const {id} = request.params as {id: string}
 
+        const schema = z.object({
+            workspaceName: z.string().optional(),
+            memberLimit: z.number().optional(),
+            img: z.string().optional(),
+            dayLimit: z.number().optional(),
+            userInvLimit: z.number().optional(),
+            role: z.enum(["admin", "manager", "member"]).optional()
+        })
+
+        const schemaResult = schema.safeParse(request.body)
+
+        if(!schemaResult.success){
+            return reply.status(400).send({error: ""})
+        }
+
+        const {workspaceName, memberLimit, img, dayLimit, userInvLimit, role} = schemaResult.data
+
+        if(workspaceName || memberLimit || img){ 
+            const resWorkspace = await db
+            .update(workspace)
+            .set({name: schemaResult.data.workspaceName, memberLimit, img})
+            .where(eq(workspace.id, String(id)))
+        }
+
+        if(role){
+            const resWorkspaceMember = await db 
+            .update(workspaceMember)
+            .set({role})
+            .where(eq(workspaceMember.workspaceId, String(id)))
+        }
+        
+        if(dayLimit ||  userInvLimit){ //inv
+            const resInv = await db
+            .update(workspaceInvite)
+            .set({dayLimit, userInvLimit})
+            .where(eq(workspaceInvite.workspaceId, String(id)))
+        }
+
+
+        return reply.status(201).send()
     })
 }

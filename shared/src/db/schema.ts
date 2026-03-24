@@ -88,6 +88,7 @@ export const workspaceRole = pgEnum("workspace_role", ["admin", "manager", "memb
 export const workspace = pgTable("workspace", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
+  img: text("img"),
   type: workspaceType("type").notNull(),
   memberLimit: integer("member_limit").default(10).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
