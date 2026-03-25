@@ -2,6 +2,7 @@ import 'dotenv/config'
 import Fastify from 'fastify'
 import rateLimit from '@fastify/rate-limit'
 import cors from '@fastify/cors'
+import { workspaceAPI } from './routes/workspace'
 import {auth} from "shared/auth"
 
 const port = Number(process.env.PORT) || 3001
@@ -26,6 +27,9 @@ app.register(rateLimit, {
   timeWindow: '1 minute'
 })
 
+app.register(workspaceAPI, {
+  prefix: "/api/workspaces"
+})
 
 app.all('/api/auth/*', 
   {config: {

@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { StarField } from '@/components/Starfield'
 import { Outlet, Link } from '@tanstack/react-router'
 import { Session } from '@/types/session'
@@ -11,6 +11,7 @@ export const Route = createFileRoute('/console/workspace')({
 
 function RouteComponent() {
   const [session, setSession] = useState<Session | null>()
+  const navigate = useNavigate()
 
   async function fetchSesssion(){
     const {data} = await authClient.getSession();
@@ -19,6 +20,7 @@ function RouteComponent() {
 
   useEffect(() =>{
     fetchSesssion()
+    navigate({to: '/console/workspace/personal'})
   }, [])
 
   return (

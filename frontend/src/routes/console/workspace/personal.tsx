@@ -9,7 +9,7 @@ function RouteComponent() {
     return(
     <>
       <TabBar>
-    
+        <div></div>
       </TabBar>
     
       <Outlet />

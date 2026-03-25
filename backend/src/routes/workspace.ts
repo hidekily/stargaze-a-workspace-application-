@@ -1,13 +1,12 @@
 import {z} from "zod"
-import { FastifyInstance } from 'fastify';
-import { FastifyReply } from 'fastify';
+import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import { auth } from "shared/auth";
 import {db} from "shared/db"
-import { user, workspace, workspaceInvite, workspaceMember } from "shared/db/schema";
+import {workspace, workspaceInvite, workspaceMember } from "shared/db/schema";
 import { and, eq} from "drizzle-orm";
 
 
-export async function appFastify(app :FastifyInstance, request: FastifyReply){
+export async function workspaceAPI(app :FastifyInstance, OPTIONS: FastifyPluginOptions){
     const userSendsSchema = z.object({
         workspaceName: z.string(),
         type: z.enum(["social", 'professional']),
