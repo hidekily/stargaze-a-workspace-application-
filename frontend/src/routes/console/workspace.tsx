@@ -20,7 +20,7 @@ function RouteComponent() {
 
   useEffect(() =>{
     fetchSesssion()
-    navigate({to: '/console/workspace/personal'})
+    // navigate({to: '/console/workspace/personal'})
   }, [])
 
   return (
