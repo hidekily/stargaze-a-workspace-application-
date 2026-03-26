@@ -3,13 +3,18 @@ import { TabBar } from '@/components/featuresTabBar'
 import { API_URL } from '@/lib/api'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
+import { useState } from 'react'
+import { Modal } from '@/components/modal'
 
 export const Route = createFileRoute('/console/workspace/social')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  
+  const [workspaceName, setWorkspaceName] = useState<string>()    
+  const [memberLimit, setMemberLimit] = useState<number>()
+  const [img, setImg] = useState<string>()
+  const [modal, setModal] = useState<boolean>(false)
 
   const queryClient = useQueryClient()
 
@@ -32,6 +37,7 @@ function RouteComponent() {
   })
 
   const handleWorkspaceCreateMutation = useMutation({
+    
     mutationFn: async() => {
       await fetch(`${API_URL}/api/workspaces`, {
         method: "POST",
@@ -39,7 +45,14 @@ function RouteComponent() {
          "Content-Type": "application/json"
         },
         credentials: "include",
-        body: JSON.stringify({workspaceName: })
+        body: JSON.stringify(
+          {
+            workspaceName: workspaceName, 
+            memberLimit: memberLimit,
+            img: img, 
+            createdAt: new Date(),
+            type: "social"
+          })
       })
     },
     onSuccess: () =>{
@@ -51,11 +64,25 @@ function RouteComponent() {
 
   if(isLoading) return <div>calma pae ta carregando</div>
   return(
+    
     <>
+      {(modal === true) && (
+        <Modal 
+          header=""
+          title=''
+          subtitle=''
+          buttons={[
+            {text:"teste", onclick: () => {setModal(false), handleWorkspaceCreateMutation.mutate()}, colorVariant: "add"}
+          ]}
+        >
+          
+        </Modal>
+      )}
+
       <TabBar>
         <button 
           className='bg-white h-10 w-[80%] rounded-full mt-2' 
-          onClick={(e) => {e.preventDefault(), handleWorkspaceCreateMutation.mutate()}}>
+          onClick={(e) => {e.preventDefault(), setModal(true)}}>
             +
         </button>
 
