@@ -29,7 +29,6 @@
 .personal{      background-image: url('/personal.png');}
 .social{        background-image: url('/social.png');}
 .professional{  background-image: url('/professional.png');}
-.profile{       background-image: url('/profile.png');}
 
 .customfont{
   font-family: "Noto Sans JP", sans-serif;
@@ -43,4 +42,8 @@
   font-optical-sizing: auto;
   font-weight: 40;
   font-style: normal;
+}
+
+.input-modal{
+  @apply rounded-full w-[80%] h-[20%] bg-zinc-600 text-white
 }

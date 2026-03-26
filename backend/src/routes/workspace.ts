@@ -15,7 +15,6 @@ export async function workspaceAPI(app :FastifyInstance, OPTIONS: FastifyPluginO
         dayLimit: z.number().optional(),
         userInvLimit: z.number().optional(),
         useCount: z.number().optional(),
-        createdAt: z.date()
     })
 
     app.post('/', async(request, reply) =>{
@@ -38,7 +37,7 @@ export async function workspaceAPI(app :FastifyInstance, OPTIONS: FastifyPluginO
             return reply.status(400).send({error: "data not found"})
         }
 
-        const {workspaceName, type, memberLimit, img, dayLimit, userInvLimit, useCount, createdAt} = response.data
+        const {workspaceName, type, memberLimit, img, dayLimit, userInvLimit, useCount} = response.data
 
         const [newWorkspace] = await db.insert(workspace).values({
             name: workspaceName,
@@ -53,7 +52,7 @@ export async function workspaceAPI(app :FastifyInstance, OPTIONS: FastifyPluginO
             dayLimit: dayLimit,
             userInvLimit: userInvLimit,
             useCount: useCount,
-            createdAt: createdAt
+            createdAt: new Date()
         }).returning()
 
         const [newUser] = await db.insert(workspaceMember).values({

@@ -11,8 +11,8 @@ export const Route = createFileRoute('/console/workspace/social')({
 })
 
 function RouteComponent() {
-  const [workspaceName, setWorkspaceName] = useState<string>()    
-  const [memberLimit, setMemberLimit] = useState<number>()
+  const [workspaceName, setWorkspaceName] = useState<string>("")    
+  const [memberLimit, setMemberLimit] = useState<number>(0)
   const [img, setImg] = useState<string>()
   const [modal, setModal] = useState<boolean>(false)
 
@@ -39,6 +39,14 @@ function RouteComponent() {
   const handleWorkspaceCreateMutation = useMutation({
     
     mutationFn: async() => {
+        const body = {
+    workspaceName: workspaceName, 
+    memberLimit: memberLimit,
+    img: img, 
+    createdAt: new Date(),
+    type: "social"
+  }
+  console.log(body)
       await fetch(`${API_URL}/api/workspaces`, {
         method: "POST",
         headers: {
@@ -52,7 +60,7 @@ function RouteComponent() {
             img: img, 
             createdAt: new Date(),
             type: "social"
-          })
+          }),
       })
     },
     onSuccess: () =>{
@@ -68,14 +76,16 @@ function RouteComponent() {
     <>
       {(modal === true) && (
         <Modal 
-          header=""
-          title=''
-          subtitle=''
+          header="🦦"
+          title='adicione um grupo'
+          subtitle='teste dos D'
           buttons={[
-            {text:"teste", onclick: () => {setModal(false), handleWorkspaceCreateMutation.mutate()}, colorVariant: "add"}
+            {text:"Criar", onclick: () => {setModal(false), handleWorkspaceCreateMutation.mutate()}, colorVariant: "add"}
           ]}
         >
-          
+          <input className='input-modal' placeholder='Escolha o nome do grupo' type="text" value={workspaceName} onChange={(e) => setWorkspaceName(e.target.value)}/>
+          <input className='input-modal' placeholder='Limite de membros' type="number" value={memberLimit} onChange={(e) => setMemberLimit(e.target.valueAsNumber)}/>
+          <input type="file" disabled placeholder="em breve..." />       
         </Modal>
       )}
 
