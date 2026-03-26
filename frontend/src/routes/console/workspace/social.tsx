@@ -88,7 +88,14 @@ function RouteComponent() {
         </button>
 
         {data.map((index: workspaceSchema) =>(
-          <Link to="/console/workspace/social/$workspaceId" key={index.workspace.id} params={{workspaceId: index.workspace.id}}></Link>
+          <Link 
+            to="/console/workspace/social/$workspaceId" 
+            key={index.workspace.id} 
+            params={{workspaceId: index.workspace.id}}
+            className='groups'
+          >
+            {index.workspace.name}
+          </Link>
         ))}
       </TabBar>
 
