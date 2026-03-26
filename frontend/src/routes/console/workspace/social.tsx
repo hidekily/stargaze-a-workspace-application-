@@ -39,14 +39,6 @@ function RouteComponent() {
   const handleWorkspaceCreateMutation = useMutation({
     
     mutationFn: async() => {
-        const body = {
-    workspaceName: workspaceName, 
-    memberLimit: memberLimit,
-    img: img, 
-    createdAt: new Date(),
-    type: "social"
-  }
-  console.log(body)
       await fetch(`${API_URL}/api/workspaces`, {
         method: "POST",
         headers: {
@@ -58,7 +50,6 @@ function RouteComponent() {
             workspaceName: workspaceName, 
             memberLimit: memberLimit,
             img: img, 
-            createdAt: new Date(),
             type: "social"
           }),
       })
