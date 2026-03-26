@@ -64,8 +64,6 @@ export async function workspaceAPI(app :FastifyInstance, OPTIONS: FastifyPluginO
         return reply.status(201).send({data: {newWorkspace, newInvite, newUser}, message: 'data was created'})
     })
 
-
-
     app.get('/by-ids', async(request, reply) =>{
         const session = await auth.api.getSession({
             headers: request.headers
@@ -131,5 +129,23 @@ export async function workspaceAPI(app :FastifyInstance, OPTIONS: FastifyPluginO
 
 
         return reply.status(201).send()
+    })
+
+    app.delete('/:id', async(request, reply) =>{
+        const {id} = request.params as {id: string}
+
+        const idParamsSchema = z.object({
+            id: z.string().uuid()
+        })
+
+        const res = idParamsSchema.safeParse({id})
+
+        if(!res.success){
+            return reply.status(400).send({error:"erro ao identificar o workspace"})
+        }
+
+        await db.delete(workspace).where(eq(workspace.id, String(id))) 
+
+        return reply.status(201).send({data: res, message: "workspace deleted"})
     })
 }
