@@ -71,6 +71,7 @@ function RouteComponent() {
           title='adicione um grupo'
           subtitle='teste dos D'
           buttons={[
+            {text: 'cancel', onclick: () => {setModal(false), handleWorkspaceCreateMutation.reset()}, colorVariant: "danger"},
             {text:"Criar", onclick: () => {setModal(false), handleWorkspaceCreateMutation.mutate()}, colorVariant: "add"}
           ]}
         >

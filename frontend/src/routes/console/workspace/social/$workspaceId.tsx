@@ -10,19 +10,21 @@ function RouteComponent() {
   const {workspaceId} = useParams({from: "/console/workspace/social/$workspaceId"})
 
   const {data} = useQuery({
-    queryKey:["routeId"],
+    queryKey:["workspaceId", workspaceId],
     queryFn: async () => {
-      const res = await fetch(`${API_URL}/api/workspace/${workspaceId}`)
+      const res = await fetch(`${API_URL}/api/workspaces/${workspaceId}`, {
+        credentials: "include"
+      })
       return res.json()
     }
   })
+
+  console.log(data)
   
   return(
     <>
-      <div>
-        {data.map((index) => (
-          <div></div>
-        ))}
+      <div className='h-full w-full bg-white text-black flex justify-center items-center text-6xl'>
+        {data?.workspace.name}
       </div>
     </>
   )}

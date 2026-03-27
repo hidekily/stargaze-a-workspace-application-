@@ -64,6 +64,7 @@ export async function workspaceAPI(app :FastifyInstance, OPTIONS: FastifyPluginO
         return reply.status(201).send({data: {newWorkspace, newInvite, newUser}, message: 'data was created'})
     })
 
+    // esse get pega todos os workspaces
     app.get('/by-ids', async(request, reply) =>{
         const session = await auth.api.getSession({
             headers: request.headers
@@ -74,8 +75,7 @@ export async function workspaceAPI(app :FastifyInstance, OPTIONS: FastifyPluginO
         }
         const {type} = request.query as {type: "social" | "professional"}
 
-        const workspaces = await db
-        .select()
+        const workspaces = await db.select()
         .from(workspace)
         .innerJoin(workspaceMember, eq(workspace.id , workspaceMember.workspaceId))
         .where(and(
@@ -84,6 +84,28 @@ export async function workspaceAPI(app :FastifyInstance, OPTIONS: FastifyPluginO
         ))
 
         return reply.send(workspaces)
+    })
+
+    //esse get pega workspaces especificos e seus usuarios
+    app.get('/:id', async(request, reply) => {
+        const {id} = request.params as {id:string}
+
+        const idParamsSchema = z.object({
+            id: z.string().uuid()
+        })
+
+        const res = idParamsSchema.safeParse({id})
+
+        if(!res.success){
+            return reply.status(400).send({error:"erro ao achar o id"})
+        }
+
+        const [data] = await db.select() // aqui nos usamos o [] para pegar sempre 1 item do array ao inves do array em si
+        .from(workspace)
+        .innerJoin(workspaceMember, eq(workspace.id, workspaceMember.workspaceId))
+        .where(eq(workspace.id, id))
+
+        return reply.send(data)
     })
 
     app.patch('/:id', async(request, reply) =>{
