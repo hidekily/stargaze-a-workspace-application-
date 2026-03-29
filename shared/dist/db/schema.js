@@ -58,6 +58,7 @@ export const verification = pgTable("verification", {
 // aqui acaba o schema do better-auth
 // aqui comeca os schemas para as funcoes do workspace (sim eu gerei c IA n vou gastar 20min escrevendo schema)
 // pq a IA gera delete cascade? ☠️
+// era p ser cascade mesmo pqp 
 export const workspaceType = pgEnum("workspace_type", ["social", "professional"]);
 export const workspaceRole = pgEnum("workspace_role", ["admin", "manager", "member"]);
 export const workspace = pgTable("workspace", {
@@ -86,7 +87,7 @@ export const workspaceInvite = pgTable("workspace_invite", {
     inviteCode: text("invite_code").primaryKey(),
     workspaceId: text("workspace_id")
         .notNull()
-        .references(() => workspace.id, { onDelete: "restrict" }),
+        .references(() => workspace.id, { onDelete: "cascade" }),
     dayLimit: integer("day_limit"),
     userInvLimit: integer("user_inv_limit"),
     useCount: integer("use_count").default(0).notNull(),
