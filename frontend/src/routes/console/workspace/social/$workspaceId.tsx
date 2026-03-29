@@ -54,10 +54,18 @@ function RouteComponent() {
         />
       )}
 
-      <div className='h-full w-[100%] bg-[#ffc6a8] text-black flex flex-col text-6xl'>
-        <nav className='w-full h-[10%] bg-black flex flex-row'>
-          <button onClick={() => setModal(true)} className='w-20 h-10 bg-white rounded-full'></button>
+      <div className='h-full w-[70%] bg-[#0A0A0F]/80 text-black flex flex-col text-white'>
+        <nav className='w-full h-[10%] bg-zinc-900 flex flex-row items-center'>
+          <span className='ml-6'>{data.workspace.name}</span>
         </nav>
+
+        <section className='h-[80%] w-full bg-white'> {/* display da msg  e activities*/}
+
+        </section>
+
+        <section> {/* input da msg + enviar */}
+
+        </section>
       </div>
     </>
   )}

@@ -26,9 +26,7 @@
   height: 30px;
   width: 30px;
 }
-.personal{      background-image: url('/personal.png');}
-.social{        background-image: url('/social.png');}
-.professional{  background-image: url('/professional.png');}
+
 
 .customfont{
   font-family: "Noto Sans JP", sans-serif;

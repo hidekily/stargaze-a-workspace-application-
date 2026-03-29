@@ -80,7 +80,7 @@ function RouteComponent() {
 
       <TabBar>
         <button 
-          className='bg-white h-10 w-[80%] rounded-full mt-2' 
+          className='bg-zinc-800 h-10 w-[80%] rounded-full mt-8 border-dashed border-1 border-white text-white' 
           onClick={(e) => {e.preventDefault(), setModal(true)}}>
             +
         </button>
@@ -97,6 +97,6 @@ function RouteComponent() {
         ))}
       </TabBar>
 
-      <Outlet/>
+      <Outlet />
     </>
   )}

@@ -26,28 +26,23 @@ function RouteComponent() {
   return (
     <>
         <div className='w-full h-full relative bg-black'>
-            <StarField />
-
             <div className='relative w-full h-full flex flex-row md:flex-row'>
-              <section className='h-[8%] md:h-full w-full md:w-[7%] bg-[#0A0A0F] flex flex-row md:flex-col opacity-90'>
+              <section className='h-[8%] md:h-full w-full md:w-[10%] bg-[#0A0A0F] flex flex-row md:flex-col opacity-90'>
                 <section className='w-[80%] md:w-full h-full md:h-[80%] flex flex-row md:flex-col items-center gap-8'>
                   {/*  */}
                     <Link to='/console/workspace/personal' 
                       className='border-1 rounded-full h-full w-[20%] flex flex-col justify-center items-center lg:mt-5 md:h-[15%] md:w-[80%] text-[#FF6B4A]'>
-                      <span className='personal'/>
-                      <span className='hidden md:block'>personal</span>
+                      <span>P</span>
                     </Link>
 
                     <Link to='/console/workspace/job' 
                       className='border-1 rounded-full h-full w-[20%] flex flex-col justify-center items-center md:h-[15%] md:w-[80%] text-[#4A6BFF]'>
-                      <span className='professional'/>
-                      <span className='hidden md:block'>work</span>
+                      <span>W</span>
                     </Link>
 
                     <Link to='/console/workspace/social' 
                       className='border-1 rounded-full h-full w-[20%] flex flex-col justify-center items-center md:h-[15%] md:w-[80%] text-[#FFD666]'>
-                      <span className='social'/>
-                      <span className='hidden md:block'>friends</span>
+                      <span>S</span>
                     </Link>
                   {/*  */}
                 </section>
