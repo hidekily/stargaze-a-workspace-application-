@@ -45,9 +45,9 @@
 }
 
 .input-modal{
-  @apply rounded-full w-[80%] h-[20%] bg-zinc-600 text-white
+  @apply rounded-lg w-[80%] h-20 bg-zinc-600 text-white text-center
 }
 
 .groups{
-  @apply flex justify-center items-center bg-zinc-900 text-white rounded-full w-[80%] h-[10%] text-xs
+  @apply flex justify-center items-center bg-zinc-900 text-white rounded-lg w-[80%] h-[10%] text-xs
 }

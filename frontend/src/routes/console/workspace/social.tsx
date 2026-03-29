@@ -67,17 +67,14 @@ function RouteComponent() {
     <>
       {(modal === true) && (
         <Modal 
-          header="🦦"
-          title='adicione um grupo'
-          subtitle='teste dos D'
+          header="🦦 create your group"
           buttons={[
             {text: 'cancel', onclick: () => {setModal(false), handleWorkspaceCreateMutation.reset()}, colorVariant: "danger"},
             {text:"Criar", onclick: () => {setModal(false), handleWorkspaceCreateMutation.mutate()}, colorVariant: "add"}
           ]}
         >
           <input className='input-modal' placeholder='Escolha o nome do grupo' type="text" value={workspaceName} onChange={(e) => setWorkspaceName(e.target.value)}/>
-          <input className='input-modal' placeholder='Limite de membros' type="number" value={memberLimit} onChange={(e) => setMemberLimit(e.target.valueAsNumber)}/>
-          <input type="file" disabled placeholder="em breve..." />       
+          <input className='input-modal' placeholder='Limite de membros' type="number" value={memberLimit } onChange={(e) => setMemberLimit(e.target.valueAsNumber)}/>
         </Modal>
       )}
 

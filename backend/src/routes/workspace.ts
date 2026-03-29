@@ -8,7 +8,7 @@ import { and, eq} from "drizzle-orm";
 
 export async function workspaceAPI(app :FastifyInstance, OPTIONS: FastifyPluginOptions){
     const userSendsSchema = z.object({
-        workspaceName: z.string(),
+        workspaceName: z.string().min(1),
         type: z.enum(["social", 'professional']),
         memberLimit: z.number(),
         img: z.string().optional(),
