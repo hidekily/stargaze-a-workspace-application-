@@ -72,7 +72,7 @@ export function TabBar2({type, linkBase}: ComponentProps) {
           buttons={[
             {text: 'cancel', onclick: () => {setModal(false), handleWorkspaceCreateMutation.reset()}, colorVariant: "danger"},
             (workspaceName !== "" ? 
-                {text: "criar", onclick: () => {setModal(false), handleWorkspaceCreateMutation.mutate}, colorVariant: "add"} 
+                {text: "criar", onclick: () => {setModal(false), handleWorkspaceCreateMutation.mutate()}, colorVariant: "add"} 
                 : 
                 {text: "digite o nome", onclick: () => {}, colorVariant: "mid"} 
             )
