@@ -47,5 +47,5 @@
 }
 
 .groups{
-  @apply flex justify-center items-center bg-zinc-900 text-white rounded-lg w-[80%] h-[10%] text-xs
+  @apply flex justify-center items-center bg-zinc-900 text-white rounded-lg w-[70%] h-[10%] text-xs
 }
