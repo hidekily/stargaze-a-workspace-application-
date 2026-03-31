@@ -6,5 +6,5 @@ export const Route = createFileRoute('/console/workspace/job/$workspaceId')({
 })
 
 function RouteComponent() {
-    <TabBar3 navigateTo='/console/workspace/job' routeFrom='/console/workspace/job/$workspaceId' />
+    return <TabBar3 navigateTo='/console/workspace/job' routeFrom='/console/workspace/job/$workspaceId' />
 }
