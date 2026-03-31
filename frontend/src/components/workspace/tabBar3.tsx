@@ -1,17 +1,18 @@
 import { Modal } from '@/components/modal'
 import { API_URL } from '@/lib/api'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { createFileRoute, useNavigate, useParams } from '@tanstack/react-router'
+import { useNavigate, useParams } from '@tanstack/react-router'
 import { useState } from 'react'
 
-export const Route = createFileRoute('/console/workspace/job/$workspaceId')({
-  component: RouteComponent,
-})
+interface componentProps {
+    navigateTo: "/console/workspace/social" | "/console/workspace/job"
+    routeFrom: "/console/workspace/social/$workspaceId" | "/console/workspace/job/$workspaceId"
+}
 
-function RouteComponent() {
+export function TabBar3({navigateTo, routeFrom}: componentProps) {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const {workspaceId} = useParams({from: "/console/workspace/job/$workspaceId"})
+  const {workspaceId} = useParams({from: `${routeFrom}`})
 
   const [modal, setModal] = useState<boolean>(false)
 
@@ -35,7 +36,7 @@ function RouteComponent() {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['workspaceId', workspaceId]}),
       queryClient.invalidateQueries({queryKey: ["workspace"]}),
-      navigate({to: '/console/workspace/job'})
+      navigate({to: `${navigateTo}`})
     },
   })
 
