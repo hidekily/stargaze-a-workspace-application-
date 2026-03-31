@@ -43,7 +43,7 @@
 }
 
 .input-modal{
-  @apply rounded-lg w-[80%] h-20 bg-zinc-600 text-white text-center
+  @apply rounded-lg w-[80%] h-10 bg-zinc-600 text-white text-center
 }
 
 .groups{

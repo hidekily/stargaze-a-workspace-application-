@@ -3,7 +3,6 @@ import { API_URL } from '@/lib/api'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { createFileRoute, useNavigate, useParams } from '@tanstack/react-router'
 import { useState } from 'react'
-import { workspace } from './../../../../../../shared/src/db/schema';
 
 export const Route = createFileRoute('/console/workspace/social/$workspaceId')({
   component: RouteComponent,
@@ -56,7 +55,7 @@ function RouteComponent() {
 
       <div className='h-full w-[70%] bg-[#0A0A0F]/80 text-black flex flex-col text-white'>
         <nav className='w-full h-[10%] bg-zinc-900 flex flex-row items-center'>
-          <span className='ml-6'>{data.workspace.name}</span>
+          <span className='ml-6'>{data?.workspace.name}</span>
         </nav>
 
         <section className='h-[80%] w-full bg-white'> {/* display da msg  e activities*/}

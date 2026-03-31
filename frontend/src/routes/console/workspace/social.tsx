@@ -74,6 +74,7 @@ function RouteComponent() {
           ]}
         >
           <input className='input-modal' placeholder='Escolha o nome do grupo' type="text" value={workspaceName} onChange={(e) => setWorkspaceName(e.target.value)}/>
+          <span>Limite do Grupo:</span>
           <input className='input-modal' placeholder='Limite de membros' type="number" value={memberLimit } onChange={(e) => setMemberLimit(e.target.valueAsNumber)}/>
         </Modal>
       )}
