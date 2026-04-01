@@ -7,7 +7,6 @@ import { useState } from 'react'
 import { Modal } from '@/components/modal'
 import {useHotkey} from '@tanstack/react-hotkeys'
 
-
 interface ComponentProps {
     type: "social" | "professional",
     linkBase: "/console/workspace/job/$workspaceId" | "/console/workspace/social/$workspaceId",
@@ -57,16 +56,30 @@ export function TabBar2({type, linkBase}: ComponentProps) {
     },
     onSuccess: () =>{
       queryClient.invalidateQueries({queryKey: ['workspace']})
+      setMemberLimit(0)
+      setWorkspaceName("")
     },
     onError: () => {}
   })
 
-  const testeHotKey = useHotkey({key: "Mod + Y"}, () => {handleWorkspaceCreateMutation.mutate(), setModal(false)})
+  // const for hot keys ( i made it a little bit better for user), inclusive eu n preciso chamar elas nas functions
+  const backspace = useHotkey({key: "Backspace", mod: true}, () => {handleWorkspaceCreateMutation.reset(), setModal(false)})  
+  const enter = useHotkey({key: "enter", mod:true}, () => {
+    if(handleWorkspaceCreateMutation.isSuccess){
+      setTimeout(() => {
+        handleWorkspaceCreateMutation.reset()
+        setModal(false)
+      }, 2000)
+    }
+    else if(!getButton.disabled){
+      handleWorkspaceCreateMutation.mutate()
+    } 
+  })
 
   function getBtn() : {text: string, colorVariant: "mid" | "add" | "danger", disabled: boolean}{
     if(workspaceName === "") return {text: "digite o nome", colorVariant: "mid", disabled: true}
-    if(memberLimit <= 0) return {text: "add o limite", colorVariant: "mid", disabled: true}
-    return {text: "criar", colorVariant: "add", disabled: false}
+    if(memberLimit <= 0 || isNaN(memberLimit)) return {text: "add o limite", colorVariant: "mid", disabled: true}
+    return {text: "create ( enter )", colorVariant: "add", disabled: false}
   }const getButton = getBtn()
 
   if(isLoading) return <div>calma pae ta carregando</div>
@@ -76,7 +89,7 @@ export function TabBar2({type, linkBase}: ComponentProps) {
         <Modal 
           header="🦦 create your group"
           buttons={[
-            {text: 'cancel', onclick: () => {setModal(false), handleWorkspaceCreateMutation.reset(), testeHotKey}, colorVariant: "danger"},
+            {text: 'cancel (backspace)', onclick: () => {setModal(false), handleWorkspaceCreateMutation.reset()}, colorVariant: "danger"},
             {
               text: getButton.text, 
               colorVariant: getButton.colorVariant,
@@ -86,7 +99,7 @@ export function TabBar2({type, linkBase}: ComponentProps) {
         >
           <input className='input-modal' placeholder='Escolha o nome do grupo' type="text" value={workspaceName} onChange={(e) => setWorkspaceName(e.target.value)}/>
           <span>Limite do Grupo:</span>
-          <input className='input-modal w-80' placeholder='Limite de membros' type="number" value={memberLimit } onChange={(e) => setMemberLimit(e.target.valueAsNumber)}/>
+          <input className='input-modal w-80' placeholder='Limite de membros' type="number" value={memberLimit} onChange={(e) => setMemberLimit(e.target.valueAsNumber)}/>
         </Modal>
       )}
 
@@ -96,7 +109,7 @@ export function TabBar2({type, linkBase}: ComponentProps) {
           header={<div className='bolinhaModal'>🦦</div>}
           subtitle='o seu grupo foi criado com sucesso'
           buttons={[
-            {text: "confirm", onclick: () => {setModal(false), handleWorkspaceCreateMutation.reset()}, colorVariant: 'add'}
+            {text: "confirm ( enter )", onclick: () => {setModal(false), handleWorkspaceCreateMutation.reset()}, colorVariant: 'add'}
           ]}
         />
       )}
