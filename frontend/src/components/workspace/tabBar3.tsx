@@ -62,7 +62,7 @@ export function TabBar3({navigateTo, routeFrom}: componentProps) {
         <section className='h-[80%] w-full bg-white'> {/* display da msg  e activities*/}
 
         </section>
-
+          <button className='w-20 h-20 bg-teal-900' onClick={(e) => {e.preventDefault(), handleDeleteGroup.mutate()}}></button>
         <section> {/* input da msg + enviar */}
 
         </section>

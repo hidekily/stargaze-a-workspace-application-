@@ -5,6 +5,8 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { Modal } from '@/components/modal'
+import {useHotkey} from '@tanstack/react-hotkeys'
+
 
 interface ComponentProps {
     type: "social" | "professional",
@@ -16,7 +18,6 @@ export function TabBar2({type, linkBase}: ComponentProps) {
   const [memberLimit, setMemberLimit] = useState<number>(0)
   const [img, setImg] = useState<string>()
   const [modal, setModal] = useState<boolean>(false)
-
   const queryClient = useQueryClient()
 
   interface workspaceSchema {
@@ -38,7 +39,6 @@ export function TabBar2({type, linkBase}: ComponentProps) {
   })
 
   const handleWorkspaceCreateMutation = useMutation({
-    
     mutationFn: async() => {
       await fetch(`${API_URL}/api/workspaces`, {
         method: "POST",
@@ -61,27 +61,44 @@ export function TabBar2({type, linkBase}: ComponentProps) {
     onError: () => {}
   })
 
+  const testeHotKey = useHotkey({key: "Mod + Y"}, () => {handleWorkspaceCreateMutation.mutate(), setModal(false)})
+
+  function getBtn() : {text: string, colorVariant: "mid" | "add" | "danger", disabled: boolean}{
+    if(workspaceName === "") return {text: "digite o nome", colorVariant: "mid", disabled: true}
+    if(memberLimit <= 0) return {text: "add o limite", colorVariant: "mid", disabled: true}
+    return {text: "criar", colorVariant: "add", disabled: false}
+  }const getButton = getBtn()
 
   if(isLoading) return <div>calma pae ta carregando</div>
   return(
-    
     <>
-      {(modal === true) && (
+      {(modal === true && !handleWorkspaceCreateMutation.isSuccess) && (
         <Modal 
           header="🦦 create your group"
           buttons={[
-            {text: 'cancel', onclick: () => {setModal(false), handleWorkspaceCreateMutation.reset()}, colorVariant: "danger"},
-            (workspaceName !== "" ? 
-                {text: "criar", onclick: () => {setModal(false), handleWorkspaceCreateMutation.mutate()}, colorVariant: "add"} 
-                : 
-                {text: "digite o nome", onclick: () => {}, colorVariant: "mid"} 
-            )
+            {text: 'cancel', onclick: () => {setModal(false), handleWorkspaceCreateMutation.reset(), testeHotKey}, colorVariant: "danger"},
+            {
+              text: getButton.text, 
+              colorVariant: getButton.colorVariant,
+              onclick: getButton.disabled ? () => {} : () => {setModal(false), handleWorkspaceCreateMutation.mutate()}
+            }
           ]}
         >
           <input className='input-modal' placeholder='Escolha o nome do grupo' type="text" value={workspaceName} onChange={(e) => setWorkspaceName(e.target.value)}/>
           <span>Limite do Grupo:</span>
-          <input className='input-modal' placeholder='Limite de membros' type="number" value={memberLimit } onChange={(e) => setMemberLimit(e.target.valueAsNumber)}/>
+          <input className='input-modal w-80' placeholder='Limite de membros' type="number" value={memberLimit } onChange={(e) => setMemberLimit(e.target.valueAsNumber)}/>
         </Modal>
+      )}
+
+      {/* mensagem qque deu certo */}
+      {(handleWorkspaceCreateMutation.isSuccess) && (
+        <Modal 
+          header={<div className='bolinhaModal'>🦦</div>}
+          subtitle='o seu grupo foi criado com sucesso'
+          buttons={[
+            {text: "confirm", onclick: () => {setModal(false), handleWorkspaceCreateMutation.reset()}, colorVariant: 'add'}
+          ]}
+        />
       )}
 
       <TabBar>

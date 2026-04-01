@@ -21,8 +21,8 @@ const variantColors = {
 export function Modal({header, title, subtitle, buttons, children}:ModalProps){
     return(
         <>
-            <div className="inset-0 fixed bg-[#f4EAe0]/50 flex justify-center items-center w-full h-full">
-                <section className="bg-[#e8d8c4] w-[90%] h-auto flex flex-col justify-center items-center rounded-lg gap-2 border-1 sm:w-[55%] sm:h-[65%]">
+            <div className="inset-0 fixed bg-[#f4EAe0]/50 flex justify-center items-center w-full h-full opacity-90">
+                <section className="bg-[#e8d8c4] w-[90%] h-auto flex flex-col justify-center items-center rounded-lg gap-2 border-1 sm:w-[55%] sm:h-[65%]">|
                     <div className="w-full flex flex-col justify-center p-5 gap-3 sm:h-[50%] sm:p-8 sm:gap-4">
                         <span>{header}</span>
                         <span className="text-xl sm:text-3xl">{title}</span>
