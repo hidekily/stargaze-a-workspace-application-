@@ -69,7 +69,7 @@ export function TabBar2({type, linkBase}: ComponentProps) {
       setTimeout(() => {
         handleWorkspaceCreateMutation.reset()
         setModal(false)
-      }, 2000)
+      }, 600)
     }
     else if(!getButton.disabled){
       handleWorkspaceCreateMutation.mutate()
