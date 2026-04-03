@@ -73,9 +73,9 @@ export function TabBar2({type, linkBase}: ComponentProps) {
     onError: () => {}
   })
 
-  // const for hot keys ( i made it a little bit better for user), inclusive eu n preciso chamar elas nas functions
-  const backspace = useHotkey({key: "Backspace", mod: true}, () => {handleWorkspaceCreateMutation.reset(), setModal(false)})  
-  const enter = useHotkey({key: "enter", mod:true}, () => {
+  // const for hot keys ( i made it a little bit better for user), inclusive eu n preciso chamar elas nas functions e nem fzr const
+  useHotkey({key: "Backspace", mod: true}, () => {handleWorkspaceCreateMutation.reset(), setModal(false)})  
+  useHotkey({key: "enter", mod:true}, () => {
     if(handleWorkspaceCreateMutation.isSuccess){
       setTimeout(() => {
         handleWorkspaceCreateMutation.reset()
