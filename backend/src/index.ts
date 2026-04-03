@@ -4,6 +4,7 @@ import rateLimit from '@fastify/rate-limit'
 import cors from '@fastify/cors'
 import { workspaceAPI } from './routes/workspace'
 import {auth} from "shared/auth"
+import { imgUpload } from './routes/imgUpload'
 
 const port = Number(process.env.PORT) || 3001
 const app = Fastify({ logger: true })
@@ -29,6 +30,10 @@ app.register(rateLimit, {
 
 app.register(workspaceAPI, {
   prefix: "/api/workspaces"
+})
+
+app.register(imgUpload, {
+  prefix: "/api/imgUpload"
 })
 
 app.all('/api/auth/*', 

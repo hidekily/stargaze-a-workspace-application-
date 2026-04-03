@@ -44,7 +44,7 @@ export function TabBar2({type, linkBase}: ComponentProps) {
       if (imgFile) {
         const formData = new FormData()
         formData.append('file', imgFile)
-        const uploadRes = await fetch(`${API_URL}/api/upload`, {
+        const uploadRes = await fetch(`${API_URL}/api/imgUpload`, {
           method: "POST",
           credentials: "include",
           body: formData  // nota: sem Content-Type header, o browser seta automaticamente
