@@ -56,6 +56,7 @@ export function TabBar3({navigateTo, routeFrom}: componentProps) {
 
       <div className='h-full w-[70%] bg-[#0A0A0F]/80 text-black flex flex-col text-white'>
         <nav className='w-full h-[10%] bg-zinc-900 flex flex-row items-center'>
+          <img src={data?.workspace.img} className='w-20 h-20 rounded-full bg-cover bg-no-repeat bg-center' />        
           <span className='ml-6'>{data?.workspace.name}</span>
         </nav>
 

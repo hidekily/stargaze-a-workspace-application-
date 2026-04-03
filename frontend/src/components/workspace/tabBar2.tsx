@@ -15,7 +15,7 @@ interface ComponentProps {
 export function TabBar2({type, linkBase}: ComponentProps) {
   const [workspaceName, setWorkspaceName] = useState<string>("")    
   const [memberLimit, setMemberLimit] = useState<number>(0)
-  const [img, setImg] = useState<string>()
+  const [imgFile, setImg] = useState<File | null>(null)
   const [modal, setModal] = useState<boolean>(false)
   const queryClient = useQueryClient()
 
@@ -38,20 +38,31 @@ export function TabBar2({type, linkBase}: ComponentProps) {
   })
 
   const handleWorkspaceCreateMutation = useMutation({
-    mutationFn: async() => {
+    mutationFn: async () => {
+      let imgUrl = undefined
+        
+      if (imgFile) {
+        const formData = new FormData()
+        formData.append('file', imgFile)
+        const uploadRes = await fetch(`${API_URL}/api/upload`, {
+          method: "POST",
+          credentials: "include",
+          body: formData  // nota: sem Content-Type header, o browser seta automaticamente
+        })
+        const uploadData = await uploadRes.json()
+        imgUrl = uploadData.url
+      }
+    
       await fetch(`${API_URL}/api/workspaces`, {
         method: "POST",
-        headers: {
-         "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify(
-          {
-            workspaceName: workspaceName, 
-            memberLimit: memberLimit,
-            img: img, 
-            type: `${type}`
-          }),
+        body: JSON.stringify({
+          workspaceName,
+          memberLimit,
+          img: imgUrl,
+          type
+        })
       })
     },
     onSuccess: () =>{
@@ -87,7 +98,12 @@ export function TabBar2({type, linkBase}: ComponentProps) {
     <>
       {(modal === true && !handleWorkspaceCreateMutation.isSuccess) && (
         <Modal 
-          header="🦦 create your group"
+          header={<input 
+            type='file' 
+            className='rounded-full w-20 h-20' 
+            onChange={(e) => setImg(e.target.files?.[0] ?? null)} // pega o primeiro arquivo ou fica null
+            accept='image/*'
+          />}
           buttons={[
             {text: 'cancel (backspace)', onclick: () => {setModal(false), handleWorkspaceCreateMutation.reset()}, colorVariant: "danger"},
             {
