@@ -145,7 +145,6 @@ export function TabBar2({type, linkBase}: ComponentProps) {
             params={{workspaceId: index.workspace.id}}
             className='groups'
           >
-            <img src={index.workspace.img}/>
             {index.workspace.name}
           </Link>
         ))}
