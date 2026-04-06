@@ -44,7 +44,7 @@ export async function workspaceAPI(app :FastifyInstance, OPTIONS: FastifyPluginO
             type: type,
             memberLimit: memberLimit,
             id: workspaceId,
-           img: img
+            img: img
         }).returning()
 
         const [newInvite] = await db.insert(workspaceInvite).values({
