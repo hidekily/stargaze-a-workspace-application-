@@ -41,6 +41,7 @@ export function TabBar2({type, linkBase}: ComponentProps) {
     mutationFn: async () => {
       let imgUrl = undefined
         
+      console.log(imgFile)
       if (imgFile) {
         const formData = new FormData()
         formData.append('file', imgFile)
@@ -144,6 +145,7 @@ export function TabBar2({type, linkBase}: ComponentProps) {
             params={{workspaceId: index.workspace.id}}
             className='groups'
           >
+            <img src={index.workspace.img}/>
             {index.workspace.name}
           </Link>
         ))}

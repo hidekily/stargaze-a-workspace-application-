@@ -8,6 +8,7 @@ import { imgUpload } from './routes/imgUpload'
 
 const port = Number(process.env.PORT) || 3001
 const app = Fastify({ logger: true })
+process.env.NODE_TLS_REJECTED_UNAUTHORIZED = '0'
 
 app.register(cors, {
   origin: (origin, cb) => {

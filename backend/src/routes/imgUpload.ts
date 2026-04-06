@@ -22,7 +22,6 @@ export async function imgUpload(app: FastifyInstance, ){
             Key: key, 
             ContentType: file.mimetype,
             Bucket: `${process.env.R2_BUCKET_NAME}` 
-            // o workspaces eh opcional, pq dps eu vou fzr um upload de img p perfil. Ent n quero bagunca no cloudFlare dps
         })
 
         await r2.send(r2Upload)
