@@ -135,7 +135,7 @@ export function TabBar2({type, linkBase}: ComponentProps) {
         <button 
           className='bg-zinc-800 h-10 w-[80%] rounded-full mt-8 border-dashed border-1 border-white text-white' 
           onClick={(e) => {e.preventDefault(), setModal(true)}}>
-            +
+          🦦 + 🦥
         </button>
 
         {data.map((index: workspaceSchema) =>(
@@ -143,9 +143,10 @@ export function TabBar2({type, linkBase}: ComponentProps) {
             to={`${linkBase}`}
             key={index.workspace.id} 
             params={{workspaceId: index.workspace.id}}
-            className='groups'
+            className='groups gap-5'
           >
-            {index.workspace.name}
+            {index.workspace.img === null ? null : <img src={index?.workspace.img} className='w-10 h-10 border-white border-1 rounded-md bg-center' />}
+            <span className={`${linkBase === "/console/workspace/job/$workspaceId" ? "text-[#4A6BFF]" : "text-[#FFD666]"}`}>{index.workspace.name}</span>
           </Link>
         ))}
       </TabBar>

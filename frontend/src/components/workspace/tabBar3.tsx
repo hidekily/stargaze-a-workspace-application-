@@ -54,17 +54,23 @@ export function TabBar3({navigateTo, routeFrom}: componentProps) {
       )}
 
       <div className='h-full w-[70%] bg-[#0A0A0F]/80 text-black flex flex-col text-white'>
-        <nav className='w-full h-[10%] bg-zinc-900 flex flex-row items-center'>
-          <img src={data?.workspace.img} className='w-20 h-20 rounded-full bg-cover bg-no-repeat bg-center' />     
-          <span className='ml-6'>{data?.workspace.name}</span>
+        <nav className='w-full h-[10%] bg-zinc-900'>
+          <section className='w-[50%] h-full flex flex-row gap-5 items-center'>
+            {data?.workspace.img && <img src={data?.workspace.img} className='w-15 h-15 rounded-full bg-cover bg-no-repeat bg-center ml-5'/>}
+            <span className='text-2xl text-[#FFD666] ml-2'>{data?.workspace.name}</span>
+          </section>
+
+          <section className='w-[50%] h-full'>
+
+          </section>
         </nav>
 
-        <section className='h-[80%] w-full bg-white'> {/* display da msg  e activities*/}
+        <section className='h-[80%] w-full bg-[#1A1A2E]'> {/* display da msg  e activities*/}
 
         </section>
-          <button className='w-20 h-20 bg-teal-900' onClick={(e) => {e.preventDefault(), handleDeleteGroup.mutate()}}></button>
-        <section> {/* input da msg + enviar */}
 
+        <section> {/* input da msg + enviar */}
+          <button className='w-20 h-20 bg-teal-900' onClick={(e) => {e.preventDefault(), handleDeleteGroup.mutate()}}></button>
         </section>
       </div>
     </>
