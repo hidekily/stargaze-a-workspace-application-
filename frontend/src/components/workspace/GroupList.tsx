@@ -101,7 +101,7 @@ export function TabBar2({type, linkBase}: ComponentProps) {
         <Modal 
           header={<input 
             type='file' 
-            className='rounded-full w-20 h-20' 
+            className={`rounded-full w-20 h-20`} 
             onChange={(e) => setImg(e.target.files?.[0] ?? null)} // pega o primeiro arquivo ou fica null
             accept='image/*'
           />}

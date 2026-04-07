@@ -1,4 +1,4 @@
-import { TabBar3 } from '@/components/workspace/tabBar3'
+import { TabBar3 } from '@/components/workspace/GroupChat'
 import { createFileRoute} from '@tanstack/react-router'
 
 export const Route = createFileRoute('/console/workspace/job/$workspaceId')({

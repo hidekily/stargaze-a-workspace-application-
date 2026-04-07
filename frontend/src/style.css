@@ -47,7 +47,7 @@
 }
 
 .groups{
-  @apply flex justify-center items-center bg-zinc-900 text-white rounded-2xl w-[70%] h-[10%] text-xs border-1 border-white border-dashed
+  @apply flex justify-center items-center bg-zinc-900 text-white rounded-2xl w-[70%] min-h-25 text-xs border-1 border-white border-dashed
 }
 
 .bolinhaModal{
