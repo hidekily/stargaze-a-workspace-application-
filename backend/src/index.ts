@@ -5,6 +5,7 @@ import cors from '@fastify/cors'
 import { workspaceAPI } from './routes/workspace'
 import {auth} from "shared/auth"
 import { imgUpload } from './routes/imgUpload'
+import { todoListApi } from './routes/todoList'
 
 const port = Number(process.env.PORT) || 3001
 const app = Fastify({ logger: true })
@@ -35,6 +36,10 @@ app.register(workspaceAPI, {
 
 app.register(imgUpload, {
   prefix: "/api/imgUpload"
+})
+
+app.register(todoListApi, {
+  prefix:"api/todoList"
 })
 
 app.all('/api/auth/*', 
