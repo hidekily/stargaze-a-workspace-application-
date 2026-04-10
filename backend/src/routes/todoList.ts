@@ -3,8 +3,7 @@ import { FastifyInstance } from "fastify"
 import { auth } from "shared/auth"
 import { db } from "shared/db";
 import { todoItems, todoList } from "shared/db/schema";
-import { eq } from "drizzle-orm";
-import { session } from "shared/db/schema";
+import { desc, eq } from "drizzle-orm";
 
 export function todoListApi(app: FastifyInstance){
     const listSchema = z.object({
@@ -90,8 +89,61 @@ export function todoListApi(app: FastifyInstance){
 
         const lists = await db.select()
         .from(todoList)
-        .where(eq(todoList, todoList.userId))
+        .where(eq(todoList.userId, session.user.id))
 
         return reply.send(lists)
+    }) 
+
+    app.get('/items/:id', async(request, reply) => {
+        const {id} = request.params as {id: string}
+
+        const session = await auth.api.getSession({
+            headers: request.headers
+        })
+
+        if(!session){
+            return reply.send({error:"erro ao validar a session"})
+        }
+
+        const items = await db.select()
+        .from(todoItems)
+        .where(eq(todoItems.todoId, String(id)))
+
+        return reply.send({data: items})
+    })
+
+    app.patch("/:id", async(request, reply) =>{
+        const {id} = request.params as {id: string}
+
+        const itemsSchemaResult = itemSchema.safeParse(request.body)
+        
+        if(!itemsSchemaResult.success){
+             return reply.status(400).send({error:"erro"})
+        }
+
+        const {itemName} = itemsSchemaResult.data
+
+        const ListSchemaResult = listSchema.safeParse(request.body)
+
+        if(!ListSchemaResult.success){
+            return reply.status(400).send({error:"erro"})
+        }
+
+        const {todoName, description} = ListSchemaResult.data
+
+        if(itemName){
+            const updateTodoItems = await db
+            .update(todoItems)
+            .set({itemName})
+            .where(eq(todoItems.todoId, String(id)))
+        }
+
+        // todo inteiro LISTA
+        if(todoName || description){
+            const updateTodoList = await db
+            .update(todoList)
+            .set({listName: todoName, description: description})
+            .where(eq(todoList.id, String(id)))
+        }
     })
 }
