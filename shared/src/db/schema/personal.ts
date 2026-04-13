@@ -5,8 +5,15 @@ import {
 } from "drizzle-orm/pg-core";
 
 import {user} from "./betterAuth"
-export const doneOrNotEnums = pgEnum("doneOrNoteEnumList", ["done", "pending"])
 
+//enums
+export const doneOrNotEnums = pgEnum("doneOrNoteEnumList", ["done", "pending"])
+export const habitosEnum = pgEnum("habitosEnum", ["done",  "pending", "notDone"])
+export const despesaEnum = pgEnum("despesas", ["despesa fixa", "lazer", "escola", "assinaturas", "outros-despesa"])
+export const receitaEnum = pgEnum("receita", ["freelance", "trabalho", "investimentos", "outros-receita"])
+export const tipoEnum = pgEnum("tipo", ["gasto", "ganho"])
+
+// todo
 export const todoList = pgTable("personalTodoList", {
     id: text("id").primaryKey(),
     userId: text("userId")
@@ -25,3 +32,38 @@ export const todoItems = pgTable("todoItems",{
     itemName: text("item").notNull(),
     doneOrNot: doneOrNotEnums("doneOrNotEnum").default("pending").notNull()
 })
+// 
+
+// notas 
+export const notas = pgTable("notas", {
+    id: text("id").primaryKey(),
+    userId: text("userId")
+    .references(() => user.id, {onDelete: "cascade"}),
+    name: text("name").notNull(),
+    content: text("").default(""),
+    createdAt: timestamp().defaultNow().notNull(),
+})
+// 
+
+// habitos
+export const habitos = pgTable("habitos", {
+    id: text("id").primaryKey(),
+    userId: text("useId")
+    .references(() => user.id, {onDelete: "cascade"}),
+    name: text("name").notNull(),
+    color: text("color").notNull(),
+    habitosTracking: habitosEnum("habitosEnum").default("pending").notNull()
+})
+// 
+
+//financas items etc
+export const financas = pgTable("financas", {
+    id: text("id").primaryKey(),
+    userId: text("userId")
+    .references(() => user.id, {onDelete: 'cascade'}),
+    name: text("name").notNull(),
+    tipo: tipoEnum().notNull(),
+    receita: receitaEnum(),
+    despesas: despesaEnum()
+})
+//

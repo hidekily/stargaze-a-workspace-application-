@@ -78,6 +78,7 @@ export function todoListApi(app: FastifyInstance){
         return reply.status(201).send({data: newTodoListItem, message: "item created"})
     })
 
+    // get todo list
     app.get('/by-ids', async(request, reply) => {
         const session = await auth.api.getSession({
             headers: request.headers
@@ -94,6 +95,7 @@ export function todoListApi(app: FastifyInstance){
         return reply.send(lists)
     }) 
 
+    // get do items da todo
     app.get('/items/:id', async(request, reply) => {
         const {id} = request.params as {id: string}
 
@@ -112,24 +114,23 @@ export function todoListApi(app: FastifyInstance){
         return reply.send({data: items})
     })
 
+    // ... tem nem oq falar
     app.patch("/:id", async(request, reply) =>{
         const {id} = request.params as {id: string}
 
-        const itemsSchemaResult = itemSchema.safeParse(request.body)
+        const schema = z.object({
+            itemName: z.string().optional(),
+            todoName: z.string().optional(),
+            description: z.string().optional()
+        })       
         
-        if(!itemsSchemaResult.success){
-             return reply.status(400).send({error:"erro"})
+        const schemaResult = schema.safeParse(request.body)
+
+        if(!schemaResult.success){
+            return reply.status(400).send({error: "erro ao validar a data"})
         }
 
-        const {itemName} = itemsSchemaResult.data
-
-        const ListSchemaResult = listSchema.safeParse(request.body)
-
-        if(!ListSchemaResult.success){
-            return reply.status(400).send({error:"erro"})
-        }
-
-        const {todoName, description} = ListSchemaResult.data
+        const {todoName, itemName, description} = schemaResult.data
 
         if(itemName){
             const updateTodoItems = await db
@@ -142,7 +143,10 @@ export function todoListApi(app: FastifyInstance){
         if(todoName || description){
             const updateTodoList = await db
             .update(todoList)
-            .set({listName: todoName, description: description})
+            .set({
+                ...(todoName && {listName: todoName}),
+                ...(description && {description: description}),
+            })
             .where(eq(todoList.id, String(id)))
         }
     })
