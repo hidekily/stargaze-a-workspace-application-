@@ -1,4 +1,4 @@
-import { relations } from "drizzle-orm";
+import { One, relations } from "drizzle-orm";
 import {
   pgTable, text, timestamp, boolean, index, 
   serial, integer, decimal, pgEnum, unique,
@@ -9,8 +9,7 @@ import {user} from "./betterAuth"
 //enums
 export const doneOrNotEnums = pgEnum("doneOrNoteEnumList", ["done", "pending"])
 export const habitosEnum = pgEnum("habitosEnum", ["done",  "pending", "notDone"])
-export const despesaEnum = pgEnum("despesas", ["despesa fixa", "lazer", "escola", "assinaturas", "outros-despesa"])
-export const receitaEnum = pgEnum("receita", ["freelance", "trabalho", "investimentos", "outros-receita"])
+export const categoriasEnum = pgEnum("categorias", ["despesa fixa", "lazer", "escola", "assinaturas", "investimentos", "trabalho", "freelance", "outros"])
 export const tipoEnum = pgEnum("tipo", ["gasto", "ganho"])
 
 // todo
@@ -40,7 +39,7 @@ export const notas = pgTable("notas", {
     userId: text("userId")
     .references(() => user.id, {onDelete: "cascade"}),
     name: text("name").notNull(),
-    content: text("").default(""),
+    content: text("content").default(""),
     createdAt: timestamp().defaultNow().notNull(),
 })
 // 
@@ -48,11 +47,18 @@ export const notas = pgTable("notas", {
 // habitos
 export const habitos = pgTable("habitos", {
     id: text("id").primaryKey(),
-    userId: text("useId")
+    userId: text("userId")
     .references(() => user.id, {onDelete: "cascade"}),
     name: text("name").notNull(),
     color: text("color").notNull(),
-    habitosTracking: habitosEnum("habitosEnum").default("pending").notNull()
+})
+
+export const habitosTracking = pgTable("tracking", {
+    id: text("id").primaryKey(),
+    habitosListId: text("habitosRef")
+    .references(() => habitos.id, {onDelete: "cascade"}),
+    status: habitosEnum().default("pending"),
+    date: timestamp().defaultNow()
 })
 // 
 
@@ -63,7 +69,7 @@ export const financas = pgTable("financas", {
     .references(() => user.id, {onDelete: 'cascade'}),
     name: text("name").notNull(),
     tipo: tipoEnum().notNull(),
-    receita: receitaEnum(),
-    despesas: despesaEnum()
+    valor: decimal().notNull(),
+    categorias: categoriasEnum().notNull()
 })
 //
