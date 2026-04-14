@@ -3,6 +3,7 @@ import { FastifyInstance } from "fastify"
 import { db } from "shared/db"
 import { auth } from "shared/auth"
 import { habitos, habitosTracking } from "shared/db/schema"
+import { eq } from "drizzle-orm"
 
 export function habitosApi(app: FastifyInstance){
     app.post('/habitos', async(request, reply) => {
@@ -69,5 +70,41 @@ export function habitosApi(app: FastifyInstance){
         }).returning()
 
         return reply.status(201).send({data: newTracking})
+    })
+
+    app.get('/by-ids', async(request, reply) => {
+        const session = await auth.api.getSession({
+            headers: request.headers
+        })
+
+        if(!session){
+            return reply.status(400).send({error:"erro ao validar a session"})
+        }
+
+        const getHabitos = await db
+        .select()
+        .from(habitos)
+        .where(eq(habitos.id, session.user.id))
+        
+        return reply.send(getHabitos)
+    })
+
+    app.get("tracking/:id", async(request, reply) => {
+        const {id} = request.params as {id: string}
+
+        const session =  await auth.api.getSession({
+            headers: request.headers
+        })
+
+        if(!session){
+            return reply.status(400).send({error:"erro ao validar a session"})
+        }
+
+        const getTracking = await db
+        .select()
+        .from(habitosTracking)
+        .where(eq(habitosTracking.id, String(id)))
+
+        return reply.send(getTracking)
     })
 }
