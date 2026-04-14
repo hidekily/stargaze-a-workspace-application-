@@ -8,6 +8,7 @@ import { imgUpload } from './routes/imgUpload'
 import { todoListApi } from './routes/todoList'
 import { notasApi } from './routes/notas'
 import { financasApi } from './routes/financas'
+import { habitosApi } from './routes/habitos'
 
 const port = Number(process.env.PORT) || 3001
 const app = Fastify({ logger: true })
@@ -52,7 +53,11 @@ app.register(financasApi, {
   prefix:"api/financa"
 })
 
-app.all('/api/auth/*', 
+app.register(habitosApi, {
+  prefix: "api/habitos"
+})
+
+app.all('/api/auth/*',
   {config: {
     rateLimit: {
       max: 20,

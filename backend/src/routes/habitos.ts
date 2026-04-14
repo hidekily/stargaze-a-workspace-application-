@@ -40,7 +40,7 @@ export function habitosApi(app: FastifyInstance){
     })
 
     app.post('/tracking/:id', async(request, reply) => {
-        const {habitosListId} = request.params as {habitosListId:  string}
+        const {id} = request.params as {id:  string}
         const trackingid = crypto.randomUUID()
         const schema = z.object({
             status: z.enum(["done", "pending", "notDone"]),
@@ -64,7 +64,7 @@ export function habitosApi(app: FastifyInstance){
 
         const [newTracking] = await db.insert(habitosTracking).values({
             id: trackingid,
-            habitosListId: habitosListId,
+            habitosListId: id,
             status: status,
             date: new Date(),
         }).returning()
@@ -84,12 +84,12 @@ export function habitosApi(app: FastifyInstance){
         const getHabitos = await db
         .select()
         .from(habitos)
-        .where(eq(habitos.id, session.user.id))
+        .where(eq(habitos.userId, session.user.id))
         
         return reply.send(getHabitos)
     })
 
-    app.get("tracking/:id", async(request, reply) => {
+    app.get("/tracking/:id", async(request, reply) => {
         const {id} = request.params as {id: string}
 
         const session =  await auth.api.getSession({
@@ -103,7 +103,7 @@ export function habitosApi(app: FastifyInstance){
         const getTracking = await db
         .select()
         .from(habitosTracking)
-        .where(eq(habitosTracking.id, String(id)))
+        .where(eq(habitosTracking.habitosListId, String(id)))
 
         return reply.send(getTracking)
     })
