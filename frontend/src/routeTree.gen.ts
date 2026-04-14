@@ -16,6 +16,12 @@ import { Route as ConsoleWorkspaceSocialRouteImport } from './routes/console/wor
 import { Route as ConsoleWorkspacePersonalRouteImport } from './routes/console/workspace/personal'
 import { Route as ConsoleWorkspaceJobRouteImport } from './routes/console/workspace/job'
 import { Route as ConsoleWorkspaceSocialWorkspaceIdRouteImport } from './routes/console/workspace/social/$workspaceId'
+import { Route as ConsoleWorkspacePersonalTodoRouteImport } from './routes/console/workspace/personal/todo'
+import { Route as ConsoleWorkspacePersonalPomodoroRouteImport } from './routes/console/workspace/personal/pomodoro'
+import { Route as ConsoleWorkspacePersonalNotasRouteImport } from './routes/console/workspace/personal/notas'
+import { Route as ConsoleWorkspacePersonalFinancaRouteImport } from './routes/console/workspace/personal/financa'
+import { Route as ConsoleWorkspacePersonalDashboardRouteImport } from './routes/console/workspace/personal/dashboard'
+import { Route as ConsoleWorkspacePersonalCalendarioRouteImport } from './routes/console/workspace/personal/calendario'
 import { Route as ConsoleWorkspaceJobWorkspaceIdRouteImport } from './routes/console/workspace/job/$workspaceId'
 
 const ConsoleRoute = ConsoleRouteImport.update({
@@ -55,6 +61,42 @@ const ConsoleWorkspaceSocialWorkspaceIdRoute =
     path: '/$workspaceId',
     getParentRoute: () => ConsoleWorkspaceSocialRoute,
   } as any)
+const ConsoleWorkspacePersonalTodoRoute =
+  ConsoleWorkspacePersonalTodoRouteImport.update({
+    id: '/todo',
+    path: '/todo',
+    getParentRoute: () => ConsoleWorkspacePersonalRoute,
+  } as any)
+const ConsoleWorkspacePersonalPomodoroRoute =
+  ConsoleWorkspacePersonalPomodoroRouteImport.update({
+    id: '/pomodoro',
+    path: '/pomodoro',
+    getParentRoute: () => ConsoleWorkspacePersonalRoute,
+  } as any)
+const ConsoleWorkspacePersonalNotasRoute =
+  ConsoleWorkspacePersonalNotasRouteImport.update({
+    id: '/notas',
+    path: '/notas',
+    getParentRoute: () => ConsoleWorkspacePersonalRoute,
+  } as any)
+const ConsoleWorkspacePersonalFinancaRoute =
+  ConsoleWorkspacePersonalFinancaRouteImport.update({
+    id: '/financa',
+    path: '/financa',
+    getParentRoute: () => ConsoleWorkspacePersonalRoute,
+  } as any)
+const ConsoleWorkspacePersonalDashboardRoute =
+  ConsoleWorkspacePersonalDashboardRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => ConsoleWorkspacePersonalRoute,
+  } as any)
+const ConsoleWorkspacePersonalCalendarioRoute =
+  ConsoleWorkspacePersonalCalendarioRouteImport.update({
+    id: '/calendario',
+    path: '/calendario',
+    getParentRoute: () => ConsoleWorkspacePersonalRoute,
+  } as any)
 const ConsoleWorkspaceJobWorkspaceIdRoute =
   ConsoleWorkspaceJobWorkspaceIdRouteImport.update({
     id: '/$workspaceId',
@@ -67,9 +109,15 @@ export interface FileRoutesByFullPath {
   '/console': typeof ConsoleRouteWithChildren
   '/console/workspace': typeof ConsoleWorkspaceRouteWithChildren
   '/console/workspace/job': typeof ConsoleWorkspaceJobRouteWithChildren
-  '/console/workspace/personal': typeof ConsoleWorkspacePersonalRoute
+  '/console/workspace/personal': typeof ConsoleWorkspacePersonalRouteWithChildren
   '/console/workspace/social': typeof ConsoleWorkspaceSocialRouteWithChildren
   '/console/workspace/job/$workspaceId': typeof ConsoleWorkspaceJobWorkspaceIdRoute
+  '/console/workspace/personal/calendario': typeof ConsoleWorkspacePersonalCalendarioRoute
+  '/console/workspace/personal/dashboard': typeof ConsoleWorkspacePersonalDashboardRoute
+  '/console/workspace/personal/financa': typeof ConsoleWorkspacePersonalFinancaRoute
+  '/console/workspace/personal/notas': typeof ConsoleWorkspacePersonalNotasRoute
+  '/console/workspace/personal/pomodoro': typeof ConsoleWorkspacePersonalPomodoroRoute
+  '/console/workspace/personal/todo': typeof ConsoleWorkspacePersonalTodoRoute
   '/console/workspace/social/$workspaceId': typeof ConsoleWorkspaceSocialWorkspaceIdRoute
 }
 export interface FileRoutesByTo {
@@ -77,9 +125,15 @@ export interface FileRoutesByTo {
   '/console': typeof ConsoleRouteWithChildren
   '/console/workspace': typeof ConsoleWorkspaceRouteWithChildren
   '/console/workspace/job': typeof ConsoleWorkspaceJobRouteWithChildren
-  '/console/workspace/personal': typeof ConsoleWorkspacePersonalRoute
+  '/console/workspace/personal': typeof ConsoleWorkspacePersonalRouteWithChildren
   '/console/workspace/social': typeof ConsoleWorkspaceSocialRouteWithChildren
   '/console/workspace/job/$workspaceId': typeof ConsoleWorkspaceJobWorkspaceIdRoute
+  '/console/workspace/personal/calendario': typeof ConsoleWorkspacePersonalCalendarioRoute
+  '/console/workspace/personal/dashboard': typeof ConsoleWorkspacePersonalDashboardRoute
+  '/console/workspace/personal/financa': typeof ConsoleWorkspacePersonalFinancaRoute
+  '/console/workspace/personal/notas': typeof ConsoleWorkspacePersonalNotasRoute
+  '/console/workspace/personal/pomodoro': typeof ConsoleWorkspacePersonalPomodoroRoute
+  '/console/workspace/personal/todo': typeof ConsoleWorkspacePersonalTodoRoute
   '/console/workspace/social/$workspaceId': typeof ConsoleWorkspaceSocialWorkspaceIdRoute
 }
 export interface FileRoutesById {
@@ -88,9 +142,15 @@ export interface FileRoutesById {
   '/console': typeof ConsoleRouteWithChildren
   '/console/workspace': typeof ConsoleWorkspaceRouteWithChildren
   '/console/workspace/job': typeof ConsoleWorkspaceJobRouteWithChildren
-  '/console/workspace/personal': typeof ConsoleWorkspacePersonalRoute
+  '/console/workspace/personal': typeof ConsoleWorkspacePersonalRouteWithChildren
   '/console/workspace/social': typeof ConsoleWorkspaceSocialRouteWithChildren
   '/console/workspace/job/$workspaceId': typeof ConsoleWorkspaceJobWorkspaceIdRoute
+  '/console/workspace/personal/calendario': typeof ConsoleWorkspacePersonalCalendarioRoute
+  '/console/workspace/personal/dashboard': typeof ConsoleWorkspacePersonalDashboardRoute
+  '/console/workspace/personal/financa': typeof ConsoleWorkspacePersonalFinancaRoute
+  '/console/workspace/personal/notas': typeof ConsoleWorkspacePersonalNotasRoute
+  '/console/workspace/personal/pomodoro': typeof ConsoleWorkspacePersonalPomodoroRoute
+  '/console/workspace/personal/todo': typeof ConsoleWorkspacePersonalTodoRoute
   '/console/workspace/social/$workspaceId': typeof ConsoleWorkspaceSocialWorkspaceIdRoute
 }
 export interface FileRouteTypes {
@@ -103,6 +163,12 @@ export interface FileRouteTypes {
     | '/console/workspace/personal'
     | '/console/workspace/social'
     | '/console/workspace/job/$workspaceId'
+    | '/console/workspace/personal/calendario'
+    | '/console/workspace/personal/dashboard'
+    | '/console/workspace/personal/financa'
+    | '/console/workspace/personal/notas'
+    | '/console/workspace/personal/pomodoro'
+    | '/console/workspace/personal/todo'
     | '/console/workspace/social/$workspaceId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -113,6 +179,12 @@ export interface FileRouteTypes {
     | '/console/workspace/personal'
     | '/console/workspace/social'
     | '/console/workspace/job/$workspaceId'
+    | '/console/workspace/personal/calendario'
+    | '/console/workspace/personal/dashboard'
+    | '/console/workspace/personal/financa'
+    | '/console/workspace/personal/notas'
+    | '/console/workspace/personal/pomodoro'
+    | '/console/workspace/personal/todo'
     | '/console/workspace/social/$workspaceId'
   id:
     | '__root__'
@@ -123,6 +195,12 @@ export interface FileRouteTypes {
     | '/console/workspace/personal'
     | '/console/workspace/social'
     | '/console/workspace/job/$workspaceId'
+    | '/console/workspace/personal/calendario'
+    | '/console/workspace/personal/dashboard'
+    | '/console/workspace/personal/financa'
+    | '/console/workspace/personal/notas'
+    | '/console/workspace/personal/pomodoro'
+    | '/console/workspace/personal/todo'
     | '/console/workspace/social/$workspaceId'
   fileRoutesById: FileRoutesById
 }
@@ -182,6 +260,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleWorkspaceSocialWorkspaceIdRouteImport
       parentRoute: typeof ConsoleWorkspaceSocialRoute
     }
+    '/console/workspace/personal/todo': {
+      id: '/console/workspace/personal/todo'
+      path: '/todo'
+      fullPath: '/console/workspace/personal/todo'
+      preLoaderRoute: typeof ConsoleWorkspacePersonalTodoRouteImport
+      parentRoute: typeof ConsoleWorkspacePersonalRoute
+    }
+    '/console/workspace/personal/pomodoro': {
+      id: '/console/workspace/personal/pomodoro'
+      path: '/pomodoro'
+      fullPath: '/console/workspace/personal/pomodoro'
+      preLoaderRoute: typeof ConsoleWorkspacePersonalPomodoroRouteImport
+      parentRoute: typeof ConsoleWorkspacePersonalRoute
+    }
+    '/console/workspace/personal/notas': {
+      id: '/console/workspace/personal/notas'
+      path: '/notas'
+      fullPath: '/console/workspace/personal/notas'
+      preLoaderRoute: typeof ConsoleWorkspacePersonalNotasRouteImport
+      parentRoute: typeof ConsoleWorkspacePersonalRoute
+    }
+    '/console/workspace/personal/financa': {
+      id: '/console/workspace/personal/financa'
+      path: '/financa'
+      fullPath: '/console/workspace/personal/financa'
+      preLoaderRoute: typeof ConsoleWorkspacePersonalFinancaRouteImport
+      parentRoute: typeof ConsoleWorkspacePersonalRoute
+    }
+    '/console/workspace/personal/dashboard': {
+      id: '/console/workspace/personal/dashboard'
+      path: '/dashboard'
+      fullPath: '/console/workspace/personal/dashboard'
+      preLoaderRoute: typeof ConsoleWorkspacePersonalDashboardRouteImport
+      parentRoute: typeof ConsoleWorkspacePersonalRoute
+    }
+    '/console/workspace/personal/calendario': {
+      id: '/console/workspace/personal/calendario'
+      path: '/calendario'
+      fullPath: '/console/workspace/personal/calendario'
+      preLoaderRoute: typeof ConsoleWorkspacePersonalCalendarioRouteImport
+      parentRoute: typeof ConsoleWorkspacePersonalRoute
+    }
     '/console/workspace/job/$workspaceId': {
       id: '/console/workspace/job/$workspaceId'
       path: '/$workspaceId'
@@ -203,6 +323,33 @@ const ConsoleWorkspaceJobRouteChildren: ConsoleWorkspaceJobRouteChildren = {
 const ConsoleWorkspaceJobRouteWithChildren =
   ConsoleWorkspaceJobRoute._addFileChildren(ConsoleWorkspaceJobRouteChildren)
 
+interface ConsoleWorkspacePersonalRouteChildren {
+  ConsoleWorkspacePersonalCalendarioRoute: typeof ConsoleWorkspacePersonalCalendarioRoute
+  ConsoleWorkspacePersonalDashboardRoute: typeof ConsoleWorkspacePersonalDashboardRoute
+  ConsoleWorkspacePersonalFinancaRoute: typeof ConsoleWorkspacePersonalFinancaRoute
+  ConsoleWorkspacePersonalNotasRoute: typeof ConsoleWorkspacePersonalNotasRoute
+  ConsoleWorkspacePersonalPomodoroRoute: typeof ConsoleWorkspacePersonalPomodoroRoute
+  ConsoleWorkspacePersonalTodoRoute: typeof ConsoleWorkspacePersonalTodoRoute
+}
+
+const ConsoleWorkspacePersonalRouteChildren: ConsoleWorkspacePersonalRouteChildren =
+  {
+    ConsoleWorkspacePersonalCalendarioRoute:
+      ConsoleWorkspacePersonalCalendarioRoute,
+    ConsoleWorkspacePersonalDashboardRoute:
+      ConsoleWorkspacePersonalDashboardRoute,
+    ConsoleWorkspacePersonalFinancaRoute: ConsoleWorkspacePersonalFinancaRoute,
+    ConsoleWorkspacePersonalNotasRoute: ConsoleWorkspacePersonalNotasRoute,
+    ConsoleWorkspacePersonalPomodoroRoute:
+      ConsoleWorkspacePersonalPomodoroRoute,
+    ConsoleWorkspacePersonalTodoRoute: ConsoleWorkspacePersonalTodoRoute,
+  }
+
+const ConsoleWorkspacePersonalRouteWithChildren =
+  ConsoleWorkspacePersonalRoute._addFileChildren(
+    ConsoleWorkspacePersonalRouteChildren,
+  )
+
 interface ConsoleWorkspaceSocialRouteChildren {
   ConsoleWorkspaceSocialWorkspaceIdRoute: typeof ConsoleWorkspaceSocialWorkspaceIdRoute
 }
@@ -220,13 +367,13 @@ const ConsoleWorkspaceSocialRouteWithChildren =
 
 interface ConsoleWorkspaceRouteChildren {
   ConsoleWorkspaceJobRoute: typeof ConsoleWorkspaceJobRouteWithChildren
-  ConsoleWorkspacePersonalRoute: typeof ConsoleWorkspacePersonalRoute
+  ConsoleWorkspacePersonalRoute: typeof ConsoleWorkspacePersonalRouteWithChildren
   ConsoleWorkspaceSocialRoute: typeof ConsoleWorkspaceSocialRouteWithChildren
 }
 
 const ConsoleWorkspaceRouteChildren: ConsoleWorkspaceRouteChildren = {
   ConsoleWorkspaceJobRoute: ConsoleWorkspaceJobRouteWithChildren,
-  ConsoleWorkspacePersonalRoute: ConsoleWorkspacePersonalRoute,
+  ConsoleWorkspacePersonalRoute: ConsoleWorkspacePersonalRouteWithChildren,
   ConsoleWorkspaceSocialRoute: ConsoleWorkspaceSocialRouteWithChildren,
 }
 
