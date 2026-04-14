@@ -6,6 +6,8 @@ import { workspaceAPI } from './routes/workspace'
 import {auth} from "shared/auth"
 import { imgUpload } from './routes/imgUpload'
 import { todoListApi } from './routes/todoList'
+import { notasApi } from './routes/notas'
+import { financasApi } from './routes/financas'
 
 const port = Number(process.env.PORT) || 3001
 const app = Fastify({ logger: true })
@@ -40,6 +42,14 @@ app.register(imgUpload, {
 
 app.register(todoListApi, {
   prefix:"api/todoList"
+})
+
+app.register(notasApi, {
+  prefix: "api/notas"
+})
+
+app.register(financasApi, {
+  prefix:"api/financa"
 })
 
 app.all('/api/auth/*', 
