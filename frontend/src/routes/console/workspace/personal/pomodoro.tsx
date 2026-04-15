@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { usePomodoro } from '@/types/pomodoro'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export const Route = createFileRoute('/console/workspace/personal/pomodoro')({
   component: RouteComponent,
@@ -19,12 +19,33 @@ function RouteComponent() {
     startTimer, 
     resetTimer, 
     setFocusTime,
-    nextSession
+    nextSession,
+    tick
   } = usePomodoro()
-
   const options = [20, 40, 60, 80, 100, 120]
   
+  const formaterTime = (timeLeft: number) => {
+    let min = timeLeft/60
+    let minFormat = Math.floor(min)
+    let seconds = timeLeft % 60
+    const secondsFormat = String(seconds).padStart(2, "0")
+
+    return `${minFormat}:${secondsFormat}` 
+  }
   
+  useEffect(() => {
+    if(!isRunning) return
+    if(timeLeft === 0) {
+      nextSession()
+      startTimer()
+    }
+
+    const interval = setInterval(() => {
+      tick()
+    }, 1000)
+
+    return () => clearInterval(interval)
+  },[isRunning, timeLeft])
 
   return(
     <>
@@ -32,7 +53,7 @@ function RouteComponent() {
         <section className='w-[70%] h-full flex flex-col items-center'>
           <div className='h-[45%] w-full flex flex-col justify-center items-center text-[#ff6b4a] gap-5'>
             <span className='text-lg'>Pomodoro 🍅</span>
-            <span className='text-9xl'>{timeLeft}</span>
+            <span className='text-9xl'>{formaterTime(timeLeft)}</span>
             <span>{"sessão " + currentSession + ` de ` + sessions}</span>
           </div>
 

@@ -1,12 +1,12 @@
 import { create } from "zustand"
 
 const pomodoroOptions: Record<number, number> = {
-  15: 3,
-  25: 5,
-  40: 8,
-  60: 12,
-  80: 16,
-  90: 18,
+  20: 5,
+  40: 10,
+  60: 20,
+  80: 40,
+  100: 50,
+  120: 60,
 }
 
 interface Pomodoro {
@@ -23,10 +23,11 @@ interface Pomodoro {
   resetTimer: () => void
   setFocusTime: (minutes: number) => void
   nextSession: () => void
+  tick: () => void
 }
 
 export const usePomodoro = create<Pomodoro>((set, get) => ({
-  timeLeft: 25 * 60,
+  timeLeft: 20 * 60,
   isRunning: false,
   sessions: 4,
   currentSession: 1,
@@ -66,6 +67,8 @@ export const usePomodoro = create<Pomodoro>((set, get) => ({
       isRunning: false,
     }
   }),
+
+  tick: () => set((state) => ({ timeLeft: state.timeLeft - 1 })),
 }))
 
 export { pomodoroOptions }
