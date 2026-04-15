@@ -59,3 +59,8 @@
 
   transition: .2s;
 }
+
+.set-timer{
+ @apply rounded-full w-20 h-10 flex justify-center items-center cursor-pointer
+
+}
