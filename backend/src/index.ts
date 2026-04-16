@@ -42,7 +42,7 @@ app.register(imgUpload, {
 })
 
 app.register(todoListApi, {
-  prefix:"api/todoList"
+  prefix:"/api/todoList"
 })
 
 app.register(notasApi, {
@@ -50,11 +50,11 @@ app.register(notasApi, {
 })
 
 app.register(financasApi, {
-  prefix:"api/financa"
+  prefix:"/api/financa"
 })
 
 app.register(habitosApi, {
-  prefix: "api/habitos"
+  prefix: "/api/habitos"
 })
 
 app.all('/api/auth/*',
