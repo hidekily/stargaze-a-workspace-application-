@@ -13,8 +13,20 @@ function RouteComponent() {
   const [name, setName] = useState<string>("")
   const [description, setDescription] = useState<string>("")
   const [modal, setModal] = useState<boolean>(false)
+  const [selectedListId, setSelectedListId] = useState<string | null>(null)
 
   const queryClient = useQueryClient()
+
+  const { data: itemsData } = useQuery({
+    queryKey: ["todoItems", selectedListId],
+    queryFn: async () => {
+      const response = await fetch(`${API_URL}/api/todolist/items/${selectedListId}`, {
+        credentials: 'include',
+      })
+      return response.json()
+    },
+    enabled: !!selectedListId, 
+  })  
 
   const {data} = useQuery({
     queryKey: ["todo"],
