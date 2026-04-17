@@ -50,7 +50,7 @@ function RouteComponent() {
       {modal === true && (
         <Modal 
           header=''
-          title=''
+          title='Crie sua todo list'
           subtitle=''
           buttons={[
             {text: "cancel", onclick: () => {handleCreateTodo.reset(), setModal(false)}, colorVariant: 'danger'},
