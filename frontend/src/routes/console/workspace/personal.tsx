@@ -34,7 +34,7 @@ function RouteComponent() {
     <div className='w-full h-full'>
       <nav className='h-20 w-full border-b-[0.5px] border-zinc-900 flex flex-row items-end justify-center gap-[5%] text-zinc-500 fixed bg-black'>
         {Object.values(tabProps).map((index: any) => (
-          <Link key={index} to={index.linkto} 
+          <Link key={index.tab} to={index.linkto} 
                 className={`personal-tab-navbar ${active === index.tab ?  "text-lg text-[#ffd666] border-b border-[#ffd666]" : ""}`}
           >
             {index.name}

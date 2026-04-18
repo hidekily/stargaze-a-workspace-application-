@@ -14,19 +14,38 @@ function RouteComponent() {
   const [description, setDescription] = useState<string>("")
   const [modal, setModal] = useState<boolean>(false)
   const [selectedListId, setSelectedListId] = useState<string | null>(null)
+  const [itemName, setItemName] = useState<string>("")
+  const [activeTab, setActiveTab] = useState()
 
   const queryClient = useQueryClient()
 
   const { data: itemsData } = useQuery({
     queryKey: ["todoItems", selectedListId],
     queryFn: async () => {
-      const response = await fetch(`${API_URL}/api/todolist/items/${selectedListId}`, {
+      const response = await fetch(`${API_URL}/api/todoList/items/${selectedListId}`, {
         credentials: 'include',
       })
       return response.json()
     },
     enabled: !!selectedListId, 
   })  
+
+  const handleCreateTodoItems = useMutation({
+    mutationFn: async() => {
+      await fetch(`${API_URL}/api/todoList/item/${selectedListId}`, {
+        credentials: "include",
+        method: "POST",
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify({
+          itemName: itemName,
+        })
+      })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey:['todoItems']})
+      setItemName("")
+    }
+  })
 
   const {data} = useQuery({
     queryKey: ["todo"],
@@ -75,6 +94,7 @@ function RouteComponent() {
       )}
 
       <div className='h-full w-full flex flex-row'>
+        {/* box das listas */}
         <section className='h-full w-[45%] flex flex-col items-center'>
           <section className='h-[15%] w-[80%] flex flex-row items-center justify-between text-white'>
             <span className='text-3xl font-semibold text-[#ff6b4a] tracking-tight'>Your Lists</span>
@@ -87,13 +107,15 @@ function RouteComponent() {
             </button>
           </section>
 
-          <section className='h-[85%] w-full flex flex-col overflow-auto items-center gap-3 pr-1'>
+        {/* listas */}
+        <section className='h-[85%] w-full flex flex-col overflow-auto items-center gap-3 pr-1'>
             {data && data.map && data.map((todo: any) => (
-              <div key={todo.id} className='w-[80%] bg-zinc-900/70 border border-zinc-800 hover:border-[#ff6b4a]/30 flex flex-col gap-1 text-white rounded-2xl px-5 py-4 transition-colors duration-150 cursor-default'>
+              <div  key={todo.id} 
+                    className={`w-[80%] ${activeTab === todo.id ? "bg-[#ff6b4a]/60" : "bg-zinc-800"} border border-zinc-800 hover:border-[#ff6b4a]/30 flex flex-col gap-1 text-white rounded-2xl px-5 py-4 transition-colors duration-150 cursor-default`}
+                    onClick={() => {setSelectedListId(todo.id), setActiveTab(todo.id)}}
+                >
                 <span className='text-base font-medium text-white leading-snug'>{todo.listName}</span>
-                {todo.description && (
-                  <span className='text-sm text-zinc-400 leading-snug'>{todo.description}</span>
-                )}
+                <span className='text-sm text-zinc-400 leading-snug'>{todo.description}</span>
                 <span className='text-xs text-zinc-600 mt-1'>{dataFormater(todo.date)}</span>
               </div>
             ))}
@@ -101,6 +123,23 @@ function RouteComponent() {
         </section>
 
         <span className='h-full w-[1px] bg-zinc-800'/>
+
+        {/* box dos items */}
+        <section className='w-[55%] h-full flex flex-col justify-center items-center overflow-auto'>
+            <div className='h-[90%] w-full flex flex-col overflow-auto items-center'>
+              {itemsData && itemsData.data.map && itemsData.data.map((index: any) => (
+                <div key={index.id} className={`h-20 w-[80%] bg-zinc-800 rounded-4xl mt-6 flex flex-row justify-center items-center`}>
+                  <span>{index.itemName}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* input dos items */}
+            <div className='h-[10%] w-full flex flex-row justify-center items-center gap-5'>
+              <input type="text" value={itemName} placeholder='digite uma nova tarefa' className='w-[80%] h-[70%] bg-zinc-800 rounded-lg' onChange={(e) => setItemName(e.target.value)}/>
+              <button onClick={(e) => {e.preventDefault(), handleCreateTodoItems.mutate()}} className='w-10 h-10 rounded-2xl bg-white'>+</button>
+            </div>
+        </section>
       </div>
     </>
   )
