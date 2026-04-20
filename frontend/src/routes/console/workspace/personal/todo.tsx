@@ -88,8 +88,8 @@ function RouteComponent() {
       })
       return response.json()
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey:["todoItems"]})
+    onSettled: () => {
+      queryClient.invalidateQueries({queryKey:["todoItems", selectedListId]})
     }
   })
 
@@ -146,10 +146,9 @@ function RouteComponent() {
             <div className='h-[90%] w-full flex flex-col overflow-auto items-center'>
               {itemsData && itemsData.data.map && itemsData.data.map((index: any) => (
                 <div key={index.id} 
-                     className={`h-20 w-[80%] ${index.doneOrNot === "done" ? "bg-zinc-800" : "bg-teal-900"} rounded-4xl mt-6 flex flex-row justify-center items-center`} 
+                     className={`h-20 w-[80%] ${index.doneOrNot === "done" ? "bg-green-800" : "bg-red-700"} rounded-4xl mt-6 flex flex-row justify-center items-center`} 
                      onClick={() => handleSetStatus.mutate({itemId: index.id, doneOrNotStatus: index.doneOrNot})}>
                   <span>{index.itemName}</span>
-                  <span>{index.doneOrNot}</span>
                 </div>
               ))}
             </div>

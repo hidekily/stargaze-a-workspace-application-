@@ -140,7 +140,7 @@ export function todoListApi(app: FastifyInstance){
                 ...(itemName && {itemName: itemName}),
                 ...(doneOrNot && {doneOrNot: doneOrNot})
             })
-            .where(eq(todoItems.todoId, String(id)))
+            .where(eq(todoItems.id, String(id)))
         }
 
         // todo inteiro LISTA
