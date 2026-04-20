@@ -76,6 +76,23 @@ function RouteComponent() {
     }
   })
 
+  const handleSetStatus = useMutation({
+    mutationFn: async({itemId, doneOrNotStatus}: {itemId: string, doneOrNotStatus: string}) => {
+      const response = await fetch(`${API_URL}/api/todoList/${itemId}`, {
+        method: "PATCH",
+        credentials: 'include',
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify({
+          doneOrNot: doneOrNotStatus === "pending" ? "done" : "pending"
+        })
+      })
+      return response.json()
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey:["todoItems"]})
+    }
+  })
+
   return (
     <>
       {modal === true && (
@@ -128,8 +145,11 @@ function RouteComponent() {
         <section className='w-[55%] h-full flex flex-col justify-center items-center overflow-auto'>
             <div className='h-[90%] w-full flex flex-col overflow-auto items-center'>
               {itemsData && itemsData.data.map && itemsData.data.map((index: any) => (
-                <div key={index.id} className={`h-20 w-[80%] bg-zinc-800 rounded-4xl mt-6 flex flex-row justify-center items-center`}>
+                <div key={index.id} 
+                     className={`h-20 w-[80%] ${index.doneOrNot === "done" ? "bg-zinc-800" : "bg-teal-900"} rounded-4xl mt-6 flex flex-row justify-center items-center`} 
+                     onClick={() => handleSetStatus.mutate({itemId: index.id, doneOrNotStatus: index.doneOrNot})}>
                   <span>{index.itemName}</span>
+                  <span>{index.doneOrNot}</span>
                 </div>
               ))}
             </div>

@@ -121,7 +121,8 @@ export function todoListApi(app: FastifyInstance){
         const schema = z.object({
             itemName: z.string().optional(),
             todoName: z.string().optional(),
-            description: z.string().optional()
+            description: z.string().optional(),
+            doneOrNot: z.enum(["pending", "done"]).optional()
         })       
         
         const schemaResult = schema.safeParse(request.body)
@@ -130,12 +131,15 @@ export function todoListApi(app: FastifyInstance){
             return reply.status(400).send({error: "erro ao validar a data"})
         }
 
-        const {todoName, itemName, description} = schemaResult.data
+        const {todoName, itemName, description, doneOrNot} = schemaResult.data
 
-        if(itemName){
+        if(itemName || doneOrNot){
             const updateTodoItems = await db
             .update(todoItems)
-            .set({itemName})
+            .set({
+                ...(itemName && {itemName: itemName}),
+                ...(doneOrNot && {doneOrNot: doneOrNot})
+            })
             .where(eq(todoItems.todoId, String(id)))
         }
 
