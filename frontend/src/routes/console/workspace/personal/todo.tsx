@@ -95,8 +95,8 @@ function RouteComponent() {
   })
 
   const handleDeleteTodo = useMutation({
-    mutationFn: async() => {
-      const response = await fetch(`${API_URL}/api/todolist/${selectedListId}`, {
+    mutationFn: async(listId: string) => {
+      const response = await fetch(`${API_URL}/api/todoList/${listId}`, {
         credentials: 'include',
         method: "DELETE"
       })
@@ -113,7 +113,7 @@ function RouteComponent() {
       })
       await response.json()
     },
-    onSettled: () => {queryClient.invalidateQueries({queryKey: ["todoItems", selectedListId]})}
+    onSettled: () => {queryClient.invalidateQueries({queryKey: ["todoItems"]})}
   })
 
   return (
@@ -140,7 +140,7 @@ function RouteComponent() {
           subtitle=''
           buttons={[
             {text: 'cancel', onclick: () => {setModalDel(false),handleDeleteTodo.reset()}, colorVariant: 'add'},
-            {text: 'delete', onclick: () => {setModalDel(false), handleDeleteTodo.mutate()}, colorVariant: 'danger'}
+            {text: 'delete', onclick: () => {setModalDel(false),handleDeleteTodo.mutate(selectedListId!)}, colorVariant: 'danger'}
           ]}
         >
 
@@ -191,10 +191,11 @@ function RouteComponent() {
             <div className='h-[90%] w-full flex flex-col overflow-auto items-center'>
               {itemsData && itemsData.data.map && itemsData.data.map((index: any) => (
                 <div key={index.id} 
-                     className={`h-20 w-[80%] ${index.doneOrNot === "done" ? "" : ""} rounded-4xl mt-6 flex flex-row justify-center items-center gap-5`} 
+                     className={`h-20 w-[80%] ${index.doneOrNot === "done" ? "bg-[#7BA3FF]/50" : "bg-[#FF6B4A]/50"} rounded-4xl mt-6 flex flex-row justify-center items-center gap-5 text-white`} 
                      onClick={() => handleSetStatus.mutate({itemId: index.id, doneOrNotStatus: index.doneOrNot})}>
                   <span>{index.itemName}</span>
                   <span>{index.doneOrNot}</span>
+                  <button onClick={() => {handleDeleteTodoItems.mutate({itemId: index.id})}}>🗑️</button>
                 </div>
               ))}
             </div>
