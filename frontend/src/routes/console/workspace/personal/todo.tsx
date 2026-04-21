@@ -13,6 +13,7 @@ function RouteComponent() {
   const [name, setName] = useState<string>("")
   const [description, setDescription] = useState<string>("")
   const [modal, setModal] = useState<boolean>(false)
+  const [modalDel, setModalDel] = useState<boolean>(false)
   const [selectedListId, setSelectedListId] = useState<string | null>(null)
   const [itemName, setItemName] = useState<string>("")
   const [activeTab, setActiveTab] = useState()
@@ -93,6 +94,28 @@ function RouteComponent() {
     }
   })
 
+  const handleDeleteTodo = useMutation({
+    mutationFn: async() => {
+      const response = await fetch(`${API_URL}/api/todolist/${selectedListId}`, {
+        credentials: 'include',
+        method: "DELETE"
+      })
+      await response.json()
+    },
+    onSettled: () => {queryClient.invalidateQueries({queryKey: ['todo']})}
+  })
+
+  const handleDeleteTodoItems = useMutation({
+    mutationFn: async({itemId} : {itemId: string}) => {
+      const response = await fetch(`${API_URL}/api/todoList/items/${itemId}`, {
+        credentials: 'include',
+        method: "DELETE"
+      })
+      await response.json()
+    },
+    onSettled: () => {queryClient.invalidateQueries({queryKey: ["todoItems", selectedListId]})}
+  })
+
   return (
     <>
       {modal === true && (
@@ -110,10 +133,24 @@ function RouteComponent() {
         </Modal>
       )}
 
+      {modalDel === true && (
+        <Modal
+          header=''
+          title=''
+          subtitle=''
+          buttons={[
+            {text: 'cancel', onclick: () => {setModalDel(false),handleDeleteTodo.reset()}, colorVariant: 'add'},
+            {text: 'delete', onclick: () => {setModalDel(false), handleDeleteTodo.mutate()}, colorVariant: 'danger'}
+          ]}
+        >
+
+        </Modal>
+      )}
+
       <div className='h-full w-full flex flex-row'>
         {/* box das listas */}
         <section className='h-full w-[45%] flex flex-col items-center'>
-          <section className='h-[15%] w-[80%] flex flex-row items-center justify-between text-white'>
+          <section className='h-[15%] w-[80%] flex flex-row items-center justify-center gap-10 text-white'>
             <span className='text-3xl font-semibold text-[#ff6b4a] tracking-tight'>Your Lists</span>
             <button
               onClick={() => setModal(true)}
@@ -121,6 +158,14 @@ function RouteComponent() {
             >
               <span className='text-lg leading-none'>+</span>
               <span className='text-sm'>New list</span>
+            </button>
+
+            <button
+              onClick={() => {setModalDel(true)}}
+              className='text-xl rounded-xl px-4 h-9 bg-[#ff6b4a]/20 hover:bg-[#ff6b4a]/40 border border-[#ff6b4a]/30 text-[#ff6b4a] transition-colors duration-150 flex items-center gap-1'
+            >
+              <span className='text-lg leading-none'>-</span>
+              <span className='text-sm'>delete</span>
             </button>
           </section>
 
@@ -146,9 +191,10 @@ function RouteComponent() {
             <div className='h-[90%] w-full flex flex-col overflow-auto items-center'>
               {itemsData && itemsData.data.map && itemsData.data.map((index: any) => (
                 <div key={index.id} 
-                     className={`h-20 w-[80%] ${index.doneOrNot === "done" ? "bg-green-800" : "bg-red-700"} rounded-4xl mt-6 flex flex-row justify-center items-center`} 
+                     className={`h-20 w-[80%] ${index.doneOrNot === "done" ? "" : ""} rounded-4xl mt-6 flex flex-row justify-center items-center gap-5`} 
                      onClick={() => handleSetStatus.mutate({itemId: index.id, doneOrNotStatus: index.doneOrNot})}>
                   <span>{index.itemName}</span>
+                  <span>{index.doneOrNot}</span>
                 </div>
               ))}
             </div>

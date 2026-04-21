@@ -154,4 +154,18 @@ export function todoListApi(app: FastifyInstance){
             .where(eq(todoList.id, String(id)))
         }
     })
+
+    // app delete dos todos e items
+
+    app.delete('/:id', async(request, reply) => {
+        const {id} = request.params as {id: string}
+
+        await db.delete(todoList).where(eq(todoList.id, String(id)))
+    })
+
+    app.delete('/items/:id', async(request, reply) => {
+        const {id} = request.params as {id: string}
+
+        await db.delete(todoItems).where(eq(todoItems.id, String(id)))
+    })
 }
