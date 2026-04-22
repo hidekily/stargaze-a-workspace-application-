@@ -35,9 +35,9 @@ function RouteComponent() {
 
   if (loading){
     return (
-      <div className='inset-0 w-full h-full bg-[#F4EAE0]/80 flex justify-center items-center'>
-        <div className="w-10 h-10 border-4 border-white border-t-black rounded-full animate-spin duration-1000" />     
-      </div> 
+      <div className='inset-0 w-full h-full bg-[#0A0A0F]/80 flex justify-center items-center'>
+        <div className="w-10 h-10 border-4 border-[#E8E8F0] border-t-[#FF6B4A] rounded-full animate-spin duration-1000" />
+      </div>
     )
   }
 

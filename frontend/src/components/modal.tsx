@@ -14,20 +14,20 @@ interface ModalProps{
 
 const variantColors = {
   add: "bg-[#ff6b4a]/20 hover:bg-[#ff6b4a]/35 border border-[#ff6b4a]/40 text-[#ff6b4a]",
-  danger: "bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-zinc-300",
-  mid: "bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-zinc-300",
+  danger: "bg-[#1A1A2E] hover:bg-[#252540] border border-[#252540] text-[#E8E8F0]",
+  mid: "bg-[#1A1A2E] hover:bg-[#252540] border border-[#252540] text-[#E8E8F0]",
 }
 
 export function Modal({header, title, subtitle, buttons, children}:ModalProps){
     return(
         <>
             <div className="inset-0 fixed bg-black/60 backdrop-blur-sm flex justify-center items-center w-full h-full z-50">
-                <section className="bg-zinc-900 border border-zinc-800 w-[90%] h-auto flex flex-col rounded-2xl gap-5 sm:w-[45%]">
+                <section className="bg-[#0A0A0F] border border-[#252540] w-[90%] h-auto flex flex-col rounded-2xl gap-5 sm:w-[45%]">
                     <div className="w-full flex flex-col p-6 gap-4 sm:p-8 sm:gap-4">
-                        <span className="text-zinc-500 text-sm">{header}</span>
-                        <span className="text-xl font-semibold text-white sm:text-2xl">{title}</span>
+                        <span className="text-[#9898B0] text-sm">{header}</span>
+                        <span className="text-xl font-semibold text-[#E8E8F0] sm:text-2xl">{title}</span>
                         {children}
-                        <span className="text-sm text-zinc-400 sm:text-base">{subtitle}</span>
+                        <span className="text-sm text-[#9898B0] sm:text-base">{subtitle}</span>
                     </div>
 
                     <div className="w-full flex p-6 pt-2 gap-3 sm:p-8 sm:pt-2">

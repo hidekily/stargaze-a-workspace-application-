@@ -8,7 +8,7 @@ import { desc, eq } from "drizzle-orm";
 export function todoListApi(app: FastifyInstance){
     const listSchema = z.object({
         todoName: z.string().min(1),
-        description: z.string().min(1)
+        description: z.string().optional()
     })
 
     const itemSchema = z.object({

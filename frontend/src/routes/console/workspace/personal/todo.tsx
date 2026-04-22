@@ -116,6 +116,8 @@ function RouteComponent() {
     onSettled: () => {queryClient.invalidateQueries({queryKey: ["todoItems"]})}
   })
 
+  const selectedList = data?.find((ci: any) => ci.id === selectedListId)
+
   return (
     <>
       {modal === true && (
@@ -135,7 +137,7 @@ function RouteComponent() {
 
       {modalDel === true && (
         <Modal
-          header=''
+          header={<>Are you sure you want to delete this todo list: "<span className='text-[#ff6b4a] text-lg'>{selectedList?.listName}</span>" ?</>}
           title=''
           subtitle=''
           buttons={[
@@ -172,38 +174,43 @@ function RouteComponent() {
         {/* listas */}
         <section className='h-[85%] w-full flex flex-col overflow-auto items-center gap-3 pr-1'>
             {data && data.map && data.map((todo: any) => (
-              <div  key={todo.id} 
-                    className={`w-[80%] ${activeTab === todo.id ? "bg-[#ff6b4a]/60" : "bg-zinc-800"} border border-zinc-800 hover:border-[#ff6b4a]/30 flex flex-col gap-1 text-white rounded-2xl px-5 py-4 transition-colors duration-150 cursor-default`}
+              <div  key={todo.id}
+                    className={`w-[80%] ${activeTab === todo.id ? "bg-[#ff6b4a]/60" : "bg-[#1A1A2E]"} border border-[#252540] hover:border-[#ff6b4a]/30 flex flex-col gap-1 text-[#E8E8F0] rounded-2xl px-5 py-4 transition-colors duration-150 cursor-default`}
                     onClick={() => {setSelectedListId(todo.id), setActiveTab(todo.id)}}
                 >
-                <span className='text-base font-medium text-white leading-snug'>{todo.listName}</span>
-                <span className='text-sm text-zinc-400 leading-snug'>{todo.description}</span>
-                <span className='text-xs text-zinc-600 mt-1'>{dataFormater(todo.date)}</span>
+                <span className='text-base font-medium text-[#E8E8F0] leading-snug'>{todo.listName}</span>
+                <span className='text-sm text-[#9898B0] leading-snug'>{todo.description}</span>
+                <span className='text-xs text-[#5A5A78] mt-1'>{dataFormater(todo.date)}</span>
               </div>
             ))}
           </section>
         </section>
 
-        <span className='h-full w-[1px] bg-zinc-800'/>
+        <span className='h-full w-[1px] bg-[#252540]'/>
 
         {/* box dos items */}
         <section className='w-[55%] h-full flex flex-col justify-center items-center overflow-auto'>
-            <div className='h-[90%] w-full flex flex-col overflow-auto items-center'>
+            <div className='h-[90%] w-full flex flex-col overflow-auto p-5'>
+              <span className='text-2xl text-white'>{selectedList?.listName}</span>
+              <span className='text-lg text-white'>{selectedList?.description}</span>
               {itemsData && itemsData.data.map && itemsData.data.map((index: any) => (
-                <div key={index.id} 
-                     className={`h-20 w-[80%] ${index.doneOrNot === "done" ? "bg-[#7BA3FF]/50" : "bg-[#FF6B4A]/50"} rounded-4xl mt-6 flex flex-row justify-center items-center gap-5 text-white`} 
-                     onClick={() => handleSetStatus.mutate({itemId: index.id, doneOrNotStatus: index.doneOrNot})}>
-                  <span>{index.itemName}</span>
-                  <span>{index.doneOrNot}</span>
-                  <button onClick={() => {handleDeleteTodoItems.mutate({itemId: index.id})}}>🗑️</button>
+                <div key={index.id} className='h-15 w-[80%] bg-[#12121C] mt-5 rounded-lg border-1 border-white/50 flex flex-row justify-between items-center'>
+                  <button className={`h-10 w-10 rounded-2xl border-1 border-[#252540] flex justify-center items-center ml-2 ${index.doneOrNot === 'pending' ?  "": "bg-[#FFD666]/80"}`}
+                          onClick={() => handleSetStatus.mutate({itemId: index.id, doneOrNotStatus: index.doneOrNot})}
+                  >
+                    {index.doneOrNot === 'pending' ? "" : "✓"}
+                  </button>
+                  <span className='text-[#ffb347]'>{index.itemName}</span>
+                  <span className='text-[#FFB347]'>{index.doneOrNot}</span>
+                  <span onClick={() => handleDeleteTodoItems.mutate({itemId: index.id})}>🗑️</span>
                 </div>
               ))}
             </div>
 
             {/* input dos items */}
-            <div className='h-[10%] w-full flex flex-row justify-center items-center gap-5'>
-              <input type="text" value={itemName} placeholder='digite uma nova tarefa' className='w-[80%] h-[70%] bg-zinc-800 rounded-lg' onChange={(e) => setItemName(e.target.value)}/>
-              <button onClick={(e) => {e.preventDefault(), handleCreateTodoItems.mutate()}} className='w-10 h-10 rounded-2xl bg-white'>+</button>
+            <div className='h-[10%] w-full flex flex-row justify-center items-center gap-5 text-[#FFB347]'>
+              <input type="text" value={itemName} placeholder='digite uma nova tarefa' className='w-[80%] h-[70%] bg-[#1A1A2E] rounded-lg' onChange={(e) => setItemName(e.target.value)}/>
+              <button onClick={(e) => {e.preventDefault(), handleCreateTodoItems.mutate()}} className='w-10 h-10 rounded-2xl bg-[#FF6B4A]'>+</button>
             </div>
         </section>
       </div>

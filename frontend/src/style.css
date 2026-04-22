@@ -43,15 +43,15 @@
 }
 
 .input-modal{
-  @apply rounded-lg w-[80%] h-10 bg-zinc-600 text-white text-center
+  @apply rounded-lg w-[80%] h-10 bg-[#252540] text-[#E8E8F0] text-center
 }
 
 .groups{
-  @apply flex justify-center items-center bg-zinc-900 text-white rounded-2xl w-[70%] min-h-25 text-xs border-1 border-white border-dashed
+  @apply flex justify-center items-center bg-[#0A0A0F] text-[#E8E8F0] rounded-2xl w-[70%] min-h-25 text-xs border-1 border-[#252540] border-dashed
 }
 
 .bolinhaModal{
-  @apply w-15 h-15 rounded-full bg-[#e8828a]/80 flex justify-center items-center text-2xl border-1 border-[#7A5C3E]
+  @apply w-15 h-15 rounded-full bg-[#FF5A5A]/80 flex justify-center items-center text-2xl border-1 border-[#252540]
 }
 
 .personal-tab-navbar{

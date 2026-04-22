@@ -32,10 +32,10 @@ function RouteComponent() {
 
   return (
     <div className='w-full h-full'>
-      <nav className='h-20 w-full border-b-[0.5px] border-zinc-900 flex flex-row items-end justify-center gap-[5%] text-zinc-500 fixed bg-black'>
+      <nav className='h-20 w-full border-b-[0.5px] border-[#252540] flex flex-row items-end justify-center gap-[5%] text-[#9898B0] fixed bg-[#0A0A0F]'>
         {Object.values(tabProps).map((index: any) => (
-          <Link key={index.tab} to={index.linkto} 
-                className={`personal-tab-navbar ${active === index.tab ?  "text-lg text-[#ffd666] border-b border-[#ffd666]" : ""}`}
+          <Link key={index.tab} to={index.linkto}
+                className={`personal-tab-navbar ${active === index.tab ?  "text-lg text-[#FF6B4A] border-b border-[#FF6B4A]" : ""}`}
           >
             {index.name}
           </Link>

@@ -59,16 +59,16 @@ function RouteComponent() {
 
           <div className='h-[10%] w-full flex flex-row justify-center items-center text-md gap-5'>
             {options.map((index) => (
-              <a key={index} className={`set-timer ${focusTime === index ? "bg-[#ff6b4a]/40 border-[#ff6b3a]/50 border-1" : "bg-zinc-800 border-1 border-zinc-600"}`} onClick={() => setFocusTime(index)}>
+              <a key={index} className={`set-timer ${focusTime === index ? "bg-[#ff6b4a]/40 border-[#FF6B4A]/50 border-1" : "bg-[#1A1A2E] border-1 border-[#252540]"}`} onClick={() => setFocusTime(index)}>
                 {index}
               </a>
             ))}
           </div>
 
           <div className='h-[30%] w-full flex flex-row justify-center items-center gap-15'>
-            <button onClick={() => {startTimer()}} className='w-45 h-20 rounded-lg bg-zinc-800 border-1 border-[#ff6b4a]'>Start</button>
-            <button onClick={() => {pauseTimer()}} className='w-45 h-20 rounded-lg bg-zinc-800 border-1 border-[#ff6b4a]'>Pause</button>
-            <button onClick={() => {resetTimer()}} className='w-45 h-20 rounded-lg bg-zinc-800 border-1 border-[#ff6b4a]'>Reset</button>
+            <button onClick={() => {startTimer()}} className='w-45 h-20 rounded-lg bg-[#1A1A2E] border-1 border-[#FF6B4A]'>Start</button>
+            <button onClick={() => {pauseTimer()}} className='w-45 h-20 rounded-lg bg-[#1A1A2E] border-1 border-[#FF6B4A]'>Pause</button>
+            <button onClick={() => {resetTimer()}} className='w-45 h-20 rounded-lg bg-[#1A1A2E] border-1 border-[#FF6B4A]'>Reset</button>
           </div>
         </section>
       </div>
