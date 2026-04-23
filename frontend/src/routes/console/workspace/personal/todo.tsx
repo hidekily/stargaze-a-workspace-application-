@@ -17,6 +17,8 @@ function RouteComponent() {
   const [selectedListId, setSelectedListId] = useState<string | null>(null)
   const [itemName, setItemName] = useState<string>("")
   const [activeTab, setActiveTab] = useState()
+  const [isEditing, setIsEditing] = useState<string | null>()
+  const [editValue, setEditValue] = useState<string>()
 
   const queryClient = useQueryClient()
 
@@ -116,6 +118,21 @@ function RouteComponent() {
     onSettled: () => {queryClient.invalidateQueries({queryKey: ["todoItems"]})}
   })
 
+  const handleUpdateTodoItems = useMutation({
+    mutationFn: async({itemId} : {itemId: string}) => {
+      const response = await fetch(`${API_URL}/api/todoList/${itemId}`, {
+        credentials: 'include',
+        method: 'PATCH',
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify({
+          itemName: editValue
+        })
+      })
+      await response.json()
+    },
+    onSettled: () => {queryClient.invalidateQueries({queryKey: ['todoItems']})}
+  })
+
   const selectedList = data?.find((ci: any) => ci.id === selectedListId)
 
   return (
@@ -200,9 +217,27 @@ function RouteComponent() {
                   >
                     {index.doneOrNot === 'pending' ? "" : "✓"}
                   </button>
-                  <span className='text-[#ffb347]'>{index.itemName}</span>
+
+                  <span onDoubleClick={() => {setIsEditing(index.id), setEditValue(index.itemName)}}>
+                    {isEditing === index.id ? 
+                      <input type="text"
+                             placeholder={`${index.itemName}`}
+                             className='bg-zinc-800 text-[#FFB347] rounded-lg' 
+                             value={editValue}
+                             onBlur={() => setIsEditing(null)}
+                             onChange={(e) => setEditValue(e.target.value)}
+                             onKeyDown={(e) => { if(e.key === "Enter" && !e.shiftKey){
+                              e.preventDefault()
+                              setIsEditing(null)
+                              handleUpdateTodoItems.mutate({itemId: index.id})
+                             }}}
+                             /> 
+                      :<span className='text-[#FFB347] text-lg'>{index.itemName}</span>
+                    }
+                  </span>
+
                   <span className='text-[#FFB347]'>{index.doneOrNot}</span>
-                  <span onClick={() => handleDeleteTodoItems.mutate({itemId: index.id})}>🗑️</span>
+                  <button className='mr-2' onClick={() => handleDeleteTodoItems.mutate({itemId: index.id})}>🗑️</button>
                 </div>
               ))}
             </div>
