@@ -130,7 +130,11 @@ function RouteComponent() {
       })
       await response.json()
     },
-    onSettled: () => {queryClient.invalidateQueries({queryKey: ['todoItems']})}
+    onSettled: () => {
+      queryClient.invalidateQueries({queryKey: ['todoItems']})
+      setEditValue("")
+      setIsEditing(null)
+    }
   })
 
   const selectedList = data?.find((ci: any) => ci.id === selectedListId)
@@ -209,7 +213,7 @@ function RouteComponent() {
         <section className='w-[55%] h-full flex flex-col justify-center items-center overflow-auto'>
             <div className='h-[90%] w-full flex flex-col overflow-auto p-5'>
               <span className='text-2xl text-white'>{selectedList?.listName}</span>
-              <span className='text-lg text-white'>{selectedList?.description}</span>
+              <span className='text-lg text-white opacity-30'>{selectedList?.description}</span>
               {itemsData && itemsData.data.map && itemsData.data.map((index: any) => (
                 <div key={index.id} className='h-15 w-[80%] bg-[#12121C] mt-5 rounded-lg border-1 border-white/50 flex flex-row justify-between items-center'>
                   <button className={`h-10 w-10 rounded-2xl border-1 border-[#252540] flex justify-center items-center ml-2 ${index.doneOrNot === 'pending' ?  "": "bg-[#FFD666]/80"}`}
@@ -228,7 +232,6 @@ function RouteComponent() {
                              onChange={(e) => setEditValue(e.target.value)}
                              onKeyDown={(e) => { if(e.key === "Enter" && !e.shiftKey){
                               e.preventDefault()
-                              setIsEditing(null)
                               handleUpdateTodoItems.mutate({itemId: index.id})
                              }}}
                              /> 
@@ -236,7 +239,7 @@ function RouteComponent() {
                     }
                   </span>
 
-                  <span className='text-[#FFB347]'>{index.doneOrNot}</span>
+                  <span className='text-[#FFB347]'>status: {index.doneOrNot}</span>
                   <button className='mr-2' onClick={() => handleDeleteTodoItems.mutate({itemId: index.id})}>🗑️</button>
                 </div>
               ))}
@@ -244,7 +247,7 @@ function RouteComponent() {
 
             {/* input dos items */}
             <div className='h-[10%] w-full flex flex-row justify-center items-center gap-5 text-[#FFB347]'>
-              <input type="text" value={itemName} placeholder='digite uma nova tarefa' className='w-[80%] h-[70%] bg-[#1A1A2E] rounded-lg' onChange={(e) => setItemName(e.target.value)}/>
+              <input type="text" value={itemName} placeholder='digite uma nova tarefa' className='w-[80%] h-[70%] bg-[#1A1A2E] rounded-lg text-center' onChange={(e) => setItemName(e.target.value)}/>
               <button onClick={(e) => {e.preventDefault(), handleCreateTodoItems.mutate()}} className='w-10 h-10 rounded-2xl bg-[#FF6B4A]'>+</button>
             </div>
         </section>
