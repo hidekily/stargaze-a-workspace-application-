@@ -75,8 +75,8 @@ export function TabBar2({type, linkBase}: ComponentProps) {
   })
 
   // const for hot keys ( i made it a little bit better for user), inclusive eu n preciso chamar elas nas functions e nem fzr const
-  useHotkey({key: "Backspace", mod: true}, () => {handleWorkspaceCreateMutation.reset(), setModal(false)})  
-  useHotkey({key: "enter", mod:true}, () => {
+  useHotkey({key: "Backspace"}, () => {handleWorkspaceCreateMutation.reset(), setModal(false)})  
+  useHotkey({key: "enter"}, () => {
     if(handleWorkspaceCreateMutation.isSuccess){
       setTimeout(() => {
         handleWorkspaceCreateMutation.reset()

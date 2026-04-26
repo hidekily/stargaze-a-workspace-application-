@@ -46,7 +46,7 @@ app.register(todoListApi, {
 })
 
 app.register(notasApi, {
-  prefix: "api/notas"
+  prefix: "/api/notas"
 })
 
 app.register(financasApi, {

@@ -30,9 +30,9 @@ export const notas = pgTable("notas", {
     id: text("id").primaryKey(),
     userId: text("userId")
         .references(() => user.id, { onDelete: "cascade" }),
-    name: text("name").notNull(),
-    content: text("content").default(""),
+    notasName: text("name").notNull(),
     createdAt: timestamp().defaultNow().notNull(),
+    content: text().default(""),
 });
 // 
 // habitos

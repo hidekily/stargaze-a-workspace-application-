@@ -4,6 +4,7 @@ import { db } from 'shared/db'
 import { auth } from 'shared/auth'
 import  {notas} from "shared/db/schema"
 import { eq } from 'drizzle-orm'
+import { request } from 'http'
 
 
 export function notasApi(app: FastifyInstance){
@@ -13,7 +14,7 @@ export function notasApi(app: FastifyInstance){
 
         const schema = z.object({
             name: z.string().min(2),
-            content: z.string().min(1),
+            content: z.string().optional(),
         })
 
         const session = await auth.api.getSession({
@@ -34,7 +35,7 @@ export function notasApi(app: FastifyInstance){
 
         const [newNota] = await db.insert(notas).values({
             id: id,
-            name: name, 
+            notasName: name, 
             content: content,
             userId: session.user.id,
             createdAt: date
@@ -81,5 +82,11 @@ export function notasApi(app: FastifyInstance){
         .returning()
 
         return reply.send(updateNota)
+    })
+
+    app.delete('/:id', async(request, reply) => {
+        const {id} = request.params as {id: string}
+
+        await db.delete(notas).where(eq(notas.id, String(id)))
     })
 }
