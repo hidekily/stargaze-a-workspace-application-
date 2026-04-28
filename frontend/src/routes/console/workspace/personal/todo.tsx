@@ -183,13 +183,15 @@ function RouteComponent() {
               <span className='text-sm'>New list</span>
             </button>
 
-            <button
-              onClick={() => {setModalDel(true)}}
-              className='text-xl rounded-xl px-4 h-9 bg-[#ff6b4a]/20 hover:bg-[#ff6b4a]/40 border border-[#ff6b4a]/30 text-[#ff6b4a] transition-colors duration-150 flex items-center gap-1'
-            >
-              <span className='text-lg leading-none'>-</span>
-              <span className='text-sm'>delete</span>
-            </button>
+            {selectedListId === null ? null :
+              <button
+                onClick={() => {setModalDel(true)}}
+                className='text-xl rounded-xl px-4 h-9 bg-[#ff6b4a]/20 hover:bg-[#ff6b4a]/40 border border-[#ff6b4a]/30 text-[#ff6b4a] transition-colors duration-150 flex items-center gap-1'
+              >
+                <span className='text-lg leading-none'>-</span>
+                <span className='text-sm'>delete</span>
+              </button>
+            }
           </section>
 
         {/* listas */}
@@ -222,7 +224,7 @@ function RouteComponent() {
                     {index.doneOrNot === 'pending' ? "" : "✓"}
                   </button>
 
-                  <span onDoubleClick={() => {setIsEditing(index.id), setEditValue(index.itemName)}}>
+                  <span>
                     {isEditing === index.id ? 
                       <input type="text"
                              placeholder={`${index.itemName}`}
@@ -238,9 +240,11 @@ function RouteComponent() {
                       :<span className='text-[#FFB347] text-lg'>{index.itemName}</span>
                     }
                   </span>
-
-                  <span className='text-[#FFB347]'>status: {index.doneOrNot}</span>
-                  <button className='mr-2' onClick={() => handleDeleteTodoItems.mutate({itemId: index.id})}>🗑️</button>
+                  <section className='flex flex-row gap-10 mr-2'>
+                    {isEditing === index.id ? <p className='text-sm text-white'>press enter to save</p> : null}
+                    <button onClick={() => {setIsEditing(index.id), setEditValue(index.itemName)}} className='text-white hover:text-lg transition-all duration-500'>✎</button>
+                    <button className='mr-2 hover:text-lg transition-all duration-500' onClick={() => handleDeleteTodoItems.mutate({itemId: index.id})}>🗑️</button>
+                  </section>
                 </div>
               ))}
             </div>
@@ -248,7 +252,7 @@ function RouteComponent() {
             {/* input dos items */}
             <div className='h-[10%] w-full flex flex-row justify-center items-center gap-5 text-[#FFB347]'>
               <input type="text" value={itemName} placeholder='digite uma nova tarefa' className='w-[80%] h-[70%] bg-[#1A1A2E] rounded-lg text-center' onChange={(e) => setItemName(e.target.value)}/>
-              <button onClick={(e) => {e.preventDefault(), handleCreateTodoItems.mutate()}} className='w-10 h-10 rounded-2xl bg-[#FF6B4A]'>+</button>
+              <button onClick={(e) => {e.preventDefault(), handleCreateTodoItems.mutate()}} className='w-10 h-10 rounded-2xl bg-[#FF6B4A] text-black'>+</button>
             </div>
         </section>
       </div>

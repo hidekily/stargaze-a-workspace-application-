@@ -117,6 +117,7 @@ function RouteComponent() {
         <div className='h-full w-[60%] flex flex-col items-center '>
           <span className='opacity-60 text-white mt-2'>ctrl + s : save</span>
           <textarea 
+            placeholder='digite algo 🦥'
             className='w-[92%] h-[85%] text-[#ffb64a] text-2xl border-1 border-[#ff6b4a] rounded-lg p-3 overflow-auto mt-4 outline-none'
             value={content || ""} 
             onChange={(e) => setContent(e.target.value)}
