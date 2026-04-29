@@ -1,6 +1,6 @@
-import { createFileRoute, useTags } from '@tanstack/react-router'
+import { createFileRoute} from '@tanstack/react-router'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { useState } from 'react'
+import {useState } from 'react'
 import { API_URL } from '@/lib/api'
 import { useHotkey } from '@tanstack/react-hotkeys'
 import { throttle } from '@tanstack/react-pacer'
@@ -12,7 +12,7 @@ export const Route = createFileRoute('/console/workspace/personal/notas')({
 function RouteComponent() {
   const [notaName, setNotaName] = useState<string>()
   const [content, setContent] = useState<string | null>()
-  const querClient = useQueryClient()
+  const queryClient = useQueryClient()
   const [selectedNotaId, setSelectedNotaId] = useState<string | null>(null)
   const [saved, setSaved] = useState<boolean>(false)
 
@@ -41,7 +41,7 @@ function RouteComponent() {
       return await response.json()
     },
     onSettled: () => {
-      querClient.invalidateQueries({queryKey: ['nota']})
+      queryClient.invalidateQueries({queryKey: ['nota']})
       setNotaName("")
       setContent("")
     }
@@ -56,7 +56,9 @@ function RouteComponent() {
       return await response.json()
     },
     onSettled: () => {
-      querClient.invalidateQueries({queryKey: ['nota']})
+      queryClient.invalidateQueries({queryKey: ['nota']})
+      setSelectedNotaId(null)
+      setContent(null)
     }
   })
 
@@ -73,7 +75,7 @@ function RouteComponent() {
       return await response.json()
     },
     onSuccess: () => {
-      querClient.invalidateQueries({queryKey: ['nota']})
+      queryClient.invalidateQueries({queryKey: ['nota']})
       setSaved(true)
       setTimeout(() => setSaved(false), 2000)
     }
@@ -82,6 +84,7 @@ function RouteComponent() {
   useHotkey({key: "S", mod: true},  () => throttleSave())
 
   const throttleSave = throttle(() => handleUpdateNote.mutate(), {wait: 5000})
+
 
   return(
     <>
@@ -114,15 +117,19 @@ function RouteComponent() {
           </section>
         </div>
         {/*  */}
-        <div className='h-full w-[60%] flex flex-col items-center '>
+        <div className='h-full w-[60%] flex flex-col items-center justify-center'>
           <span className='opacity-60 text-white mt-2'>ctrl + s : save</span>
-          <textarea 
-            placeholder='digite algo 🦥'
-            className='w-[92%] h-[85%] text-[#ffb64a] text-2xl border-1 border-[#ff6b4a] rounded-lg p-3 overflow-auto mt-4 outline-none'
-            value={content || ""} 
-            onChange={(e) => setContent(e.target.value)}
-            onBlur={() => handleUpdateNote.mutate()}
-          />
+            {data?.length === 0 && selectedNotaId === null ? <p className='text-white text-4xl'>Crie uma nota</p>
+              : data?.length >= 1  &&  selectedNotaId === null ? <p className='text-white text-4xl'>Selecione uma nota</p>
+              :           
+              <textarea 
+                placeholder='digite algo 🦥'
+                className='w-[92%] h-[85%] text-[#ffb64a] text-2xl border-1 border-[#ff6b4a] rounded-lg p-3 overflow-auto mt-4 outline-none'
+                value={content || ""} 
+                onChange={(e) => setContent(e.target.value)}
+                onBlur={() => handleUpdateNote.mutate()}
+              />
+            }
         </div>
       </section>
     </>

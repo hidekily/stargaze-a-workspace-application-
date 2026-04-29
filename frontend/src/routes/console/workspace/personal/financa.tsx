@@ -123,19 +123,19 @@ function RouteComponent() {
             <div className='h-full w-full border border-zinc-700 bg-zinc-900 rounded-2xl text-white overflow-hidden'>
               <section className='p-6 h-[15%] w-full flex flex-row justify-between items-center border-b border-zinc-700'>
                 <p className='font-bold text-lg'>Transacoes</p>
-                <button className='h-8 w-8 rounded-lg border border-[#4ADE80] 
-                                   bg-[#4ADE80]/20 text-[#4ADE80] font-bold text-xl flex items-center justify-center'
+                <button className='h-8 w-8 rounded-lg border border-[#4ADE80] bg-[#4ADE80]/20 
+                                   text-[#4ADE80] font-bold text-md flex items-center justify-center'
                         onClick={() => setModal(true)}
                 >
-                    +
+                    <p>+</p>
                 </button>
               </section>
               {/* parte que lista todas as transacoes */}
-              <section className='h-[85%] w-full overflow-auto flex flex-col items-center'>
+              <section className='h-[85%] w-full flex flex-col items-center overflow-auto gap-2'>
                 {data && data.map((index: any) => (
-                  <div key={index.id} className='w-[90%] h-20 bg-zinc-800 mt-2 rounded-lg flex flex-row justify-between items-center p-2'>
+                  <div key={index.id} className='w-[90%] bg-zinc-800 mt-2 rounded-lg flex flex-row justify-between items-center p-2 border-1 border-zinc-700'>
                     <span>{index.name}</span>
-                    <span className={`${index.tipo === "ganho" ? "bg-green-800" : "bg-red-800"} rounded-md`}>{index.tipo === "ganho" ? "+" : "-"} R${index.valor}</span>
+                    <span className={`${index.tipo === "ganho" ? "text-green-400" : "text-red-400"} rounded-md`}>{index.tipo === "ganho" ? "+" : "-"} R${index.valor}</span>
                     <span>categoria: {index.categorias}</span>
                   </div>
                 ))}
@@ -146,10 +146,10 @@ function RouteComponent() {
           <section className='h-full w-[35%] flex flex-col gap-4'>
             <section className='flex-[2] w-full border border-zinc-700 bg-zinc-900 rounded-2xl p-5'>
               <p className='font-bold text-white text-base h-[10%]'>Por categoria</p>
-              <section className=''>
-                {data.filter(data.categoria).map((index: any) => (
-                  <div key={index.id}>
-
+              <section className='h-[90%] w-full flex flex-col p-2'>
+                {data.filter(categoria).map((index: any) => (
+                  <div key={index}>
+                    
                   </div>
                 ))}
               </section>
