@@ -52,7 +52,9 @@ function RouteComponent() {
   const receita = data?.filter((i: any) => i.tipo === "ganho").reduce((acc: number, i: any) => acc + Number(i.valor), 0) || 0
   const despesas = data?.filter((i: any) => i.tipo === "gasto").reduce((acc: number, i: any) => acc + Number(i.valor), 0) || 0
   const saldo = receita - despesas
+  const categorias = [...new Set(data?.map((i: any) => i.categorias))]
 
+ 
   return(
     <>
       {modal === true &&(
@@ -117,6 +119,7 @@ function RouteComponent() {
             <span className='text-[#7BA3FF] text-4xl font-bold'>R$ {saldo}</span>
           </span>
         </section>
+        
         {/* section das transacoes */}
         <section className='flex-1 w-full flex flex-row gap-4 overflow-hidden'>
           <section className='h-full w-[65%]'>
@@ -130,28 +133,47 @@ function RouteComponent() {
                     <p>+</p>
                 </button>
               </section>
+
               {/* parte que lista todas as transacoes */}
               <section className='h-[85%] w-full flex flex-col items-center overflow-auto gap-2'>
                 {data && data.map((index: any) => (
-                  <div key={index.id} className='w-[90%] bg-zinc-800 mt-2 rounded-lg flex flex-row justify-between items-center p-2 border-1 border-zinc-700'>
-                    <span>{index.name}</span>
-                    <span className={`${index.tipo === "ganho" ? "text-green-400" : "text-red-400"} rounded-md`}>{index.tipo === "ganho" ? "+" : "-"} R${index.valor}</span>
-                    <span>categoria: {index.categorias}</span>
+                  <div key={index.id} className='w-[90%] bg-zinc-800 mt-2 rounded-lg flex flex-row justify-between items-center p-4 border-1 border-zinc-700 gap-2'>
+                    <span className='w-1/3'>{index.name}</span>
+                    <span className={`w-1/3 text-center ${index.tipo === "ganho" ? "text-green-400" : "text-red-400"}`}>
+                      {index.tipo === "ganho" ? "+" : "-"} R${index.valor}
+                    </span>
+                    <span className='w-1/3 text-right text-zinc-400 text-sm mr-2'>categoria: {index.categorias}</span>
+                    <button className='w-1/50 text-sm mr-2'>✎</button>
+                    <button className='w-1/50 text-sm'>🗑️</button>
                   </div>
                 ))}
               </section>
             </div>
           </section>
+
           {/* parte onde tem as boxes menores */}
           <section className='h-full w-[35%] flex flex-col gap-4'>
             <section className='flex-[2] w-full border border-zinc-700 bg-zinc-900 rounded-2xl p-5'>
               <p className='font-bold text-white text-base h-[10%]'>Por categoria</p>
               <section className='h-[90%] w-full flex flex-col p-2'>
-                {data.filter(categoria).map((index: any) => (
-                  <div key={index}>
-                    
-                  </div>
-                ))}
+                {categorias.map((index: any) => {
+                  const totalCat = data?.filter((i: any) => i.categorias === index)
+                    .reduce((acc: number, i: any) => acc + Number(i.valor), 0) || 0
+                  const percent = despesas > 0 ? Math.round((totalCat * 100) / despesas) : 0
+
+                  return (
+                    <div key={index}>
+                      <span className='text-[#ff6b4a]'>{index}</span>
+                      <span className='text-[#ff6b4a] ml-1'>{percent}%</span>
+                        <div className='w-full h-2 bg-zinc-800 rounded-full mt-1'>
+                          <div 
+                            className='h-full bg-[#7BA3FF] rounded-full' 
+                            style={{ width: `${percent}%` }}
+                          />
+                        </div>
+                    </div>
+                  )
+                })}
               </section>
             </section>
             <section className='flex-[1.5] w-full border border-zinc-700 bg-zinc-900 rounded-2xl p-5'>
