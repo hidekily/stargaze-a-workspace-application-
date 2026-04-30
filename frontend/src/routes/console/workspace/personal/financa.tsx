@@ -14,7 +14,7 @@ function RouteComponent() {
   const [tipo, setTipo] = useState<"gasto" | "ganho">("gasto")
   const [valor, setValor] = useState<string>()
   const [categoria, setCategoria] = useState<"despesa fixa" | "lazer" | "escola" | "assinaturas" | "investimentos" | "trabalho" | "freelance" | "outros">("despesa fixa")
-  const [modal, setModal] = useState(false)
+  const [modal, setModal] = useState<"delete" | "create" | null>()
 
   const {data} = useQuery({
     queryKey: ['financa'],
@@ -49,21 +49,33 @@ function RouteComponent() {
     }
   })
 
+  const handleDeleteFinanca = useMutation({
+    mutationFn: async({itemId} : {itemId: string}) => {
+      const response = await fetch(`${API_URL}/api/financa/${itemId}`, {
+        credentials: 'include',
+        method: "DELETE"
+      })
+      return await response.json()
+    },
+    onSettled: async() => {
+      queryClient.invalidateQueries({queryKey: ['financa']})
+    }
+  })
+
   const receita = data?.filter((i: any) => i.tipo === "ganho").reduce((acc: number, i: any) => acc + Number(i.valor), 0) || 0
   const despesas = data?.filter((i: any) => i.tipo === "gasto").reduce((acc: number, i: any) => acc + Number(i.valor), 0) || 0
   const saldo = receita - despesas
-  const categorias = [...new Set(data?.map((i: any) => i.categorias))]
+  const categorias = [...new Set(data?.filter((i: any) => i.tipo === "gasto").map((i: any) => i.categorias))]
 
- 
   return(
     <>
-      {modal === true &&(
+      {modal === "create" &&(
         <Modal
           header=''
           title='Defina sua transacao'
           buttons={[
-            {text: 'Cancel', onclick: () => {handleCreateFinanca.reset(), setModal(false)}, colorVariant: 'mid'},
-            {text: 'Submit', onclick: () => {handleCreateFinanca.mutate(), setModal(false)}, colorVariant: 'add'}
+            {text: 'Cancel', onclick: () => {handleCreateFinanca.reset(), setModal(null)}, colorVariant: 'mid'},
+            {text: 'Submit', onclick: () => {handleCreateFinanca.mutate(), setModal(null)}, colorVariant: 'add'}
           ]}
         >
           {/* nome da transacao  */}
@@ -101,6 +113,15 @@ function RouteComponent() {
         </Modal>
       )}
 
+      {modal === "delete" && (
+        <Modal
+          header
+        >
+
+        </Modal>
+      )}
+
+
       {/* a porra do Modal ficou gigante kkkkkkkkkkk */}
       
       <div className='h-full w-full flex flex-col gap-4 p-4'>
@@ -119,7 +140,7 @@ function RouteComponent() {
             <span className='text-[#7BA3FF] text-4xl font-bold'>R$ {saldo}</span>
           </span>
         </section>
-        
+
         {/* section das transacoes */}
         <section className='flex-1 w-full flex flex-row gap-4 overflow-hidden'>
           <section className='h-full w-[65%]'>
@@ -128,7 +149,7 @@ function RouteComponent() {
                 <p className='font-bold text-lg'>Transacoes</p>
                 <button className='h-8 w-8 rounded-lg border border-[#4ADE80] bg-[#4ADE80]/20 
                                    text-[#4ADE80] font-bold text-md flex items-center justify-center'
-                        onClick={() => setModal(true)}
+                        onClick={() => setModal("create")}
                 >
                     <p>+</p>
                 </button>
@@ -144,7 +165,7 @@ function RouteComponent() {
                     </span>
                     <span className='w-1/3 text-right text-zinc-400 text-sm mr-2'>categoria: {index.categorias}</span>
                     <button className='w-1/50 text-sm mr-2'>✎</button>
-                    <button className='w-1/50 text-sm'>🗑️</button>
+                    <button className='w-1/50 text-sm' onClick={() => handleDeleteFinanca.mutate({itemId: index.id})}>🗑️</button>
                   </div>
                 ))}
               </section>

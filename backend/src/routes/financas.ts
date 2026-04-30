@@ -99,4 +99,10 @@ export function financasApi(app:FastifyInstance){
 
         return reply.send(updateFinanca)
     })
+
+    app.delete("/:id", async(request, reply) => {
+        const {id} = request.params as {id: string}
+
+        await db.delete(financas).where(eq(financas.id,String(id)))
+    })
 }
