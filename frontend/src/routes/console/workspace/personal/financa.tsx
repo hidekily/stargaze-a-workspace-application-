@@ -15,6 +15,9 @@ function RouteComponent() {
   const [valor, setValor] = useState<string>()
   const [categoria, setCategoria] = useState<"despesa fixa" | "lazer" | "escola" | "assinaturas" | "investimentos" | "trabalho" | "freelance" | "outros">("despesa fixa")
   const [modal, setModal] = useState<"delete" | "create" | null>()
+  const [deleteId, setDeletingId] = useState()
+  const [filtro, setFiltro] = useState<"todos" | "ganho" | "gasto">("todos")
+  const [isEditing, setIsEditing] = useState<boolean>(false)
 
   const {data} = useQuery({
     queryKey: ['financa'],
@@ -50,10 +53,28 @@ function RouteComponent() {
   })
 
   const handleDeleteFinanca = useMutation({
-    mutationFn: async({itemId} : {itemId: string}) => {
-      const response = await fetch(`${API_URL}/api/financa/${itemId}`, {
+    mutationFn: async() => {
+      const response = await fetch(`${API_URL}/api/financa/${deleteId}`, {
         credentials: 'include',
         method: "DELETE"
+      })
+      return await response.json()
+    },
+    onSettled: async() => {
+      queryClient.invalidateQueries({queryKey: ['financa']})
+    }
+  })
+
+  const handleUpdateFinanca = useMutation({
+    mutationFn: async() => {
+      const response = await fetch(`${API_URL}/api/financa`, {
+        method: "PATCH",
+        credentials: 'include',
+        body: JSON.stringify({
+          valor: valor,
+          name: name,
+        }),
+        headers: {"Content-Type" : "application/json"}
       })
       return await response.json()
     },
@@ -66,6 +87,7 @@ function RouteComponent() {
   const despesas = data?.filter((i: any) => i.tipo === "gasto").reduce((acc: number, i: any) => acc + Number(i.valor), 0) || 0
   const saldo = receita - despesas
   const categorias = [...new Set(data?.filter((i: any) => i.tipo === "gasto").map((i: any) => i.categorias))]
+  const dataFiltrada = filtro === "todos" ? data : data?.filter((i: any) => i.tipo === filtro)
 
   return(
     <>
@@ -115,7 +137,11 @@ function RouteComponent() {
 
       {modal === "delete" && (
         <Modal
-          header
+          header=''
+          buttons={[
+            {text: 'cancel', onclick: () => {setModal(null), handleDeleteFinanca.reset()}, colorVariant: "add"},
+            {text: 'delete', onclick: () => {setModal(null), handleDeleteFinanca.mutate(deleteId)}, colorVariant: "add"}
+          ]}
         >
 
         </Modal>
@@ -157,15 +183,15 @@ function RouteComponent() {
 
               {/* parte que lista todas as transacoes */}
               <section className='h-[85%] w-full flex flex-col items-center overflow-auto gap-2'>
-                {data && data.map((index: any) => (
+                {dataFiltrada && dataFiltrada.map((index: any) => (
                   <div key={index.id} className='w-[90%] bg-zinc-800 mt-2 rounded-lg flex flex-row justify-between items-center p-4 border-1 border-zinc-700 gap-2'>
                     <span className='w-1/3'>{index.name}</span>
                     <span className={`w-1/3 text-center ${index.tipo === "ganho" ? "text-green-400" : "text-red-400"}`}>
                       {index.tipo === "ganho" ? "+" : "-"} R${index.valor}
                     </span>
                     <span className='w-1/3 text-right text-zinc-400 text-sm mr-2'>categoria: {index.categorias}</span>
-                    <button className='w-1/50 text-sm mr-2'>✎</button>
-                    <button className='w-1/50 text-sm' onClick={() => handleDeleteFinanca.mutate({itemId: index.id})}>🗑️</button>
+                    <button className='w-1/50 text-sm mr-2' onClick={() => setIsEditing(true)}>✎</button>
+                    <button className='w-1/50 text-sm' onClick={() => {setDeletingId(index.id), setModal("delete")}}>🗑️</button>
                   </div>
                 ))}
               </section>
@@ -199,6 +225,11 @@ function RouteComponent() {
             </section>
             <section className='flex-[1.5] w-full border border-zinc-700 bg-zinc-900 rounded-2xl p-5'>
               <p className='font-bold text-white text-base'>Filtrar</p>
+              <section className='flex flex-row gap-3 items-center h-[90%]'>
+                <button className={`h-8 w-18 rounded-lg ${filtro === "ganho" ? "bg-green-600/50" : "bg-zinc-800"} text-white`} onClick={() => setFiltro('ganho')}>ganhos</button>
+                <button className={`h-8 w-18 rounded-lg ${filtro === "gasto" ? "bg-red-600/50" : "bg-zinc-800"} text-white`} onClick={() => setFiltro('gasto')}>gastos</button>
+                <button className={`h-8 w-18 rounded-lg ${filtro === "todos" ? "bg-yellow-600/50" : "bg-zinc-800"} text-white`} onClick={() => setFiltro('todos')}>todos</button>
+              </section>
             </section>
             <section className='flex-1 w-full border border-zinc-700 bg-zinc-900 rounded-2xl p-5'>
               <p className='font-bold text-white text-base'>Exportar</p>
