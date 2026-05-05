@@ -17,7 +17,10 @@ function RouteComponent() {
   const [modal, setModal] = useState<"delete" | "create" | null>()
   const [deleteId, setDeletingId] = useState()
   const [filtro, setFiltro] = useState<"todos" | "ganho" | "gasto">("todos")
-  const [isEditing, setIsEditing] = useState<boolean>(false)
+  const [isEditing, setIsEditing] = useState<string | null>()
+  const [editValue, setEditValue] = useState<string>()
+  const [editValueValor, setEditValueValor] = useState<string>()
+
 
   const {data} = useQuery({
     queryKey: ['financa'],
@@ -66,13 +69,13 @@ function RouteComponent() {
   })
 
   const handleUpdateFinanca = useMutation({
-    mutationFn: async() => {
-      const response = await fetch(`${API_URL}/api/financa`, {
+    mutationFn: async({itemId} : {itemId: string}) => {
+      const response = await fetch(`${API_URL}/api/financa/${itemId}`, {
         method: "PATCH",
         credentials: 'include',
         body: JSON.stringify({
-          valor: valor,
-          name: name,
+          valor: editValueValor,
+          name: editValue,
         }),
         headers: {"Content-Type" : "application/json"}
       })
@@ -80,6 +83,8 @@ function RouteComponent() {
     },
     onSettled: async() => {
       queryClient.invalidateQueries({queryKey: ['financa']})
+      setEditValue("")
+      setIsEditing(null)
     }
   })
 
@@ -185,12 +190,42 @@ function RouteComponent() {
               <section className='h-[85%] w-full flex flex-col items-center overflow-auto gap-2'>
                 {dataFiltrada && dataFiltrada.map((index: any) => (
                   <div key={index.id} className='w-[90%] bg-zinc-800 mt-2 rounded-lg flex flex-row justify-between items-center p-4 border-1 border-zinc-700 gap-2'>
-                    <span className='w-1/3'>{index.name}</span>
-                    <span className={`w-1/3 text-center ${index.tipo === "ganho" ? "text-green-400" : "text-red-400"}`}>
-                      {index.tipo === "ganho" ? "+" : "-"} R${index.valor}
-                    </span>
+                    {isEditing === index.id 
+                      ? <input type="text"
+                              placeholder={`${index.name}`}
+                              className='bg-zinc-900 text-[#FFB347] rounded-lg' 
+                              value={editValue}
+                              onChange={(e) => setEditValue(e.target.value)}
+                              onKeyDown={(e) => { if(e.key === "Enter" && !e.shiftKey){
+                               setIsEditing(null)
+                               e.preventDefault()
+                               handleUpdateFinanca.mutate({itemId: index.id})
+                              }}}
+                         /> 
+                      : <span className='w/3'>{index.name}</span>
+                    }
+                    {isEditing === index.id 
+                      ? <input type="text"
+                              placeholder={`${index.valor}`}
+                              className='bg-zinc-900 text-[#FFB347] rounded-lg' 
+                              value={editValueValor}
+                              onChange={(e) => setEditValueValor(e.target.value)}
+                              onKeyDown={(e) => { if(e.key === "Enter" && !e.shiftKey){
+                               setIsEditing(null)
+                               e.preventDefault()
+                               handleUpdateFinanca.mutate({itemId: index.id})
+                              }}}
+                         /> 
+                      :            
+                        <span className={`w-1/3 text-center ${index.tipo === "ganho" ? "text-green-400" : "text-red-400"}`}>
+                          {index.tipo === "ganho" ? "+" : "-"} R${index.valor}
+                        </span>
+                    }
                     <span className='w-1/3 text-right text-zinc-400 text-sm mr-2'>categoria: {index.categorias}</span>
-                    <button className='w-1/50 text-sm mr-2' onClick={() => setIsEditing(true)}>✎</button>
+                    <button className='w-1/50 text-sm mr-2' 
+                            onClick={() => {setIsEditing(index.id), setEditValue(index.name), setEditValueValor(index.valor)}}>
+                              ✎
+                    </button>
                     <button className='w-1/50 text-sm' onClick={() => {setDeletingId(index.id), setModal("delete")}}>🗑️</button>
                   </div>
                 ))}

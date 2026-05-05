@@ -35,22 +35,6 @@ export const notas = pgTable("notas", {
     content: text().default(""),
 });
 // 
-// habitos
-export const habitos = pgTable("habitos", {
-    id: text("id").primaryKey(),
-    userId: text("userId")
-        .references(() => user.id, { onDelete: "cascade" }),
-    name: text("name").notNull(),
-    color: text("color").notNull(),
-});
-export const habitosTracking = pgTable("tracking", {
-    id: text("id").primaryKey(),
-    habitosListId: text("habitosRef")
-        .references(() => habitos.id, { onDelete: "cascade" }),
-    status: habitosEnum().default("pending"),
-    date: timestamp().defaultNow()
-});
-// 
 //financas items etc
 export const financas = pgTable("financas", {
     id: text("id").primaryKey(),
