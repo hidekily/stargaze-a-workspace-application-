@@ -14,9 +14,14 @@ const port = Number(process.env.PORT) || 3001
 const app = Fastify({ logger: true })
 process.env.NODE_TLS_REJECTED_UNAUTHORIZED = '0'
 
+const allowedOrigins = [
+  "http://localhost",
+  "https://stargaze-a-workspace-application-fr.vercel.app"
+]
+
 app.register(cors, {
   origin: (origin, cb) => {
-    if(!origin || origin.includes("localhost")){
+    if(!origin || allowedOrigins.includes(origin)){
       cb(null, true)
     } else {
       cb(new Error("Not allowed by CORS"), false)
