@@ -8,7 +8,6 @@ import {user} from "./betterAuth"
 
 //enums
 export const doneOrNotEnums = pgEnum("doneOrNoteEnumList", ["done", "pending"])
-export const habitosEnum = pgEnum("habitosEnum", ["done",  "pending", "notDone"])
 export const categoriasEnum = pgEnum("categorias", ["despesa fixa", "lazer", "escola", "assinaturas", "investimentos", "trabalho", "freelance", "outros"])
 export const tipoEnum = pgEnum("tipo", ["gasto", "ganho"])
 export const color = pgEnum("colors" ,["#FFD666", "#FF6B4A", "#7BA3FF"]) // pending - not done - done
