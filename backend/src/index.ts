@@ -14,7 +14,7 @@ const app = Fastify({ logger: true })
 process.env.NODE_TLS_REJECTED_UNAUTHORIZED = '0'
 
 const allowedOrigins = [
-  "http://localhost",
+  "http://localhost:3000",
   "https://stargaze-a-workspace-application-fr.vercel.app"
 ]
 
