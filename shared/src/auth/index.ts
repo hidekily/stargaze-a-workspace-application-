@@ -7,7 +7,7 @@ export const auth = betterAuth({
     database: drizzleAdapter(db, {
         provider: "pg", 
     }),
-    trustedOrigins: ['http://localhost:3000'],
+    trustedOrigins: ['http://localhost:3000', "https://stargaze-a-workspace-application-fr.vercel.app"],
     baseURL: process.env.BETTER_AUTH_URL || 'http://localhost:3001',
 
     account:{
