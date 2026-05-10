@@ -68,7 +68,7 @@ app.all('/api/auth/*',
   async (request, reply) => {
     if(request.method === 'OPTIONS') {
       const origin = request.headers.origin
-        if (origin && (origin.includes('localhost'))) {        
+        if (origin && (allowedOrigins.includes(origin))) {        
         reply.header('Access-Control-Allow-Origin', origin)
         reply.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS')
         reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')

@@ -18,7 +18,6 @@ function RouteComponent() {
           callbackURL: getRedirectURL()
         })
         if(data.error){
-          console.log('teste')
           alert(data.error.message)
         }
       },
