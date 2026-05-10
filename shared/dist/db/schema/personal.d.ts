@@ -1,5 +1,4 @@
 export declare const doneOrNotEnums: import("drizzle-orm/pg-core").PgEnum<["done", "pending"]>;
-export declare const habitosEnum: import("drizzle-orm/pg-core").PgEnum<["done", "pending", "notDone"]>;
 export declare const categoriasEnum: import("drizzle-orm/pg-core").PgEnum<["despesa fixa", "lazer", "escola", "assinaturas", "investimentos", "trabalho", "freelance", "outros"]>;
 export declare const tipoEnum: import("drizzle-orm/pg-core").PgEnum<["gasto", "ganho"]>;
 export declare const color: import("drizzle-orm/pg-core").PgEnum<["#FFD666", "#FF6B4A", "#7BA3FF"]>;

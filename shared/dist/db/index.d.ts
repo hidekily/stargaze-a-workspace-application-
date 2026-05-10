@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import * as schema from './schema/index';
+import * as schema from './schema/index.js';
 declare const pool: Pool;
 export declare const db: import("drizzle-orm/node-postgres").NodePgDatabase<typeof schema> & {
     $client: Pool;
