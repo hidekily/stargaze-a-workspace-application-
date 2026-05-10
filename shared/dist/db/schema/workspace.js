@@ -1,5 +1,5 @@
 import { pgTable, text, timestamp, index, integer, pgEnum, unique, } from "drizzle-orm/pg-core";
-import { user } from './betterAuth';
+import { user } from './betterAuth.js';
 export const workspaceType = pgEnum("workspace_type", ["social", "professional"]);
 export const workspaceRole = pgEnum("workspace_role", ["admin", "manager", "member"]);
 export const workspace = pgTable("workspace", {

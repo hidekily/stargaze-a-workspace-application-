@@ -1,5 +1,5 @@
 import { pgTable, text, timestamp, decimal, pgEnum, } from "drizzle-orm/pg-core";
-import { user } from "./betterAuth";
+import { user } from "./betterAuth.js";
 //enums
 export const doneOrNotEnums = pgEnum("doneOrNoteEnumList", ["done", "pending"]);
 export const categoriasEnum = pgEnum("categorias", ["despesa fixa", "lazer", "escola", "assinaturas", "investimentos", "trabalho", "freelance", "outros"]);
