@@ -2,12 +2,12 @@ import 'dotenv/config'
 import Fastify from 'fastify'
 import rateLimit from '@fastify/rate-limit'
 import cors from '@fastify/cors'
-import { workspaceAPI } from './routes/workspace'
+import { workspaceAPI } from './routes/workspace.js'
 import {auth} from "shared/auth"
-import { imgUpload } from './routes/imgUpload'
-import { todoListApi } from './routes/todoList'
-import { notasApi } from './routes/notas'
-import { financasApi } from './routes/financas'
+import { imgUpload } from './routes/imgUpload.js'
+import { todoListApi } from './routes/todoList.js'
+import { notasApi } from './routes/notas.js'
+import { financasApi } from './routes/financas.js'
 
 const port = Number(process.env.PORT) || 3001
 const app = Fastify({ logger: true })
