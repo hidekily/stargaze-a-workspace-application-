@@ -10,7 +10,7 @@ export declare const auth: import("better-auth").Auth<{
     };
     advanced: {
         crossSubDomainCookies: {
-            enabled: false;
+            enabled: true;
         };
         defaultCookieAttributes: {
             secure: true;
