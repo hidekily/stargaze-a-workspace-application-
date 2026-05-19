@@ -100,7 +100,7 @@ function RouteComponent() {
             <span className='ml-2'>Notas</span>
             <span>
               <input type="text" value={notaName} onChange={(e) => setNotaName(e.target.value)} placeholder='nome da nota' className='bg-zinc-800 rounded-lg border-1 mr-2 text-center'/>
-              <button onClick={() => handleCreateNote.mutate()} className='mr-2'>💡add</button>
+              <button onClick={() => handleCreateNote.mutate()} className='mr-2 bg-zinc-800 border-1 borer-white rounded-lg w-20'>💡add</button>
             </span>
           </nav>
 

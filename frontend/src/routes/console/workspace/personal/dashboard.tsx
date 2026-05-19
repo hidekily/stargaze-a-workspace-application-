@@ -27,7 +27,7 @@ function RouteComponent() {
         <div className='h-[55%] w-full flex gap-2'>
           {/* box da financa */}
           <section className='w-[65%] h-full border-1 border-red-800 rounded-lg'>
-            <section className='h-[20%] flex justify-between'>
+            <section className='h-[20%] flex justify-between border-b-1 border-red-800'>
               <p className='p-4 text-red-800 text-2xl'>💸 Finanças</p>
               <Link to='/console/workspace/personal/financa' className='text-red-800 p-4 text-lg'>ver todas →</Link>
             </section>
@@ -37,7 +37,7 @@ function RouteComponent() {
           {/* box das todos */}
           </section>
           <section className='w-[35%] h-full border-1 border-red-800 rounded-lg'>
-            <section className='h-[20%] flex justify-between'>
+            <section className='h-[20%] flex justify-between border-b-1 border-red-800'>
               <p className='p-4 text-red-800 text-2xl'>📌 todos</p>
               <Link to='/console/workspace/personal/todo' className='text-red-800 p-4 text-lg'>ver todas →</Link>
             </section>
@@ -50,7 +50,7 @@ function RouteComponent() {
         <div className='h-[45%] w-full'>
           <section className='h-full w-full border-1 border-red-800 rounded-lg flex flex-col'>
             {/* box das notas */}
-            <section className='h-[20%] flex justify-between'>
+            <section className='h-[20%] flex justify-between border-b-1 border-red-800'>
               <p className='p-4 text-red-800 text-2xl'>📝 Notas Recentes</p>
               <Link to='/console/workspace/personal/notas' className='text-red-800 p-4 text-lg'>ver todas →</Link>
             </section>

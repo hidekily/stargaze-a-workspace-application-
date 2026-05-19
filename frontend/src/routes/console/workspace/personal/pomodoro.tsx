@@ -50,7 +50,7 @@ function RouteComponent() {
   return(
     <>
       <div className='h-[100%] w-full text-[#FF6B4A]'>
-        <section className='w-[70%] h-full flex flex-col items-center'>
+        <section className='w-[100%] h-full flex flex-col items-center'>
           <div className='h-[45%] w-full flex flex-col justify-center items-center text-[#ff6b4a] gap-5'>
             <span className='text-lg'>Pomodoro 🍅</span>
             <span className='text-9xl'>{formaterTime(timeLeft)}</span>

@@ -18,7 +18,6 @@ function RouteComponent() {
     : pathname.includes('/personal/notas') ? "notas" 
     : pathname.includes('/personal/pomodoro') ? 'pomodoro' 
     : pathname.includes('/personal/todo') ? "todo" 
-    : pathname.includes('/personal/calendario') ? 'calendario' 
     : null
 
     const tabProps = {
@@ -27,15 +26,14 @@ function RouteComponent() {
       notas: {name: "notas", tab: "notas", linkto: '/console/workspace/personal/notas'},
       pomodoro: {name: "pomodoro", tab: "pomodoro", linkto: '/console/workspace/personal/pomodoro'},
       todo: {name: "todo", tab: "todo", linkto: "/console/workspace/personal/todo"},
-      calendario: {name: "calendario", tab: "calendario", linkto: "/console/workspace/personal/calendario"}
     }
 
   return (
     <div className='w-full h-full'>
-      <nav className='h-20 w-full border-b-[0.5px] border-[#252540] flex flex-row items-end justify-center gap-[5%] text-[#9898B0] fixed bg-[#0A0A0F]'>
+      <nav className='h-20 w-full border-b-[0.5px] border-[#252540] flex flex-row gap-[5%] text-[#9898B0] fixed bg-[#0A0A0F]'>
         {Object.values(tabProps).map((index: any) => (
           <Link key={index.tab} to={index.linkto}
-                className={`personal-tab-navbar ${active === index.tab ?  "text-lg text-[#FF6B4A] border-b border-[#FF6B4A]" : ""}`}
+                className={`personal-tab-navbar ${active === index.tab ?  "text-lg text-[#FF6B4A] border-b border-[#FF6B4A]" : ""} ml-1`}
           >
             {index.name}
           </Link>
