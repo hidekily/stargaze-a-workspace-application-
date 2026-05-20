@@ -236,7 +236,7 @@ function RouteComponent() {
           {/* parte onde tem as boxes menores */}
           <section className='h-full w-[35%] flex flex-col gap-4'>
             <section className='flex-[2] w-full border border-zinc-700 bg-zinc-900 rounded-2xl p-5'>
-              <p className='font-bold text-white text-base h-[10%]'>Por categoria</p>
+              <p className='font-bold text-white text-base h-[10%]'>Gasto por categoria</p>
               <section className='h-[90%] w-full flex flex-col p-2'>
                 {categorias.map((index: any) => {
                   const totalCat = data?.filter((i: any) => i.categorias === index)
