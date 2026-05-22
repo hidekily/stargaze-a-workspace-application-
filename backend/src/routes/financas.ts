@@ -37,7 +37,8 @@ export function financasApi(app:FastifyInstance){
             tipo: tipo,
             valor: valor,
             categorias: categorias,
-            userId: session.user.id
+            userId: session.user.id,
+            createdAt: new Date()
         }).returning()
 
         return reply.status(201).send({data: newFinanca})

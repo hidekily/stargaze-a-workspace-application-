@@ -52,6 +52,9 @@ export const financas = pgTable("financas", {
     name: text("name").notNull(),
     tipo: tipoEnum().notNull(),
     valor: decimal().notNull(),
-    categorias: categoriasEnum().notNull()
+    categorias: categoriasEnum().notNull(),
+    createdAt: timestamp("createdAt", {
+        mode: 'date',
+    }).defaultNow().notNull(),
 })
 //
