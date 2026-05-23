@@ -1,11 +1,20 @@
 import { FastifyInstance } from "fastify";
 import { auth } from "shared/auth";
 import { db } from "shared/db";
-import { desc, eq, sum } from "drizzle-orm";
+import { desc, eq, sum, and, lt, gte } from "drizzle-orm";
 import { financas } from "shared/db/schema";
 
 export function financaSummaryApi(app: FastifyInstance){
     app.get('/', async(request, reply) => {
+        
+        const agora = new Date()
+
+        const ano = agora.getFullYear()
+        const mes = agora.getMonth()
+
+        const inicioMes = new Date(ano, mes, 1)
+        const proxMes = new Date(ano, mes + 1, 1)
+
         const session = await auth.api.getSession({
             headers: request.headers
         })
@@ -20,7 +29,7 @@ export function financaSummaryApi(app: FastifyInstance){
             gasto: sum(...)
         })
         .from(financas)
-        .where()
+        .where(and(eq(financas.userId, session.user.id), gte(financas.createdAt, inicioMes), lt(financas.createdAt, proxMes)))
 
         const last3ItemsFromFinanca = await db
         .select()
