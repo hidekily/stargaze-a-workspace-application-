@@ -41,7 +41,7 @@ export function todoListApi(app: FastifyInstance){
             userId: session.user.id,
             description: description,
             date: date,
-            listName: todoName
+            listName: todoName,
         }).returning()
 
         return reply.status(201).send({data: newTodoList, message: "todo list criada"})

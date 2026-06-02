@@ -21,7 +21,10 @@ export const todoItems = pgTable("todoItems", {
         .notNull()
         .references(() => todoList.id, { onDelete: 'cascade' }),
     itemName: text("item").notNull(),
-    doneOrNot: doneOrNotEnums("doneOrNotEnum").default("pending").notNull()
+    doneOrNot: doneOrNotEnums("doneOrNotEnum").default("pending").notNull(),
+    createdAt: timestamp("createdAt", {
+        mode: 'date'
+    }).defaultNow().notNull()
 });
 // 
 // notas 
