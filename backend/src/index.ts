@@ -8,6 +8,9 @@ import { imgUpload } from './routes/imgUpload.js'
 import { todoListApi } from './routes/todoList.js'
 import { notasApi } from './routes/notas.js'
 import { financasApi } from './routes/financas.js'
+import { financaSummaryApi } from './routes/summary/financaSummary.js'
+import { notasSummaryApi } from './routes/summary/notasSummary.js'
+import { todoListSummaryApi } from './routes/summary/todosSummary.js'
 
 const port = Number(process.env.PORT) || 3001
 const app = Fastify({ logger: true })
@@ -55,6 +58,18 @@ app.register(notasApi, {
 
 app.register(financasApi, {
   prefix:"/api/financa"
+})
+
+app.register(financaSummaryApi, {
+   prefix: "/api/financa/summary" 
+})
+
+app.register(notasSummaryApi, {
+   prefix: "/api/notas/summary" 
+})
+
+app.register(todoListSummaryApi, {
+   prefix: "/api/todoList/summary" 
 })
 
 app.all('/api/auth/*',

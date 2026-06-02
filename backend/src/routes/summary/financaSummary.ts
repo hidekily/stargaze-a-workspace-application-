@@ -25,8 +25,8 @@ export function financaSummaryApi(app: FastifyInstance){
 
         const filterDataFinanca = await db
         .select({
-            ganho: sum(...),
-            gasto: sum(...)
+          ganho: sum(financas.valor),
+          gasto: sum(financas.valor)
         })
         .from(financas)
         .where(and(eq(financas.userId, session.user.id), gte(financas.createdAt, inicioMes), lt(financas.createdAt, proxMes)))
