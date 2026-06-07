@@ -10,16 +10,16 @@ export const Route = createFileRoute('/console/workspace/personal/dashboard')({
 
 function RouteComponent() {
 
-  // const {data: todoData} = useQuery({
-  //   queryKey: [""],
-  //   queryFn: async() => {
-  //     const response = await fetch(`${API_URL}/api/todo`, {
-  //       credentials: 'include',
-  //       method: 'GET'
-  //     })
-  //     return await response.json()
-  //   }
-  // })
+  const {data: dataFinanca} = useQuery({
+    queryKey: ['summaryFinanca'],
+    queryFn: async() => {
+      const response = await fetch(`${API_URL}/api/financa/summary`,{
+        credentials: 'include',
+        method: "GET"
+      })
+      return await response.json()
+    }
+  })
 
   return(
     <div className='w-full h-full flex justify-center items-center'>
@@ -32,7 +32,11 @@ function RouteComponent() {
               <Link to='/console/workspace/personal/financa' className='text-red-800 p-4 text-lg'>ver todas →</Link>
             </section>
             <section className='h-[80%]'>
-
+              {dataFinanca?.last3ItemsFromFinanca?.map((index: any) => (
+                <div key={index.id}>
+                  <p>{index.name}</p>
+                </div>
+              ))}
             </section>
           {/* box das todos */}
           </section>
