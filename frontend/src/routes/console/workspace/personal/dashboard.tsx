@@ -123,7 +123,7 @@ function RouteComponent() {
           </div>
           <div className="flex-1 px-4 py-2 flex gap-3 overflow-x-auto">
             {dataNotas?.ultimas3?.map((nota: any) => (
-              <div key={nota.id} className="min-w-[220px] flex-1 rounded-lg border border-zinc-800 p-3 flex flex-col gap-1 hover:border-zinc-600 transition-colors cursor-default">
+              <div key={nota.id} className="min-w-55 flex-1 rounded-lg border border-zinc-800 p-3 flex flex-col gap-1 hover:border-zinc-600 transition-colors cursor-default">
                 <span className="text-zinc-200 text-sm font-medium truncate">{nota.notasName}</span>
                 <p className="text-zinc-500 text-xs line-clamp-3">{nota.preview || 'Sem conteúdo'}</p>
               </div>
