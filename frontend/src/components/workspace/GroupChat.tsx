@@ -67,9 +67,6 @@ export function TabBar3({navigateTo, routeFrom}: componentProps) {
         </nav>
 
         <section className='h-[80%] w-full bg-[#1A1A2E]'> {/* display da msg  e activities*/}
-          <p>teste para ver se minha ssh do notebook novo esta funcionando</p>
-          <p>testetestetetetet</p>
-          <p>testetestestsetsetsetesstetse</p>
         </section>
 
         <section> {/* input da msg + enviar */}
