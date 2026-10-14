@@ -4,3 +4,10 @@ packages:
   - 'frontend'
 allowBuilds:
   esbuild: true
+permissions:
+  '@tanstack/devtools-event-client':
+    skills: false
+  '@tanstack/react-start':
+    skills: true
+  '@tanstack/router-plugin':
+    skills: true
