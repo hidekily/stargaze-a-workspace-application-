@@ -1,8 +1,11 @@
 import websocket from 'fastify'
+import fastify from 'fastify'
 
 export async function registerWebsocket(app: websocket.FastifyInstance) {   
-    app.register(websocket)
+    const fastify = require('fastify')
+    const websocket = require('@fastify/websocket')
 
-    app.register(websocket, {prefix: '/ws'})
-    // vou fazer o websockets para mensagem em tempo real 
-}
+    fastify.register(websocket, { prefix: '/ws' })
+
+    
+}   
