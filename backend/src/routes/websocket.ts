@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify'
-import { WebSocket } from '@fastify/websocket'
+import { WebSocket } from 'ws'
 import { auth } from 'shared/auth'
 
 export async function registerWebsocket(app: FastifyInstance) {   
@@ -12,6 +12,7 @@ export async function registerWebsocket(app: FastifyInstance) {
                 return reply.status(401).send({error: 'user invalido'})
             }
         }
+        
     }, (socket, request) => {
         socket.on('message', (msg) => socket.send(msg.toString()))
     })

@@ -77,7 +77,7 @@ app.register(todoListSummaryApi, {
 })
 
 app.register(registerWebsocket, {
-  prefix: 'api/websocket'
+  prefix: 'api/ws'
 })
 
 app.all('/api/auth/*',
