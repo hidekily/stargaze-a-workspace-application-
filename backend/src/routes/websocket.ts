@@ -1,11 +1,18 @@
-import websocket from 'fastify'
-import fastify from 'fastify'
+import { FastifyInstance } from 'fastify'
+import { WebSocket } from '@fastify/websocket'
+import { auth } from 'shared/auth'
 
-export async function registerWebsocket(app: websocket.FastifyInstance) {   
-    const fastify = require('fastify')
-    const websocket = require('@fastify/websocket')
+export async function registerWebsocket(app: FastifyInstance) {   
+    app.get('/:workspaceId', {
+        websocket: true, 
+        preValidation: async(request, reply) => {
+            const session = await auth.api.getSession({headers: request.headers})
 
-    fastify.register(websocket, { prefix: '/ws' })
-
-    
-}   
+            if(!session){ 
+                return reply.status(401).send({error: 'user invalido'})
+            }
+        }
+    }, (socket, request) => {
+        socket.on('message', (msg) => socket.send(msg.toString()))
+    })
+}

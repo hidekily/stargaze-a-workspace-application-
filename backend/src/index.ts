@@ -2,6 +2,7 @@ import 'dotenv/config'
 import Fastify from 'fastify'
 import rateLimit from '@fastify/rate-limit'
 import cors from '@fastify/cors'
+import websocket from '@fastify/websocket'
 import { workspaceAPI } from './routes/workspace.js'
 import {auth} from "shared/auth"
 import { imgUpload } from './routes/imgUpload.js'
@@ -11,6 +12,7 @@ import { financasApi } from './routes/financas.js'
 import { financaSummaryApi } from './routes/summary/financaSummary.js'
 import { notasSummaryApi } from './routes/summary/notasSummary.js'
 import { todoListSummaryApi } from './routes/summary/todosSummary.js'
+import { registerWebsocket } from './routes/websocket.js'
 
 const port = Number(process.env.PORT) || 3001
 const app = Fastify({ logger: true })
@@ -39,6 +41,8 @@ app.register(rateLimit, {
   max: 100,
   timeWindow: '1 minute'
 })
+
+app.register(websocket);
 
 app.register(workspaceAPI, {
   prefix: "/api/workspaces"
@@ -70,6 +74,10 @@ app.register(notasSummaryApi, {
 
 app.register(todoListSummaryApi, {
    prefix: "/api/todoList/summary" 
+})
+
+app.register(registerWebsocket, {
+  prefix: 'api/websocket'
 })
 
 app.all('/api/auth/*',
