@@ -3,6 +3,7 @@ import { API_URL } from '@/lib/api'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate, useParams } from '@tanstack/react-router'
 import { useState } from 'react'
+import { useWebSocket } from '@/lib/webHook'
 
 interface componentProps {
     navigateTo: "/console/workspace/social" | "/console/workspace/job"
@@ -13,8 +14,10 @@ export function TabBar3({navigateTo, routeFrom}: componentProps) {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const {workspaceId} = useParams({from: `${routeFrom}`})
+  const {messages, connected, sendMessage} = useWebSocket(workspaceId);
 
   const [modal, setModal] = useState<boolean>(false)
+
 
   const {data} = useQuery({
     queryKey:["workspaceId", workspaceId],
