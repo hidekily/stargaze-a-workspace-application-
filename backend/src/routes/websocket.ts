@@ -23,7 +23,7 @@ export async function registerWebsocket(app: FastifyInstance) {
       }
 
       const { workspaceId } = request.params as { workspaceId: string }
-      
+
       const [member] = await db.select().from(workspaceMember)
         .where(and(
           eq(workspaceMember.workspaceId, workspaceId),
@@ -60,3 +60,5 @@ export async function registerWebsocket(app: FastifyInstance) {
     })
   })
 }
+
+// ainda to tentando entender direito o websocket com fastify + como implementar isso aqui com o front

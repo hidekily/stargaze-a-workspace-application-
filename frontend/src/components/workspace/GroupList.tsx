@@ -24,7 +24,7 @@ export function TabBar2({type, linkBase}: ComponentProps) {
     workspaceMember: {userId: string, workspaceId: number, role: 'admin'}
   }
 
-  const {data, isLoading, error} = useQuery({
+  const {data, isLoading} = useQuery({
     queryKey:["workspace"],
     queryFn: async() => {
       const response = await fetch(`${API_URL}/api/workspaces/by-ids?type=${type}`, {
