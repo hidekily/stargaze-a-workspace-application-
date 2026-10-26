@@ -15,6 +15,7 @@ export function TabBar3({navigateTo, routeFrom}: componentProps) {
   const queryClient = useQueryClient()
   const {workspaceId} = useParams({from: `${routeFrom}`})
   const {messages, connected, sendMessage} = useWebSocket(workspaceId);
+  const [content, setContent] = useState<string>('')
 
   const [modal, setModal] = useState<boolean>(false)
 
@@ -70,11 +71,35 @@ export function TabBar3({navigateTo, routeFrom}: componentProps) {
         </nav>
 
         <section className='h-[80%] w-full bg-[#1A1A2E]'> {/* display da msg  e activities*/}
+          {messages.map((message, index) => (
+            <div key={index} className='bg-zinc-800 p-2'>
+              <p>{message.content}</p>
+            </div>
+          ))}
         </section>
 
         <section> {/* input da msg + enviar */}
-          <button className='w-20 h-20 bg-teal-900' onClick={(e) => {e.preventDefault(), handleDeleteGroup.mutate()}}></button>
+          <input 
+            type="text" 
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder='digite sua mensagem...'
+            maxLength={2000}
+            className={"bg-green-900 rounded p-2"}
+          />
+
+          <button 
+            disabled={!connected || !content.trim}
+            onClick={() => {
+              sendMessage(content.trim())
+              setContent("")
+            }}
+            className={"bg-teal-900 rounded p-2 disabled:opacity-70"}
+          >
+            enviar
+          </button>
         </section>
+
       </div>
     </>
   )}
