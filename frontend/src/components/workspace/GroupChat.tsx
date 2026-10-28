@@ -89,7 +89,7 @@ export function TabBar3({navigateTo, routeFrom}: componentProps) {
           />
 
           <button 
-            disabled={!connected || !content.trim}
+            disabled={!connected || !content.trim()}
             onClick={() => {
               sendMessage(content.trim())
               setContent("")

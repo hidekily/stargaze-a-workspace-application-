@@ -39,10 +39,10 @@ export async function registerWebsocket(app: FastifyInstance) {
     const room = rooms.get(workspaceId)!
     room.add(socket)
 
-    socket.on('message', (msg: string) => {
+    socket.on('message', (raw) => {
       let parsed
       try {
-        parsed = messageSchema.safeParse(JSON.parse(msg.toString()))
+        parsed = messageSchema.safeParse(JSON.parse(raw.toString()))
       } catch {
         return
       }

@@ -14,7 +14,7 @@ export function useWebSocket(workspaceId: string) {
     if (!workspaceId) return
 
     const wsUrl = import.meta.env.DEV 
-        ? `ws://localhost:3000/${workspaceId}`
+        ? `ws://localhost:3001/${workspaceId}`
         : `wss://stargaze.vercel.app/${workspaceId}`
 
     const socket = new WebSocket(wsUrl)
