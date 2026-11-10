@@ -3,7 +3,7 @@ import { API_URL } from '@/lib/api'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate, useParams } from '@tanstack/react-router'
 import { useState } from 'react'
-import { useWebSocket } from '@/lib/webHook'
+import { useWebSocket } from '@/lib/webSocket'
 
 interface componentProps {
     navigateTo: "/console/workspace/social" | "/console/workspace/job"
