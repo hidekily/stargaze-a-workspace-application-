@@ -9,28 +9,28 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConsoleRouteImport } from './routes/console'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConsoleWorkspaceRouteImport } from './routes/console/workspace'
-import { Route as ConsoleWorkspaceJobRouteImport } from './routes/console/workspace/job'
-import { Route as ConsoleWorkspacePersonalRouteImport } from './routes/console/workspace/personal'
 import { Route as ConsoleWorkspaceSocialRouteImport } from './routes/console/workspace/social'
-import { Route as ConsoleWorkspaceJobWorkspaceIdRouteImport } from './routes/console/workspace/job/$workspaceId'
-import { Route as ConsoleWorkspacePersonalDashboardRouteImport } from './routes/console/workspace/personal/dashboard'
-import { Route as ConsoleWorkspacePersonalFinancaRouteImport } from './routes/console/workspace/personal/financa'
-import { Route as ConsoleWorkspacePersonalNotasRouteImport } from './routes/console/workspace/personal/notas'
-import { Route as ConsoleWorkspacePersonalPomodoroRouteImport } from './routes/console/workspace/personal/pomodoro'
-import { Route as ConsoleWorkspacePersonalTodoRouteImport } from './routes/console/workspace/personal/todo'
+import { Route as ConsoleWorkspacePersonalRouteImport } from './routes/console/workspace/personal'
+import { Route as ConsoleWorkspaceJobRouteImport } from './routes/console/workspace/job'
 import { Route as ConsoleWorkspaceSocialWorkspaceIdRouteImport } from './routes/console/workspace/social/$workspaceId'
+import { Route as ConsoleWorkspacePersonalTodoRouteImport } from './routes/console/workspace/personal/todo'
+import { Route as ConsoleWorkspacePersonalPomodoroRouteImport } from './routes/console/workspace/personal/pomodoro'
+import { Route as ConsoleWorkspacePersonalNotasRouteImport } from './routes/console/workspace/personal/notas'
+import { Route as ConsoleWorkspacePersonalFinancaRouteImport } from './routes/console/workspace/personal/financa'
+import { Route as ConsoleWorkspacePersonalDashboardRouteImport } from './routes/console/workspace/personal/dashboard'
+import { Route as ConsoleWorkspaceJobWorkspaceIdRouteImport } from './routes/console/workspace/job/$workspaceId'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ConsoleRoute = ConsoleRouteImport.update({
   id: '/console',
   path: '/console',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConsoleWorkspaceRoute = ConsoleWorkspaceRouteImport.update({
@@ -38,9 +38,9 @@ const ConsoleWorkspaceRoute = ConsoleWorkspaceRouteImport.update({
   path: '/workspace',
   getParentRoute: () => ConsoleRoute,
 } as any)
-const ConsoleWorkspaceJobRoute = ConsoleWorkspaceJobRouteImport.update({
-  id: '/job',
-  path: '/job',
+const ConsoleWorkspaceSocialRoute = ConsoleWorkspaceSocialRouteImport.update({
+  id: '/social',
+  path: '/social',
   getParentRoute: () => ConsoleWorkspaceRoute,
 } as any)
 const ConsoleWorkspacePersonalRoute =
@@ -49,33 +49,21 @@ const ConsoleWorkspacePersonalRoute =
     path: '/personal',
     getParentRoute: () => ConsoleWorkspaceRoute,
   } as any)
-const ConsoleWorkspaceSocialRoute = ConsoleWorkspaceSocialRouteImport.update({
-  id: '/social',
-  path: '/social',
+const ConsoleWorkspaceJobRoute = ConsoleWorkspaceJobRouteImport.update({
+  id: '/job',
+  path: '/job',
   getParentRoute: () => ConsoleWorkspaceRoute,
 } as any)
-const ConsoleWorkspaceJobWorkspaceIdRoute =
-  ConsoleWorkspaceJobWorkspaceIdRouteImport.update({
+const ConsoleWorkspaceSocialWorkspaceIdRoute =
+  ConsoleWorkspaceSocialWorkspaceIdRouteImport.update({
     id: '/$workspaceId',
     path: '/$workspaceId',
-    getParentRoute: () => ConsoleWorkspaceJobRoute,
+    getParentRoute: () => ConsoleWorkspaceSocialRoute,
   } as any)
-const ConsoleWorkspacePersonalDashboardRoute =
-  ConsoleWorkspacePersonalDashboardRouteImport.update({
-    id: '/dashboard',
-    path: '/dashboard',
-    getParentRoute: () => ConsoleWorkspacePersonalRoute,
-  } as any)
-const ConsoleWorkspacePersonalFinancaRoute =
-  ConsoleWorkspacePersonalFinancaRouteImport.update({
-    id: '/financa',
-    path: '/financa',
-    getParentRoute: () => ConsoleWorkspacePersonalRoute,
-  } as any)
-const ConsoleWorkspacePersonalNotasRoute =
-  ConsoleWorkspacePersonalNotasRouteImport.update({
-    id: '/notas',
-    path: '/notas',
+const ConsoleWorkspacePersonalTodoRoute =
+  ConsoleWorkspacePersonalTodoRouteImport.update({
+    id: '/todo',
+    path: '/todo',
     getParentRoute: () => ConsoleWorkspacePersonalRoute,
   } as any)
 const ConsoleWorkspacePersonalPomodoroRoute =
@@ -84,17 +72,29 @@ const ConsoleWorkspacePersonalPomodoroRoute =
     path: '/pomodoro',
     getParentRoute: () => ConsoleWorkspacePersonalRoute,
   } as any)
-const ConsoleWorkspacePersonalTodoRoute =
-  ConsoleWorkspacePersonalTodoRouteImport.update({
-    id: '/todo',
-    path: '/todo',
+const ConsoleWorkspacePersonalNotasRoute =
+  ConsoleWorkspacePersonalNotasRouteImport.update({
+    id: '/notas',
+    path: '/notas',
     getParentRoute: () => ConsoleWorkspacePersonalRoute,
   } as any)
-const ConsoleWorkspaceSocialWorkspaceIdRoute =
-  ConsoleWorkspaceSocialWorkspaceIdRouteImport.update({
+const ConsoleWorkspacePersonalFinancaRoute =
+  ConsoleWorkspacePersonalFinancaRouteImport.update({
+    id: '/financa',
+    path: '/financa',
+    getParentRoute: () => ConsoleWorkspacePersonalRoute,
+  } as any)
+const ConsoleWorkspacePersonalDashboardRoute =
+  ConsoleWorkspacePersonalDashboardRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => ConsoleWorkspacePersonalRoute,
+  } as any)
+const ConsoleWorkspaceJobWorkspaceIdRoute =
+  ConsoleWorkspaceJobWorkspaceIdRouteImport.update({
     id: '/$workspaceId',
     path: '/$workspaceId',
-    getParentRoute: () => ConsoleWorkspaceSocialRoute,
+    getParentRoute: () => ConsoleWorkspaceJobRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -198,18 +198,18 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/console': {
       id: '/console'
       path: '/console'
       fullPath: '/console'
       preLoaderRoute: typeof ConsoleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/console/workspace': {
@@ -219,11 +219,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleWorkspaceRouteImport
       parentRoute: typeof ConsoleRoute
     }
-    '/console/workspace/job': {
-      id: '/console/workspace/job'
-      path: '/job'
-      fullPath: '/console/workspace/job'
-      preLoaderRoute: typeof ConsoleWorkspaceJobRouteImport
+    '/console/workspace/social': {
+      id: '/console/workspace/social'
+      path: '/social'
+      fullPath: '/console/workspace/social'
+      preLoaderRoute: typeof ConsoleWorkspaceSocialRouteImport
       parentRoute: typeof ConsoleWorkspaceRoute
     }
     '/console/workspace/personal': {
@@ -233,39 +233,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleWorkspacePersonalRouteImport
       parentRoute: typeof ConsoleWorkspaceRoute
     }
-    '/console/workspace/social': {
-      id: '/console/workspace/social'
-      path: '/social'
-      fullPath: '/console/workspace/social'
-      preLoaderRoute: typeof ConsoleWorkspaceSocialRouteImport
+    '/console/workspace/job': {
+      id: '/console/workspace/job'
+      path: '/job'
+      fullPath: '/console/workspace/job'
+      preLoaderRoute: typeof ConsoleWorkspaceJobRouteImport
       parentRoute: typeof ConsoleWorkspaceRoute
     }
-    '/console/workspace/job/$workspaceId': {
-      id: '/console/workspace/job/$workspaceId'
+    '/console/workspace/social/$workspaceId': {
+      id: '/console/workspace/social/$workspaceId'
       path: '/$workspaceId'
-      fullPath: '/console/workspace/job/$workspaceId'
-      preLoaderRoute: typeof ConsoleWorkspaceJobWorkspaceIdRouteImport
-      parentRoute: typeof ConsoleWorkspaceJobRoute
+      fullPath: '/console/workspace/social/$workspaceId'
+      preLoaderRoute: typeof ConsoleWorkspaceSocialWorkspaceIdRouteImport
+      parentRoute: typeof ConsoleWorkspaceSocialRoute
     }
-    '/console/workspace/personal/dashboard': {
-      id: '/console/workspace/personal/dashboard'
-      path: '/dashboard'
-      fullPath: '/console/workspace/personal/dashboard'
-      preLoaderRoute: typeof ConsoleWorkspacePersonalDashboardRouteImport
-      parentRoute: typeof ConsoleWorkspacePersonalRoute
-    }
-    '/console/workspace/personal/financa': {
-      id: '/console/workspace/personal/financa'
-      path: '/financa'
-      fullPath: '/console/workspace/personal/financa'
-      preLoaderRoute: typeof ConsoleWorkspacePersonalFinancaRouteImport
-      parentRoute: typeof ConsoleWorkspacePersonalRoute
-    }
-    '/console/workspace/personal/notas': {
-      id: '/console/workspace/personal/notas'
-      path: '/notas'
-      fullPath: '/console/workspace/personal/notas'
-      preLoaderRoute: typeof ConsoleWorkspacePersonalNotasRouteImport
+    '/console/workspace/personal/todo': {
+      id: '/console/workspace/personal/todo'
+      path: '/todo'
+      fullPath: '/console/workspace/personal/todo'
+      preLoaderRoute: typeof ConsoleWorkspacePersonalTodoRouteImport
       parentRoute: typeof ConsoleWorkspacePersonalRoute
     }
     '/console/workspace/personal/pomodoro': {
@@ -275,19 +261,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleWorkspacePersonalPomodoroRouteImport
       parentRoute: typeof ConsoleWorkspacePersonalRoute
     }
-    '/console/workspace/personal/todo': {
-      id: '/console/workspace/personal/todo'
-      path: '/todo'
-      fullPath: '/console/workspace/personal/todo'
-      preLoaderRoute: typeof ConsoleWorkspacePersonalTodoRouteImport
+    '/console/workspace/personal/notas': {
+      id: '/console/workspace/personal/notas'
+      path: '/notas'
+      fullPath: '/console/workspace/personal/notas'
+      preLoaderRoute: typeof ConsoleWorkspacePersonalNotasRouteImport
       parentRoute: typeof ConsoleWorkspacePersonalRoute
     }
-    '/console/workspace/social/$workspaceId': {
-      id: '/console/workspace/social/$workspaceId'
+    '/console/workspace/personal/financa': {
+      id: '/console/workspace/personal/financa'
+      path: '/financa'
+      fullPath: '/console/workspace/personal/financa'
+      preLoaderRoute: typeof ConsoleWorkspacePersonalFinancaRouteImport
+      parentRoute: typeof ConsoleWorkspacePersonalRoute
+    }
+    '/console/workspace/personal/dashboard': {
+      id: '/console/workspace/personal/dashboard'
+      path: '/dashboard'
+      fullPath: '/console/workspace/personal/dashboard'
+      preLoaderRoute: typeof ConsoleWorkspacePersonalDashboardRouteImport
+      parentRoute: typeof ConsoleWorkspacePersonalRoute
+    }
+    '/console/workspace/job/$workspaceId': {
+      id: '/console/workspace/job/$workspaceId'
       path: '/$workspaceId'
-      fullPath: '/console/workspace/social/$workspaceId'
-      preLoaderRoute: typeof ConsoleWorkspaceSocialWorkspaceIdRouteImport
-      parentRoute: typeof ConsoleWorkspaceSocialRoute
+      fullPath: '/console/workspace/job/$workspaceId'
+      preLoaderRoute: typeof ConsoleWorkspaceJobWorkspaceIdRouteImport
+      parentRoute: typeof ConsoleWorkspaceJobRoute
     }
   }
 }

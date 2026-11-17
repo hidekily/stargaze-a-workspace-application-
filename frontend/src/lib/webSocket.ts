@@ -67,6 +67,3 @@ export function useWebSocket(workspaceId: string) {
     sendMessage,
   }
 }
-
-
-// webHook do websocket para o frontend usar, depois tenho que fazer a conexao do front (input) p mandar o json para o back, arrumar o UI e ta pronto
