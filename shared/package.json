@@ -11,12 +11,12 @@
     "./auth": "./dist/auth/index.js"
   },
   "dependencies": {
-    "better-auth": "^1.4.18",
-    "drizzle-orm": "^0.45.0",
-    "pg": "^8.16.3"
+    "better-auth": "^1.7.25",
+    "drizzle-orm": "^0.45.4",
+    "pg": "^8.23.1"
   },
   "devDependencies": {
-    "@types/pg": "^8.15.6",
-    "typescript": "^5.7.2"
+    "@types/pg": "^8.23.1",
+    "typescript": "^5.9.3"
   }
 }
