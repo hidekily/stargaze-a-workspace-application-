@@ -13,11 +13,12 @@ const config = defineConfig({
       projects: ['./tsconfig.json'],
     }),
     tailwindcss(),
-    nitro(),
     tanstackStart(),
+    nitro(),
     viteReact(),
   ],
   
 })
+
 
 export default config
