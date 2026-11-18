@@ -20,7 +20,8 @@ process.env.NODE_TLS_REJECTED_UNAUTHORIZED = '0'
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://stargaze-a-workspace-application-fr.vercel.app"
+  "https://stargaze-a-workspace-application-fr.vercel.app",
+  'https://stargaze-zswl.onrender.com'
 ]
 
 app.register(cors, {
